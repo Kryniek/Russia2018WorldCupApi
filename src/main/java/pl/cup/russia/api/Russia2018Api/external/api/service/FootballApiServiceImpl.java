@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import pl.cup.russia.api.Russia2018Api.external.api.definition.FootballApiService;
 import pl.cup.russia.api.Russia2018Api.external.api.enums.FootballApiAction;
 import pl.cup.russia.api.Russia2018Api.external.api.util.builder.FootballApiUrlBuilder;
-import pl.cup.russia.api.Russia2018Api.external.api.util.exception.service.footballApiService.base.UrlParseException;
+import pl.cup.russia.api.Russia2018Api.external.api.util.exception.service.footballApiService.UrlParseException;
 
 @Service
 public class FootballApiServiceImpl implements FootballApiService {

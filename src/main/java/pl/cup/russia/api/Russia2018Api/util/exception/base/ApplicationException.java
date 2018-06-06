@@ -1,9 +1,11 @@
 package pl.cup.russia.api.Russia2018Api.util.exception.base;
 
-@SuppressWarnings("serial")
-public abstract class ApplicationException extends RuntimeException {
+import pl.cup.russia.api.Russia2018Api.enums.ErrorMessage;
 
-	public ApplicationException(String message) {
-		super(message);
+@SuppressWarnings("serial")
+public abstract class ApplicationException extends Russia2018CupApiException {
+
+	public ApplicationException(ErrorMessage errorMessage) {
+		super(errorMessage);
 	}
 }

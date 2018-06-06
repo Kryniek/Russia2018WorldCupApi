@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.cup.russia.api.Russia2018Api.external.api.definition.FootballApiService;
-import pl.cup.russia.api.Russia2018Api.external.api.util.exception.service.footballApiService.base.UrlParseException;
+import pl.cup.russia.api.Russia2018Api.external.api.util.exception.service.footballApiService.UrlParseException;
 
 @RestController
 @RequestMapping("/test")
