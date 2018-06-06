@@ -1,4 +1,4 @@
-package pl8.cup.russia.api.Russia2018Api;
+package pl.cup.russia.api.Russia2018Api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

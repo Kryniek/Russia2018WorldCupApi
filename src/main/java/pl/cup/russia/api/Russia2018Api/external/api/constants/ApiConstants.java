@@ -1,4 +1,4 @@
-package pl8.cup.russia.api.Russia2018Api.external.api.constants;
+package pl.cup.russia.api.Russia2018Api.external.api.constants;
 
 public class ApiConstants {
 
