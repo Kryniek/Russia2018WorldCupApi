@@ -24,7 +24,7 @@
 
         <jasypt.spring-boot.version>2.0.0</jasypt.spring-boot.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
-        <lombok.version>1.18.0<</lombok.version>
+        <lombok.version>1.18.0</lombok.version>
 	</properties>
 
 	<dependencies>
