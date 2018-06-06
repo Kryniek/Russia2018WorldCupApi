@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Data
-public class ApiEvents {
+public class ApiEvent {
 
     private Integer matchId;
 
@@ -57,6 +57,6 @@ public class ApiEvents {
 
     private ApiLineup lineup;
 
-    private ApiStatistics statistics;
+    private ApiStatistic statistics;
 
 }

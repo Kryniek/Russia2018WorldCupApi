@@ -13,6 +13,6 @@ public class ApiHomeAway {
 
     private List<ApiLineupPerson> coach; // dunno why they return is as array but we can go over it
 
-    private List<ApiLineupSubstitutions> substitutions;
+    private List<ApiLineupSubstitution> substitutions;
 
 }

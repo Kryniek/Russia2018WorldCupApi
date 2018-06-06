@@ -4,7 +4,7 @@ import lombok.Data;
 import pl8.cup.russia.api.Russia2018Api.external.api.enums.ApiStatisticType;
 
 @Data
-public class ApiStatistics {
+public class ApiStatistic {
 
     private ApiStatisticType type;
 
