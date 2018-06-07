@@ -22,6 +22,11 @@ public enum ApiStatisticType {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return this.getValue();
+    }
+
     public static ApiStatisticType parse(String value) {
         for (ApiStatisticType type : ApiStatisticType.values()) {
             if (type.getValue().equals(value))

@@ -15,6 +15,11 @@ public enum ApiCard {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return this.getValue();
+    }
+
     public static ApiCard parse(String value) {
         for(ApiCard card : ApiCard.values()) {
             if(card.getValue().equals(value))

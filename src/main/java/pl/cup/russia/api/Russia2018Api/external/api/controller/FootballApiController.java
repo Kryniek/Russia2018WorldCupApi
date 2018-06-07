@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.cup.russia.api.Russia2018Api.external.api.definition.FootballApiService;
+import pl.cup.russia.api.Russia2018Api.external.api.model.ApiLeague;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/external-api")
 public class FootballApiController {
 
 	@Autowired
@@ -18,4 +21,10 @@ public class FootballApiController {
 	public String test() {
 		return footballApiService.getLeaguesJSONArray().toString();
 	}
+
+	@GetMapping("/leagues")
+	public List<ApiLeague> getExternalApiLeagues() {
+		return footballApiService.getApiLeagues();
+	}
+
 }

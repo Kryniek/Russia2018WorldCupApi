@@ -13,7 +13,7 @@ public class FootballApiUrlBuilder {
 	private static final String API_KEY = "d49fc0bf81b31ef39c4573562e19475e4dfefaaed63100efd1fe7c972588059a";
 
 	private FootballApiAction action;
-	private List<String> urlParameters = new ArrayList<String>();
+	private List<String> urlParameters = new ArrayList<>();
 
 	public FootballApiUrlBuilder(FootballApiAction action) {
 		this.action = action;
