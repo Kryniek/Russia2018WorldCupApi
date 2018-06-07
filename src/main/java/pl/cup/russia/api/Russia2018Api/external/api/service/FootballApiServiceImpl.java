@@ -1,8 +1,5 @@
 package pl.cup.russia.api.Russia2018Api.external.api.service;
 
-import static pl.cup.russia.api.Russia2018Api.external.api.util.HttpConnectionUtil.getJSONArrayFromConnectionByUrl;
-
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -21,12 +18,7 @@ import java.util.List;
 public class FootballApiServiceImpl implements FootballApiService {
 
     @Autowired
-    RestTemplate restTemplate;
-
-	@Override
-	public JSONArray getLeaguesJSONArray() {
-		return getJSONArrayFromConnectionByUrl(new FootballApiUrlBuilder(FootballApiAction.GET_LEAGUES).withCountryId().build());
-	}
+    private RestTemplate restTemplate;
 
 	@Override
 	public List<ApiLeague> getApiLeagues() {

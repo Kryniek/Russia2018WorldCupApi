@@ -17,14 +17,8 @@ public class FootballApiController {
 	@Autowired
 	private FootballApiService footballApiService;
 
-	@GetMapping
-	public String test() {
-		return footballApiService.getLeaguesJSONArray().toString();
-	}
-
 	@GetMapping("/leagues")
 	public List<ApiLeague> getExternalApiLeagues() {
 		return footballApiService.getApiLeagues();
 	}
-
 }

@@ -2,7 +2,9 @@ package pl.cup.russia.api.Russia2018Api.external.api.util.builder;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import pl.cup.russia.api.Russia2018Api.external.api.constants.ApiConstants;
@@ -21,6 +23,24 @@ public class FootballApiUrlBuilder {
 
 	public FootballApiUrlBuilder withCountryId() {
 		this.urlParameters.add("country_id=" + ApiConstants.WORLD_CUP_COUNTRY_ID.intValue());
+
+		return this;
+	}
+
+	public FootballApiUrlBuilder withLeagueId(Integer leagueId) {
+		this.urlParameters.add("league_id=" + leagueId);
+
+		return this;
+	}
+
+	public FootballApiUrlBuilder fromDate(Date from) {
+		this.urlParameters.add("from=" + new SimpleDateFormat("yyyy-MM-dd").format(from));
+
+		return this;
+	}
+
+	public FootballApiUrlBuilder toDate(Date from) {
+		this.urlParameters.add("to=" + new SimpleDateFormat("yyyy-MM-dd").format(from));
 
 		return this;
 	}
