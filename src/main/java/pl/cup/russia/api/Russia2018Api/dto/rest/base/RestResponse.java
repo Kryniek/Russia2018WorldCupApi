@@ -1,10 +1,11 @@
 package pl.cup.russia.api.Russia2018Api.dto.rest.base;
 
+import org.springframework.http.HttpStatus;
+
 public abstract class RestResponse {
 
 	private boolean success;
-	private String errorMessage;
-	private String requestURI;
+	private HttpStatus httpStatus;
 
 	public boolean isSuccess() {
 		return success;
@@ -14,19 +15,11 @@ public abstract class RestResponse {
 		this.success = success;
 	}
 
-	public String getErrorMessage() {
-		return errorMessage;
+	public HttpStatus getHttpStatus() {
+		return httpStatus;
 	}
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	public String getRequestURI() {
-		return requestURI;
-	}
-
-	public void setRequestURI(String requestURI) {
-		this.requestURI = requestURI;
+	public void setHttpStatus(HttpStatus httpStatus) {
+		this.httpStatus = httpStatus;
 	}
 }
