@@ -21,8 +21,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<jasypt.version>2.0.0</jasypt.version>
 		<org.json.version>20180130</org.json.version>
+        <jasypt.spring-boot.version>2.0.0</jasypt.spring-boot.version>
+        <jaxb-api.version>2.3.0</jaxb-api.version>
+        <lombok.version>1.18.0</lombok.version>
 	</properties>
 
 	<dependencies>
@@ -37,9 +39,20 @@
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
-			<version>${jasypt.version}</version>
+			<version>${jasypt.spring-boot.version}</version>
 		</dependency>
-		<dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
