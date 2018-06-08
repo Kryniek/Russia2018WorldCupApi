@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.Assert;
 import org.junit.Test;
 import pl.cup.russia.api.Russia2018Api.external.api.model.ApiLeague;
-import pl.cup.russia.api.Russia2018Api.util.CustomJsonObjectMapper;
+import pl.cup.russia.api.Russia2018Api.util.jackson.CustomJsonObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,34 +17,33 @@ public class ApiLeagueMapperTest {
 
     @Test
     public void map_one_league_to_object() throws IOException {
-        ApiLeague expectedApiLeague = getLeagueForTest(1);
-        File file = new File(getClass().getResource("/api/oneApiLeague.json").getFile());
-        ApiLeague readedApiLeague = mapper.readValue(file, ApiLeague.class);
+        ApiLeague expectedLeague = getLeagueForTest(1);
+        File file = new File(getClass().getResource("/api/league/oneLeague.json").getFile());
+        ApiLeague readedLeague = mapper.readValue(file, ApiLeague.class);
 
-        Assert.assertEquals(expectedApiLeague, readedApiLeague);
+        Assert.assertEquals(expectedLeague, readedLeague);
     }
 
     @Test
     public void map_many_leagues_to_list_as_api_returns() throws IOException {
-        List<ApiLeague> expectedApiLeagues = new ArrayList<>();
-        for (int i = 1; i < 5; i++)
-            expectedApiLeagues.add(getLeagueForTest(i));
+        List<ApiLeague> expectedLeagues = new ArrayList<>();
+        for (int i = 1; i <= 4; i++)
+            expectedLeagues.add(getLeagueForTest(i));
 
+        File file = new File(getClass().getResource("/api/league/manyLeagues.json").getFile());
+        List<ApiLeague> readedLeague = mapper.readValue(file, new TypeReference<List<ApiLeague>>() {});
 
-        File file = new File(getClass().getResource("/api/manyApiLeagues.json").getFile());
-        List<ApiLeague> readedApiLeague = mapper.readValue(file, new TypeReference<List<ApiLeague>>() {});
-
-        Assert.assertEquals(expectedApiLeagues, readedApiLeague);
+        Assert.assertEquals(expectedLeagues, readedLeague);
     }
 
-    private ApiLeague getLeagueForTest(Integer counter) {
-        ApiLeague apiLeague = new ApiLeague();
-        apiLeague.setCountryId(counter);
-        apiLeague.setCountryName("Country " + counter);
-        apiLeague.setLeagueId(counter);
-        apiLeague.setLeagueName("League " + counter);
+    private ApiLeague getLeagueForTest(Integer iterator) {
+        ApiLeague league = new ApiLeague();
+        league.setCountryId(iterator);
+        league.setCountryName("Country " + iterator);
+        league.setLeagueId(iterator);
+        league.setLeagueName("League " + iterator);
 
-        return apiLeague;
+        return league;
     }
 
 }

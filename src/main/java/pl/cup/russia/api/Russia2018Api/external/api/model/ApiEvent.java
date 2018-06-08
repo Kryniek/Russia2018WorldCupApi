@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -51,12 +52,12 @@ public class ApiEvent {
 
     private Boolean matchLive;
 
-    private List<ApiScorer> goalscorer;
+    private List<ApiScorer> goalscorer = new ArrayList<>();
 
-    private List<ApiCards> cards;
+    private List<ApiCards> cards = new ArrayList<>();
 
-    private ApiLineup lineup;
+    private ApiLineup lineup = new ApiLineup();
 
-    private ApiStatistic statistics;
+    private List<ApiStatistic> statistics = new ArrayList<>();
 
 }

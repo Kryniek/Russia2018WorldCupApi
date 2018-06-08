@@ -1,14 +1,14 @@
 package pl.cup.russia.api.Russia2018Api.external.api.util.builder;
 
-import static org.springframework.util.CollectionUtils.isEmpty;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import pl.cup.russia.api.Russia2018Api.external.api.constants.ApiConstants;
 import pl.cup.russia.api.Russia2018Api.external.api.enums.FootballApiAction;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 public class FootballApiUrlBuilder {
 	private static final String BASIC_URL = "https://apifootball.com/api/";
@@ -22,7 +22,7 @@ public class FootballApiUrlBuilder {
 	}
 
 	public FootballApiUrlBuilder withCountryId() {
-		this.urlParameters.add("country_id=" + ApiConstants.WORLD_CUP_COUNTRY_ID.intValue());
+		this.urlParameters.add("country_id=" + ApiConstants.WORLD_CUP_COUNTRY_ID);
 
 		return this;
 	}
@@ -33,14 +33,14 @@ public class FootballApiUrlBuilder {
 		return this;
 	}
 
-	public FootballApiUrlBuilder fromDate(Date from) {
-		this.urlParameters.add("from=" + new SimpleDateFormat("yyyy-MM-dd").format(from));
+	public FootballApiUrlBuilder fromDate(LocalDate from) {
+		this.urlParameters.add("from=" + from.format(ISO_LOCAL_DATE));
 
 		return this;
 	}
 
-	public FootballApiUrlBuilder toDate(Date from) {
-		this.urlParameters.add("to=" + new SimpleDateFormat("yyyy-MM-dd").format(from));
+	public FootballApiUrlBuilder toDate(LocalDate to) {
+		this.urlParameters.add("to=" + to.format(ISO_LOCAL_DATE));
 
 		return this;
 	}

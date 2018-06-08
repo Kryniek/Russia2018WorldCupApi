@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class ApiLineup {
 
-    private ApiHomeAway home;
+    private ApiHomeAway home = new ApiHomeAway();
 
-    private ApiHomeAway away;
+    private ApiHomeAway away = new ApiHomeAway();
 
 }

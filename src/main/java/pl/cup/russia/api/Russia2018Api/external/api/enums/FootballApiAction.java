@@ -9,7 +9,7 @@ public enum FootballApiAction {
 
 	private String value;
 
-	private FootballApiAction(String value) {
+	FootballApiAction(String value) {
 		this.value = value;
 	}
 

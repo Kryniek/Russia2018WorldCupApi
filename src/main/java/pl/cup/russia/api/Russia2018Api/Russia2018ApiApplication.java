@@ -9,4 +9,5 @@ public class Russia2018ApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Russia2018ApiApplication.class, args);
 	}
+
 }

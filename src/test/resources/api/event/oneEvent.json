@@ -1,0 +1,40 @@
+{
+  "match_id": "1",
+  "country_id": "1",
+  "country_name": "Country 1",
+  "league_id": "1",
+  "league_name": "League 1",
+  "match_date": "0001-01-01",
+  "match_status": "Status 1",
+  "match_time": "01:01",
+  "match_hometeam_name": "Hometeam 1",
+  "match_hometeam_score": "1",
+  "match_awayteam_name": "Awayteam 1",
+  "match_awayteam_score": "1",
+  "match_hometeam_halftime_score": "1",
+  "match_awayteam_halftime_score": "1",
+  "match_hometeam_extra_score": "1",
+  "match_awayteam_extra_score": "1",
+  "match_hometeam_penalty_score": "1",
+  "match_awayteam_penalty_score": "1",
+  "match_hometeam_system": "1-1-1",
+  "match_awayteam_system": "1-1-1",
+  "match_live": "1",
+  "goalscorer": [],
+  "cards": [],
+  "lineup": {
+    "home": {
+      "starting_lineups": [],
+      "substitutes": [],
+      "coach": [],
+      "substitutions": []
+    },
+    "away": {
+      "starting_lineups": [],
+      "substitutes": [],
+      "coach": [],
+      "substitutions": []
+    }
+  },
+  "statistics": []
+}
