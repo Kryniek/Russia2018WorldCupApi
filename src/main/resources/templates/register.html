@@ -2,16 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Logowanie</title>
+<title>Rejestracja</title>
 <link rel="stylesheet"
 	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
-<link rel="stylesheet" href="../../css/login.css" />
+<link rel="stylesheet" href="../../css/register.css" />
 </head>
 <body>
 	<div class="container fixed-center position-fixed">
-		<form id="loginForm" class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
+		<form id="registerForm"
+			class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
 			<fieldset>
-				<h2 class="text-center p-3">Logowanie</h2>
+				<h2 class="text-center p-3">Rejestracja</h2>
 				<div class="form-group">
 					<input type="text"
 						class="form-control shadow-sm p-2 bg-white rounded border border-success"
@@ -22,8 +23,7 @@
 						class="form-control shadow-sm p-2 bg-white rounded border border-success"
 						placeholder="hasło" required>
 				</div>
-				<button type="submit" class="btn btn-success">Zaloguj</button>
-				<a href="/register" type="button" class="btn btn-outline-success float-right">Zarejestruj</a>
+				<button type="submit" class="btn btn-success">Zarejestruj</button>
 			</fieldset>
 		</form>
 	</div>

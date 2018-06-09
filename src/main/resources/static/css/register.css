@@ -4,6 +4,6 @@
 @import url("util/centeredContainer.css");
 @import url("util/formDefaults.css");
 
-#loginForm{
+#registerForm{
 	background-color: rgba(255,255,255,0.9) !important;
 }
