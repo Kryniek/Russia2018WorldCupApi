@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+@import url(https://fonts.googleapis.com/css?family=Comfortaa);
+
+@import url("animation/bodyBackgroundImageAnimation.css");
+
+body {
+  font-family: 'Comfortaa', cursive !important;
+}
+
+body::after {
+	background-size: cover;
+	width: 100%;
+	height: 100%;
+	content: "";
+	z-index: -1;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}

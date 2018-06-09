@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Logowanie</title>
+<link rel="stylesheet"
+	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../css/login.css" />
+</head>
+<body>
+	<div class="container fixed-center position-fixed">
+		<form id="loginForm" class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
+			<fieldset>
+				<h2 class="text-center p-3">Logowanie</h2>
+				<div class="form-group">
+					<input type="text"
+						class="form-control shadow-sm p-2 bg-white rounded border border-success"
+						placeholder="login" required>
+				</div>
+				<div class="form-group">
+					<input type="password"
+						class="form-control shadow-sm p-2 bg-white rounded border border-success"
+						placeholder="hasło" required>
+				</div>
+				<button type="submit" class="btn btn-success">Zaloguj</button>
+			</fieldset>
+		</form>
+	</div>
+
+	<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/events/events.js"></script>
+</body>
+</html>
