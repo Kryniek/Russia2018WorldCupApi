@@ -24,4 +24,14 @@ public class MainController {
 	public String worldCupWinner() {
 		return StaticHtmlResource.WORLD_CUP_WINNER.getValue();
 	}
+
+	@GetMapping("/groups-winners")
+	public String groupsWinners() {
+		return StaticHtmlResource.GROUPS_WINNERS.getValue();
+	}
+
+	@GetMapping("/matches")
+	public String matches() {
+		return StaticHtmlResource.MATCHES.getValue();
+	}
 }

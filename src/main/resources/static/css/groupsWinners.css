@@ -6,6 +6,16 @@
 
 @import url("util/formDefaults.css");
 
-#loginForm {
+@import url("util/customSelect.css");
+
+#groupsWinnersForm {
 	background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.container {
+	max-width: 900px;
+}
+
+label {
+	color: green;
 }

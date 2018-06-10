@@ -1,4 +1,6 @@
 var injectRandomBackground = function () {
+	var BACKGROUND_IMAGES_COUNT = 11;
+	
     (function init() {
         var headNode = document.head || document.getElementsByTagName('head')[0];
         var styleNode = decorateStyleNode();
@@ -23,7 +25,7 @@ var injectRandomBackground = function () {
     };
 
     function getNewBackgroundImageCssText() {
-        var randomNumber = Math.floor((Math.random() * 7) + 1);
+        var randomNumber = Math.floor((Math.random() * BACKGROUND_IMAGES_COUNT) + 1);
         var backgroundImageLocation = '../../img/background/';
 
         return 'body::after { background-image: url("../../img/background/background' + randomNumber + '.jpg"); }';
