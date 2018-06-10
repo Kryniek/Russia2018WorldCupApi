@@ -5,7 +5,7 @@
 @import url("animation/bodyBackgroundImageAnimation.css");
 
 body {
-  font-family: 'Comfortaa', cursive !important;
+	font-family: 'Comfortaa', cursive !important;
 }
 
 body::after {
@@ -18,4 +18,7 @@ body::after {
 	position: absolute;
 	top: 0;
 	left: 0;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
 }

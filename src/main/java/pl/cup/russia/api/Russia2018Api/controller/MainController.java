@@ -29,4 +29,9 @@ public class MainController {
 	public String groupsWinners() {
 		return StaticHtmlResource.GROUPS_WINNERS.getValue();
 	}
+
+	@GetMapping("/matches")
+	public String matches() {
+		return StaticHtmlResource.MATCHES.getValue();
+	}
 }
