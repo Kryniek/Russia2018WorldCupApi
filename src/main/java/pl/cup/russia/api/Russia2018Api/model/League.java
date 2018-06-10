@@ -28,6 +28,7 @@ public class League {
 
     private List<Standing> standings = new ArrayList<>();
 
+    // matches collection would be refactored - issue #
     private List<Match> matches = new ArrayList<>();
 
     public League(ApiLeague apiLeague) {

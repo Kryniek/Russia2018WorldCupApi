@@ -5,5 +5,4 @@ import pl.cup.russia.api.Russia2018Api.model.League;
 
 public interface LeagueRepository extends MongoRepository<League, String> {
 
-
 }

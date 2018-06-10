@@ -9,4 +9,8 @@ public interface LeagueService {
     void syncLeagues();
 
     List<League> selectLeagues();
+
+    List<String> selectAllTeams();
+
+    List<String> selectTeamsByLeagueId(Integer leagueId);
 }
