@@ -10,8 +10,12 @@ public interface FootballApiService {
 
 	List<ApiLeague> getApiLeagues();
 
-	List<ApiStanding> getApiStandings();
+    List<ApiStanding> getApiStandingsByLeagueId(Integer leagueId);
 
-	List<ApiEvent> getApiEvents();
+    List<ApiStanding> getApiStandings();
+
+    List<ApiEvent> getApiEventsByLeagueId(Integer leagueId);
+
+    List<ApiEvent> getApiEvents();
 
 }

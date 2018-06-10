@@ -41,6 +41,16 @@ public class FootballApiServiceImpl implements FootballApiService {
         return leagues;
     }
 
+    @Override
+    public List<ApiStanding> getApiStandingsByLeagueId(Integer leagueId) {
+        String url = new FootballApiUrlBuilder(FootballApiAction.GET_STANDINGS).withLeagueId(leagueId).build();
+        ResponseEntity<List<ApiStanding>> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
+                null, new ParameterizedTypeReference<List<ApiStanding>>() {
+                });
+
+        return responseEntity.getBody();
+    }
+
     // this methods would look different but have to test it a bit
     @Override
     public List<ApiStanding> getApiStandings() {
@@ -60,6 +70,20 @@ public class FootballApiServiceImpl implements FootballApiService {
         }
 
         return standings;
+    }
+
+    @Override
+    public List<ApiEvent> getApiEventsByLeagueId(Integer leagueId) {
+        // TODO: cause dates are mandatory it would be by league - if isGroup() return true will be from beginning of WC
+        // TODO: to the end of group stage (consts), else it will be from beginning of playoff stage to final
+        String url = new FootballApiUrlBuilder(FootballApiAction.GET_EVENTS).withLeagueId(leagueId)
+                .fromDate(LocalDate.now()).toDate(ApiConstants.FINISH_OF_GROUP_STAGE).build();
+
+        ResponseEntity<List<ApiEvent>> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
+                null, new ParameterizedTypeReference<List<ApiEvent>>() {
+                });
+
+        return responseEntity.getBody();
     }
 
     @Override
