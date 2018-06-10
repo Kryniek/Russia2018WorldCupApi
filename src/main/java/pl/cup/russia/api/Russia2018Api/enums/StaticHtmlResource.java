@@ -1,5 +1,24 @@
 package pl.cup.russia.api.Russia2018Api.enums;
 
 public enum StaticHtmlResource {
-	LOGIN, REGISTER;
+	// @formatter:off
+	LOGIN("login"),
+	REGISTER("register"),
+	WORLD_CUP_WINNER("worldCupWinner");
+	//@formatter:on
+
+	private String value;
+
+	private StaticHtmlResource(String value) {
+		this.value = value;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	@Override
+	public String toString() {
+		return value;
+	}
 }

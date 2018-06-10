@@ -12,11 +12,16 @@ public class MainController {
 
 	@GetMapping
 	public String login() {
-		return StaticHtmlResource.LOGIN.name();
+		return StaticHtmlResource.LOGIN.getValue();
 	}
 
 	@GetMapping("/register")
 	public String register() {
-		return StaticHtmlResource.REGISTER.name();
+		return StaticHtmlResource.REGISTER.getValue();
+	}
+
+	@GetMapping("/world-cup-winner")
+	public String worldCupWinner() {
+		return StaticHtmlResource.WORLD_CUP_WINNER.getValue();
 	}
 }

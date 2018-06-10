@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" href="../../img/favicon.ico" />
+<title>Kto zwycięży?</title>
+<link rel="stylesheet"
+	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../css/worldCupWinner.css" />
+</head>
+<body>
+	<div class="container fixed-center position-fixed">
+		<form id="worldCupWinnerForm"
+			class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
+			<fieldset>
+				<h2 class="text-center p-3">Kto twoim zdaniem podniesie puchar?</h2>
+				<div id="notChosenTeamAlert" class="alert alert-danger text-center"
+					role="alert">Najpierw wybierz zwycięzce!</div>
+				<div class="list-group">
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">Polska
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/240px-Flag_of_Germany.svg.png">Niemcy
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/2000px-Flag_of_the_United_Kingdom.svg.png">Anglia
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/240px-Flag_of_Russia.svg.png">Rosja
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/300px-Flag_of_Spain.svg.png">Hiszpania
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="http://flags.fmcdn.net/data/flags/w580/br.png">Brazylia
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/240px-Flag_of_Russia.svg.png">Rosja
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/300px-Flag_of_Spain.svg.png">Hiszpania
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="http://flags.fmcdn.net/data/flags/w580/br.png">Brazylia
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/240px-Flag_of_Russia.svg.png">Rosja
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/300px-Flag_of_Spain.svg.png">Hiszpania
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="http://flags.fmcdn.net/data/flags/w580/br.png">Brazylia
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/240px-Flag_of_Russia.svg.png">Rosja
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/300px-Flag_of_Spain.svg.png">Hiszpania
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="http://flags.fmcdn.net/data/flags/w580/br.png">Brazylia
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/240px-Flag_of_Russia.svg.png">Rosja
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/300px-Flag_of_Spain.svg.png">Hiszpania
+					</button>
+					<button type="button"
+						class="list-group-item list-group-item-action text-center">
+						<img class="listGroupItemFlag float-left rounded"
+							src="http://flags.fmcdn.net/data/flags/w580/br.png">Brazylia
+					</button>
+				</div>
+				<input id="forwardButton" type="button" value="Dalej"
+					class="btn btn-success float-right mt-3" />
+			</fieldset>
+		</form>
+	</div>
+
+	<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/worldCupWinner/onListGroupItemClick.js"></script>
+	<script src="../../js/worldCupWinner/onForwardButtonClick.js"></script>
+	<script src="../../js/constant.js"></script>
+	<script src="../../js/events/events.js"></script>
+	<script src="../../js/events/worldCupWinnerEvents.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+@import url("main.css");
+
+@import url("util/centeredContainer.css");
+
+@import url("util/formDefaults.css");
+
+@import url("util/customScrollbar.css");
+
+#worldCupWinnerForm {
+	background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.listGroupItemFlag {
+	height: 25px;
+	width: 35px;
+	-webkit-box-shadow: 0px 0px 5px black;
+	-moz-box-shadow: 0px 0px 5px black;
+	box-shadow: 0px 0px 5px black;
+}
+
+.list-group-item {
+	min-height: 50px;
+}
+
+.list-group-item:hover {
+	background-color: rgba(0, 180, 0, 0.2) !important;
+}
+
+.list-group-item:active {
+	background-color: rgba(0, 180, 0, 0.2) !important;
+}
+
+#notChosenTeamAlert {
+	display: none;
+}
+
+.list-group {
+	max-height: 300px;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+}
