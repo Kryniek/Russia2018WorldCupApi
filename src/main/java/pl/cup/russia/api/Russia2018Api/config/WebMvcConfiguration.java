@@ -1,4 +1,4 @@
-package pl.cup.russia.api.Russia2018Api.config.properties;
+package pl.cup.russia.api.Russia2018Api.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;

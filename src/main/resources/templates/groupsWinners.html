@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="../../img/favicon.ico" />
@@ -39,6 +39,8 @@
 						</div>
 					</div>
 				</div>
+				<div sec:authorize="isAuthenticated()"/>
+                <div sec:authorize="isAnonymous()"/>
 				<button type="submit" class="btn btn-success float-right">Dalej</button>
 			</fieldset>
 		</form>
