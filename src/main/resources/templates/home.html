@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="../../img/favicon.ico" />
@@ -97,10 +97,14 @@
 			</div>
 			<div class="col-1"></div>
 			<div id="rightPanel" class="col-3 rounded p-3 pb-3">
-				<button style="height: 15%;" type="button"
-					class="btn btn-success btn-lg btn-block">
-					Wyloguj <i class="fas fa-sign-out-alt"></i>
-				</button>
+				<div sec:authorize="isAuthenticated()">
+					<button style="height: 15%;" type="button"
+						class="btn btn-success btn-lg btn-block">
+						Wyloguj <i class="fas fa-sign-out-alt"></i>
+					</button>
+				</div>
+				<div th:text="${regSuccess}" />
+				<div th:text="${errorMsg}" />
 			</div>
 		</div>
 	</div>

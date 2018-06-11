@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.cup.russia.api.Russia2018Api.external.api.model.ApiLeague;
 
@@ -29,7 +30,10 @@ public class League {
     private List<Standing> standings = new ArrayList<>();
 
     // matches collection would be refactored - issue #
+    @Transient
     private List<Match> matches = new ArrayList<>();
+
+    private List<Integer> matchesId = new ArrayList<>();
 
     public League(ApiLeague apiLeague) {
         this.leagueApiId = apiLeague.getLeagueId();

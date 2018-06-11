@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.cup.russia.api.Russia2018Api.definition.security.UserService;
 import pl.cup.russia.api.Russia2018Api.model.security.User;
-import pl.cup.russia.api.Russia2018Api.repository.security.UserRepository;
 
 import java.util.Objects;
 
@@ -14,11 +14,11 @@ import java.util.Objects;
 public class SecurityServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
+        User user = userService.selectUserByUsername(username);
 
         if (Objects.isNull(user))
             throw new UsernameNotFoundException(username);

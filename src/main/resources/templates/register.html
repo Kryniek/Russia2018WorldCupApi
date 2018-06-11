@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container fixed-center position-fixed">
-		<form id="registerForm"
+		<form th:action="@{/users}" method="post" th:object="${user}" id="registerForm"
 			class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
 			<fieldset>
 				<h2 class="text-center p-3">Rejestracja</h2>
