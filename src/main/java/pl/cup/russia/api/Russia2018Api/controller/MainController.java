@@ -10,7 +10,12 @@ import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 @RequestMapping("/")
 public class MainController {
 
-	@GetMapping
+	@GetMapping()
+	public String base() {
+		return StaticHtmlResource.HOME.getValue();
+	}
+
+	@GetMapping("/login")
 	public String login() {
 		return StaticHtmlResource.LOGIN.getValue();
 	}

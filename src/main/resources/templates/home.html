@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4"
+	  xmlns="http://www.w3.org/1999/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="../../img/favicon.ico" />
@@ -97,10 +98,26 @@
 			</div>
 			<div class="col-1"></div>
 			<div id="rightPanel" class="col-3 rounded p-3 pb-3">
-				<button style="height: 15%;" type="button"
-					class="btn btn-success btn-lg btn-block">
-					Wyloguj <i class="fas fa-sign-out-alt"></i>
-				</button>
+				<div sec:authorize="isAuthenticated()">
+					<!--  https://stackoverflow.com/questions/22557741/logout-link-with-spring-and-thymeleaf -->
+					<button style="height: 15%;" type="button"
+						class="btn btn-success btn-lg btn-block">
+						Wyloguj <i class="fas fa-sign-out-alt"></i>
+					</button>
+
+				<a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
+				<form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+					<input hidden type="submit" value="Sign Out"/>
+				</form>
+				</div>
+
+				<div sec:authorize="isAnonymous()">
+					<a href="/login">Login</a> </br>
+					<a href="/register">Register</a>
+				</div>
+
+				<div th:text="${regSuccess}" />
+				<div th:text="${errorMsg}" />
 			</div>
 		</div>
 	</div>
