@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import pl.cup.russia.api.Russia2018Api.dto.rest.Result;
 import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
 
@@ -18,9 +20,15 @@ import static pl.cup.russia.api.Russia2018Api.enums.MatchResult.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "matches")
 public class Match {
 
+    @Id
+    private String id;
+
     private Integer leagueApiId;
+
+    private String leagueApiName;
 
     private Integer matchApiId;
 
@@ -54,6 +62,7 @@ public class Match {
 
     public Match(ApiEvent apiEvent) {
         this.leagueApiId = apiEvent.getLeagueId();
+        this.leagueApiName = apiEvent.getLeagueName();
         this.matchApiId = apiEvent.getMatchId();
         this.date = apiEvent.getMatchDate();
         this.time = apiEvent.getMatchTime();

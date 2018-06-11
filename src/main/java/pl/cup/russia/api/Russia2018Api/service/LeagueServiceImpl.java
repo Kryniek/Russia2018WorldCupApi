@@ -50,13 +50,10 @@ public class LeagueServiceImpl implements LeagueService {
                 apiStandings.stream().forEach(std -> league.getStandings().add(new Standing(std)));
             }
 
-            List<ApiEvent> apiEvents = apiService.getApiEventsByLeagueId(league.getLeagueApiId());
-            apiEvents.stream().forEach(evt -> league.getMatches().add(new Match(evt)));
-
             leagues.add(league);
         }
 
-        repository.saveAll(leagues);
+        saveAll(leagues);
     }
 
     @Override
@@ -75,7 +72,11 @@ public class LeagueServiceImpl implements LeagueService {
         return mongoTemplate.getCollection(LEAGUES.getValue())
                 .distinct("standings.teamName", eq("leagueApiId", leagueId), String.class)
                 .into(new ArrayList<>());
+    }
 
+    @Override
+    public List<League> saveAll(List<League> leagues) {
+        return repository.saveAll(leagues);
     }
 
 }
