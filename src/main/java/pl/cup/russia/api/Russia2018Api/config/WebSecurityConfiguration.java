@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import pl.cup.russia.api.Russia2018Api.service.security.SecurityServiceImpl;
 
 @Configuration
@@ -22,12 +23,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/**")
-                .permitAll()
+                .antMatchers("/", "/home", "/login", "/register").permitAll()
+                // have to do it a lil better
+                .antMatchers("/world-cup-winner", "/groups-winners", "/matches").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .failureUrl("/login");
+                .failureUrl("/login?error")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/");
     }
 
     @Autowired
