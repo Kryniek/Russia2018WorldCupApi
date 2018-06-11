@@ -6,7 +6,8 @@ public enum StaticHtmlResource {
 	REGISTER("register"),
 	WORLD_CUP_WINNER("worldCupWinner"),
 	GROUPS_WINNERS("groupsWinners"),
-	MATCHES("matches");
+	MATCHES("matches"),
+	HOME("home");
 	//@formatter:on
 
 	private String value;

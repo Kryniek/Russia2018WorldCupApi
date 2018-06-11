@@ -34,4 +34,9 @@ public class MainController {
 	public String matches() {
 		return StaticHtmlResource.MATCHES.getValue();
 	}
+
+	@GetMapping("/home")
+	public String home() {
+		return StaticHtmlResource.HOME.getValue();
+	}
 }
