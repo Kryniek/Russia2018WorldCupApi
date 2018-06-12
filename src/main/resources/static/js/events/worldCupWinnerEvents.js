@@ -1,4 +1,6 @@
 (function() {
+	injectFlagByTeamNameAndPage();
+	
 	var listGroupItems = document.getElementsByClassName("list-group-item");
 
 	for ( let listGroupItemIndex in listGroupItems) {

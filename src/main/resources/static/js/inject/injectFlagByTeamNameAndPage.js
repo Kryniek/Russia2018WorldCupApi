@@ -3,9 +3,12 @@ var injectFlagByTeamNameAndPage = function() {
 		var htmlPageName = window.location.pathname.split("/").pop();
 
 		replaceUKTeamsNamesToPolishTeamsNames(htmlPageName, getPolishTeamName);
+		debugger;
 
 		if (htmlPageName === "" || htmlPageName === "users") {
 			addFlagsSrcToHomePage();
+		} else if (htmlPageName === "world-cup-winner") {
+			addFlagsSrcToWorldCupWinnerPage();
 		}
 	})();
 
@@ -38,8 +41,9 @@ var injectFlagByTeamNameAndPage = function() {
 					}
 				}
 			}
+		} else if (htmlPageName === "world-cup-winner") {
 		}
-	};
+	}
 
 	function addFlagsSrcToHomePage() {
 		let figureElements = document.getElementsByTagName("figure");
@@ -79,7 +83,11 @@ var injectFlagByTeamNameAndPage = function() {
 				}
 			}
 		}
-	};
+	}
+
+	function addFlagsSrcToWorldCupWinnerPage() {
+
+	}
 
 	function getFlagByTeamName(team) {
 		var flagSrc = null;
@@ -95,13 +103,13 @@ var injectFlagByTeamNameAndPage = function() {
 				break;
 			}
 		}
-		
-		if(!flagSrc){
+
+		if (!flagSrc) {
 			return null;
 		}
 
 		return defaultPreSrc + flagSrc;
-	};
+	}
 
 	// TODO REMOVE
 	function getPolishTeamName(team) {
@@ -120,7 +128,7 @@ var injectFlagByTeamNameAndPage = function() {
 		}
 
 		return polishTeamName;
-	};
+	}
 
 	function flagsByTeamNames() {
 		return [ {
@@ -252,5 +260,5 @@ var injectFlagByTeamNameAndPage = function() {
 			flagSrc : "Senegal.jpg",
 			polishTeamName : "Senegal"
 		} ];
-	};
+	}
 };
