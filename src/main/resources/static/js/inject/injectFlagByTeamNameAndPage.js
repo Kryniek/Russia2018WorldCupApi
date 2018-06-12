@@ -4,7 +4,7 @@ var injectFlagByTeamNameAndPage = function() {
 
 		replaceUKTeamsNamesToPolishTeamsNames(htmlPageName, getPolishTeamName);
 
-		if (htmlPageName === "home") {
+		if (htmlPageName === "") {
 			addFlagsSrcToHomePage();
 		}
 	})();
@@ -12,7 +12,7 @@ var injectFlagByTeamNameAndPage = function() {
 	// TODO REMOVE
 	function replaceUKTeamsNamesToPolishTeamsNames(htmlPageName,
 			getPolishTeamNameFunc) {
-		if (htmlPageName === "home") {
+		if (htmlPageName === "") {
 			let figureElements = document.getElementsByTagName("figure");
 
 			for ( let figureElementIndex in figureElements) {
