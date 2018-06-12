@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerNewUserAccount(User user) throws UserAlreadyExistAuthenticationException {
         if (isUserExists(user))
-            throw new UserAlreadyExistAuthenticationException("User with username " + user.getUsername()
-                    + " already exists.");
+            throw new UserAlreadyExistAuthenticationException("Użytkownik o loginie: " + user.getUsername()
+                    + ", już istnieje.");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

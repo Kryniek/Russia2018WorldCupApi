@@ -23,7 +23,10 @@ public class MainController {
 
 	@GetMapping()
 	public ModelAndView base() {
-		return getHomeView();
+		ModelAndView mav = new ModelAndView(StaticHtmlResource.HOME.getValue());
+		mav.addObject("todayMatches", matchService.selectMatchesByDate(now()));
+
+		return mav;
 	}
 
 	@GetMapping("/login")
@@ -65,10 +68,4 @@ public class MainController {
 		return StaticHtmlResource.POINTS.getValue();
 	}
 
-	private ModelAndView getHomeView() {
-		ModelAndView mav = new ModelAndView(StaticHtmlResource.HOME.getValue());
-		mav.addObject("todayMatches", matchService.selectMatchesByDate(now()));
-
-		return mav;
-	}
 }

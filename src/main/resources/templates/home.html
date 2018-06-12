@@ -26,7 +26,7 @@
 	<div th:if="${errorMsg}">
 		<div id="errorAlert"
 			class="alert alert-danger alert-dismissible fade show" role="alert">
-			Użytkownik już istnieje.
+			<div th:text="${errorMsg}"/>
 			<button
 				onclick="document.getElementById('errorAlert').hidden = true;"
 				type="button" class="close" aria-label="Close">
