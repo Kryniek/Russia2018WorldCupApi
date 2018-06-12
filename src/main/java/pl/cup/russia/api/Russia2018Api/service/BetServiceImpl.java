@@ -12,7 +12,9 @@ import pl.cup.russia.api.Russia2018Api.enums.BetType;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
 import pl.cup.russia.api.Russia2018Api.repository.BetRepository;
 
-import static com.mongodb.client.model.Filters.eq;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Math.toIntExact;
 import static pl.cup.russia.api.Russia2018Api.enums.BetStatus.OPENED;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.*;
@@ -34,10 +36,15 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public Bet createGroupPromotionBet(BetValue betValue) {
-        return save(getBet(betValue, GROUP_STAGE_PROMOTION));
-    }
+    public List<Bet> createGroupPromotionBets(List<BetValue> betValues) {
+        List<Bet> bets = new ArrayList<>();
 
+        for (BetValue value : betValues) {
+            bets.add(getBet(value, GROUP_STAGE_PROMOTION));
+        }
+
+        return saveAll(bets);
+    }
 
     @Override
     public Bet createMatchScoreBet(BetValue betValue) {
@@ -57,6 +64,11 @@ public class BetServiceImpl implements BetService {
     @Override
     public Bet save(Bet bet) {
         return repository.save(bet);
+    }
+
+    @Override
+    public List<Bet> saveAll(List<Bet> bets) {
+        return repository.saveAll(bets);
     }
 
     @Override

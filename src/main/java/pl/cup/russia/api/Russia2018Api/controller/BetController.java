@@ -1,18 +1,19 @@
 package pl.cup.russia.api.Russia2018Api.controller;
 
-import static java.time.LocalDate.now;
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.dto.rest.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
+
+import java.util.List;
+
+import static java.time.LocalDate.now;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
 
 @Controller
 @RequestMapping("/bets")
@@ -39,8 +40,8 @@ public class BetController {
     }
 
     @PostMapping("/group")
-    public Bet betGroupPromotion(@ModelAttribute("betValue") BetValue betValue) {
-        return service.createGroupPromotionBet(betValue);
+    public List<Bet> betGroupPromotion(@ModelAttribute("betValue") List<BetValue> betValues) {
+        return service.createGroupPromotionBets(betValues);
     }
 
 	@PostMapping("/match")
