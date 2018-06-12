@@ -42,6 +42,10 @@
 						<div class="col-11 mt-3 mb-1">Dzisiejsze spotkania</div>
 					</div>
 					<th:block th:each="match : ${todayMatches}">
+						<div class="font-weight-bold" th:text="${match.hometeamName}"></div>
+						<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
+					</th:block>
+					<th:block th:each="match : ${todayMatches}">
 						<div class="row text-center pt-3">
 							<div class="col-2 matchTime">
 								<div th:text="${match.time}"></div>
