@@ -34,12 +34,8 @@ public class BetController {
 	}
 
     @PutMapping("/winner/{winnerTeamName}")
-    public String updateBetWorldCupWinner(@PathVariable String winnerTeamName, RedirectAttributes redirectAttributes) {
-        service.updateBetByType(WORLD_CUP_WINNER, new BetValue(winnerTeamName));
-
-        redirectAttributes.addFlashAttribute("todayMatches", matchService.selectMatchesByDate(now()));
-
-        return StaticHtmlResource.WORLD_CUP_WINNER.getKebabCasedRedirectValue();
+    public Integer updateBetWorldCupWinner(@PathVariable String winnerTeamName) {
+        return service.updateBetByType(WORLD_CUP_WINNER, new BetValue(winnerTeamName));
     }
 
     @PostMapping("/group")
