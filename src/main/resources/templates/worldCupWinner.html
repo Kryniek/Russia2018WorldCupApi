@@ -6,16 +6,20 @@
 <title>Kto zwycięży?</title>
 <link rel="stylesheet"
 	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
 <link rel="stylesheet" href="../../css/worldCupWinner.css" />
 </head>
 <body>
+	<button id="backButton" onclick="location.href=location.origin"
+		type="button" class="btn btn-outline-success">
+		<i class="fas fa-arrow-left"></i>
+	</button>
 	<div class="container fixed-center position-fixed">
 		<form id="worldCupWinnerForm" name="worldCupWinnerForm"
 			class="shadow-lg p-3 mb-5 bg-white border border-success rounded"
-			th:action="@{/bets/winner/}" method="post"
-			th:object="${winnerTeamName}">
+			th:action="@{/bets/winner/}" method="post">
 			<fieldset>
-				<h2 class="text-center p-3">Kto twoim zdaniem podniesie puchar?</h2>
+				<h2 class="text-center p-3">Kto podniesie puchar?</h2>
 				<div id="notChosenTeamAlert" class="alert alert-danger text-center"
 					role="alert">Najpierw wybierz zwycięzce!</div>
 				<div class="list-group">
