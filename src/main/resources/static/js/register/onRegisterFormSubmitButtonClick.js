@@ -111,6 +111,6 @@ var onRegisterFormSubmitButtonClick = function() {
 		var errorAlertElement = document.getElementById("errorAlert");
 
 		errorAlertElement.textContent = message;
-		errorAlertElement.style.setProperty("visibility", "visible");
+		errorAlertElement.style.setProperty("display", "block");
 	}
 };

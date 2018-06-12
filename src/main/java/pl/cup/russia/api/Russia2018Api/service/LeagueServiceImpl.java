@@ -23,69 +23,71 @@ import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.LEAGUES;
 @Service
 public class LeagueServiceImpl implements LeagueService {
 
-    @Autowired
-    private FootballApiService apiService;
+	@Autowired
+	private FootballApiService apiService;
 
-    @Autowired
-    private LeagueRepository repository;
+	@Autowired
+	private LeagueRepository repository;
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
-    @Override
-    public void syncLeagues() {
-        List<ApiLeague> apiLeagues = apiService.getApiLeagues();
-        List<League> leagues = new ArrayList<>();
+	@Override
+	public void syncLeagues() {
+		List<ApiLeague> apiLeagues = apiService.getApiLeagues();
+		List<League> leagues = new ArrayList<>();
 
-        for (ApiLeague apiLeague : apiLeagues) {
-            League league = new League(apiLeague);
-            if (league.isGroupStage()) {
-                List<ApiStanding> apiStandings = apiService.getApiStandingsByLeagueId(league.getLeagueApiId());
-                apiStandings.stream().forEach(std -> league.getStandings().add(new Standing(std)));
-            }
+		for (ApiLeague apiLeague : apiLeagues) {
+			League league = new League(apiLeague);
+			if (league.isGroupStage()) {
+				List<ApiStanding> apiStandings = apiService.getApiStandingsByLeagueId(league.getLeagueApiId());
+				apiStandings.stream().forEach(std -> league.getStandings().add(new Standing(std)));
+			}
 
-            leagues.add(league);
-        }
+			leagues.add(league);
+		}
 
-        saveAll(leagues);
-    }
+		saveAll(leagues);
+	}
 
-    @Override
-    public List<League> selectLeagues() {
-        return repository.findAll();
-    }
+	@Override
+	public List<League> selectLeagues() {
+		return repository.findAll();
+	}
 
-    @Override
-    public List<String> selectAllTeams() {
-        return mongoTemplate.getCollection(LEAGUES.getValue())
-                .distinct("standings.teamName", String.class).into(new ArrayList<>());
-    }
+	@Override
+	public List<String> selectAllTeams() {
+		List<String> allTeams = mongoTemplate.getCollection(LEAGUES.getValue())
+				.distinct("standings.teamName", String.class).into(new ArrayList<>());
+		allTeams.sort((o1, o2) -> o1.compareTo(o2));
 
-    @Override
-    public List<String> selectTeamsByLeagueId(Integer leagueId) {
-        return mongoTemplate.getCollection(LEAGUES.getValue())
-                .distinct("standings.teamName", eq("leagueApiId", leagueId), String.class)
-                .into(new ArrayList<>());
-    }
+		return allTeams;
+	}
 
-    @Override
-    public Map<String, List<String>> selectTeamsGroupedByLeagueName() {
-        List<League> leagues = selectLeagues();
-        Map<String, List<String>> teamsByLeagueName = new HashMap<>();
+	@Override
+	public List<String> selectTeamsByLeagueId(Integer leagueId) {
+		return mongoTemplate.getCollection(LEAGUES.getValue())
+				.distinct("standings.teamName", eq("leagueApiId", leagueId), String.class).into(new ArrayList<>());
+	}
 
-        for (League league : leagues) {
-            String leagueName = league.getName();
-            List<String> teams = league.getStandings().stream().map(std -> std.getTeamName()).collect(toList());
+	@Override
+	public Map<String, List<String>> selectTeamsGroupedByLeagueName() {
+		List<League> leagues = selectLeagues();
+		Map<String, List<String>> teamsByLeagueName = new HashMap<>();
 
-            teamsByLeagueName.put(leagueName, teams);
-        }
+		for (League league : leagues) {
+			String leagueName = league.getName();
+			List<String> teams = league.getStandings().stream().map(std -> std.getTeamName()).collect(toList());
 
-        return teamsByLeagueName;
-    }
+			teamsByLeagueName.put(leagueName, teams);
+		}
 
-    @Override
-    public List<League> saveAll(List<League> leagues) {
-        return repository.saveAll(leagues);
-    }
+		return teamsByLeagueName;
+	}
+
+	@Override
+	public List<League> saveAll(List<League> leagues) {
+		return repository.saveAll(leagues);
+	}
 
 }

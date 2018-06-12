@@ -32,6 +32,10 @@
 	background-color: rgba(0, 180, 0, 0.2) !important;
 }
 
+.list-group-item>div, .list-group-item>img {
+	pointer-events: none;
+}
+
 #notChosenTeamAlert {
 	display: none;
 }

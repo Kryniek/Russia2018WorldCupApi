@@ -4,7 +4,11 @@ var onForwardButtonClick = function() {
 				.getItem(WORLD_CUP_WINNER_CHOSEN_TEAM_LOCAL_STORAGE);
 
 		if (chosenTeam) {
-			// send request to server and redirect to next page
+			let teamNameFromLocalStorage = window.localStorage
+					.getItem(WORLD_CUP_WINNER_CHOSEN_TEAM_LOCAL_STORAGE);
+
+			document.worldCupWinnerForm.action += teamNameFromLocalStorage;
+			document.worldCupWinnerForm.submit();
 
 			window.localStorage
 					.removeItem(WORLD_CUP_WINNER_CHOSEN_TEAM_LOCAL_STORAGE);
