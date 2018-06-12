@@ -15,8 +15,8 @@ import static java.time.LocalDate.now;
 @RequestMapping("/")
 public class MainController {
 
-    @Autowired
-    private LeagueService leagueService;
+	@Autowired
+	private LeagueService leagueService;
 
 	@Autowired
 	private MatchService matchService;
@@ -41,13 +41,13 @@ public class MainController {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.WORLD_CUP_WINNER.getValue());
 		mav.addObject("teams", leagueService.selectAllTeams());
 
-	    return mav;
+		return mav;
 	}
 
 	@GetMapping("/groups-winners")
 	public ModelAndView groupsWinners() {
-        ModelAndView mav = new ModelAndView(StaticHtmlResource.GROUPS_WINNERS.getValue());
-        mav.addObject("teamsByGroupName", leagueService.selectTeamsGroupedByLeagueName());
+		ModelAndView mav = new ModelAndView(StaticHtmlResource.GROUPS_WINNERS.getValue());
+		mav.addObject("teamsByGroupName", leagueService.selectTeamsGroupedByLeagueName());
 
 		return mav;
 	}
@@ -58,6 +58,11 @@ public class MainController {
 		mav.addObject("matches", matchService.selectAll());
 
 		return mav;
+	}
+
+	@GetMapping("/points")
+	public String points() {
+		return StaticHtmlResource.POINTS.getValue();
 	}
 
 	private ModelAndView getHomeView() {

@@ -26,7 +26,7 @@
 	<div th:if="${errorMsg}">
 		<div id="errorAlert"
 			class="alert alert-danger alert-dismissible fade show" role="alert">
-			Wystąpił bład
+			Użytkownik już istnieje.
 			<button
 				onclick="document.getElementById('errorAlert').hidden = true;"
 				type="button" class="close" aria-label="Close">
@@ -41,10 +41,6 @@
 					<div class="row text-center dateRow">
 						<div class="col-11 mt-3 mb-1">Dzisiejsze spotkania</div>
 					</div>
-					<th:block th:each="match : ${todayMatches}">
-						<div class="font-weight-bold" th:text="${match.hometeamName}"></div>
-						<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
-					</th:block>
 					<th:block th:each="match : ${todayMatches}">
 						<div class="row text-center pt-3">
 							<div class="col-2 matchTime">
@@ -84,21 +80,21 @@
 						class="btn btn-success btn-lg btn-block">
 						Wyloguj <i class="fas fa-sign-out-alt"></i>
 					</button>
-					<button disabled onclick="location.href+='world-cup-winner'" type="button"
-						class="btn btn-outline-success btn-lg btn-block">
+					<button disabled onclick="location.href+='world-cup-winner'"
+						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Kto zwycięży <i class="fas fa-chess-king"></i>
 					</button>
-					<button disabled onclick="location.href+='world-cup-winner'" type="button"
-						class="btn btn-outline-success btn-lg btn-block">
+					<button disabled onclick="location.href+='world-cup-winner'"
+						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
 					</button>
 					<button disabled type="button"
 						class="btn btn-outline-success btn-lg btn-block">
 						Wszystkie mecze <i class="far fa-list-alt"></i>
 					</button>
-					<button disabled type="button"
+					<button type="button" onclick="location.href+='points'"
 						class="btn btn-outline-success btn-lg btn-block">
-						Puntkacja <i class="fas fa-signal"></i>
+						Punktacja <i class="fas fa-signal"></i>
 					</button>
 					<button disabled type="button"
 						class="btn btn-outline-success btn-lg btn-block">
@@ -111,12 +107,12 @@
 				</div>
 
 				<div sec:authorize="isAnonymous()">
-					<button onclick="location.href=location.origin+'/login'" type="button"
-						class="btn btn-success btn-lg btn-block">
+					<button onclick="location.href=location.origin+'/login'"
+						type="button" class="btn btn-success btn-lg btn-block">
 						Logowanie <i class="fas fa-sign-in-alt"></i>
 					</button>
-					<button onclick="location.href=location.origin+'/register'" type="button"
-						class="btn btn-success btn-lg btn-block">
+					<button onclick="location.href=location.origin+'/register'"
+						type="button" class="btn btn-success btn-lg btn-block">
 						Rejestracja <i class="fas fa-user-plus"></i>
 					</button>
 				</div>
