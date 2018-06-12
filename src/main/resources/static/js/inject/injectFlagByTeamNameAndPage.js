@@ -3,7 +3,6 @@ var injectFlagByTeamNameAndPage = function() {
 		var htmlPageName = window.location.pathname.split("/").pop();
 
 		replaceUKTeamsNamesToPolishTeamsNames(htmlPageName, getPolishTeamName);
-		debugger;
 
 		if (htmlPageName === "" || htmlPageName === "users") {
 			addFlagsSrcToHomePage();
