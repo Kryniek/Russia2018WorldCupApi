@@ -3,31 +3,36 @@ var injectFlagByTeamNameAndPage = function() {
 		var htmlPageName = window.location.pathname.split("/").pop();
 
 		replaceUKTeamsNamesToPolishTeamsNames(htmlPageName, getPolishTeamName);
-		
+
 		if (htmlPageName === "home") {
 			addFlagsSrcToHomePage();
 		}
 	})();
-	
-	//TODO REMOVE
-	function replaceUKTeamsNamesToPolishTeamsNames(htmlPageName, getPolishTeamNameFunc){
+
+	// TODO REMOVE
+	function replaceUKTeamsNamesToPolishTeamsNames(htmlPageName,
+			getPolishTeamNameFunc) {
 		if (htmlPageName === "home") {
 			let figureElements = document.getElementsByTagName("figure");
-			
-			for(let figureElementIndex in figureElements){
+
+			for ( let figureElementIndex in figureElements) {
 				let figureElement = figureElements[figureElementIndex];
 				let isHtmlElement = figureElement instanceof HTMLElement;
-				
-				if(isHtmlElement){
+
+				if (isHtmlElement) {
 					let figureElementChildren = figureElement.children;
-					
-					for(let figureElementChildIndex in figureElementChildren){
+
+					for ( let figureElementChildIndex in figureElementChildren) {
 						let figureElementChild = figureElementChildren[figureElementChildIndex];
 						let isHtmlElement = figureElementChild instanceof HTMLElement;
-						
-						if(isHtmlElement){
-							if(figureElementChild.tagName === "P"){
-								figureElementChild.textContent = getPolishTeamNameFunc(figureElementChild.textContent);
+
+						if (isHtmlElement) {
+							if (figureElementChild.tagName === "P") {
+								let polishTeamName = getPolishTeamNameFunc(figureElementChild.textContent);
+
+								if (polishTeamName) {
+									figureElementChild.textContent = polishTeamName;
+								}
 							}
 						}
 					}
@@ -35,36 +40,40 @@ var injectFlagByTeamNameAndPage = function() {
 			}
 		}
 	};
-	
-	function addFlagsSrcToHomePage(){
+
+	function addFlagsSrcToHomePage() {
 		let figureElements = document.getElementsByTagName("figure");
-		
-		for(let figureElementIndex in figureElements){
+
+		for ( let figureElementIndex in figureElements) {
 			let figureElement = figureElements[figureElementIndex];
 			let isHtmlElement = figureElement instanceof HTMLElement;
-			
-			if(isHtmlElement){
+
+			if (isHtmlElement) {
 				let figureElementChildren = figureElement.children;
 				let teamName = null;
-				
-				for(let figureElementChildIndex in figureElementChildren){
+
+				for ( let figureElementChildIndex in figureElementChildren) {
 					let figureElementChild = figureElementChildren[figureElementChildIndex];
 					let isHtmlElement = figureElementChild instanceof HTMLElement;
-					
-					if(isHtmlElement){
-						if(figureElementChild.tagName === "P"){
+
+					if (isHtmlElement) {
+						if (figureElementChild.tagName === "P") {
 							teamName = figureElementChild.textContent;
 						}
 					}
 				}
-				
-				for(let figureElementChildIndex in figureElementChildren){
+
+				for ( let figureElementChildIndex in figureElementChildren) {
 					let figureElementChild = figureElementChildren[figureElementChildIndex];
 					let isHtmlElement = figureElementChild instanceof HTMLElement;
-					
-					if(isHtmlElement){
-						if(figureElementChild.tagName === "IMG"){
-							figureElementChild.src = getFlagByTeamName(teamName);
+
+					if (isHtmlElement) {
+						if (figureElementChild.tagName === "IMG") {
+							let flag = getFlagByTeamName(teamName);
+
+							if (flag) {
+								figureElementChild.src = flag;
+							}
 						}
 					}
 				}
@@ -86,14 +95,17 @@ var injectFlagByTeamNameAndPage = function() {
 				break;
 			}
 		}
+		
+		if(!flagSrc){
+			return null;
+		}
 
 		return defaultPreSrc + flagSrc;
 	};
-	
-	//TODO REMOVE
+
+	// TODO REMOVE
 	function getPolishTeamName(team) {
 		var polishTeamName = null;
-		var flagSrc = null;
 
 		var defaultPreSrc = "../../../img/flag/";
 		var flagsByTeamNamesJSON = flagsByTeamNames();
@@ -103,7 +115,6 @@ var injectFlagByTeamNameAndPage = function() {
 
 			if (flagByTeamName.team === team) {
 				polishTeamName = flagByTeamName.polishTeamName;
-				flagSrc = flagByTeamName.flagSrc;
 				break;
 			}
 		}
