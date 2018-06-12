@@ -4,7 +4,7 @@ var injectFlagByTeamNameAndPage = function() {
 
 		replaceUKTeamsNamesToPolishTeamsNames(htmlPageName, getPolishTeamName);
 
-		if (htmlPageName === "") {
+		if (htmlPageName === "" || htmlPageName === "users") {
 			addFlagsSrcToHomePage();
 		}
 	})();
@@ -12,7 +12,7 @@ var injectFlagByTeamNameAndPage = function() {
 	// TODO REMOVE
 	function replaceUKTeamsNamesToPolishTeamsNames(htmlPageName,
 			getPolishTeamNameFunc) {
-		if (htmlPageName === "") {
+		if (htmlPageName === "" || htmlPageName === "users") {
 			let figureElements = document.getElementsByTagName("figure");
 
 			for ( let figureElementIndex in figureElements) {
@@ -27,7 +27,7 @@ var injectFlagByTeamNameAndPage = function() {
 						let isHtmlElement = figureElementChild instanceof HTMLElement;
 
 						if (isHtmlElement) {
-							if (figureElementChild.tagName === "P") {
+							if (figureElementChild.tagName === "DIV") {
 								let polishTeamName = getPolishTeamNameFunc(figureElementChild.textContent);
 
 								if (polishTeamName) {
@@ -57,7 +57,7 @@ var injectFlagByTeamNameAndPage = function() {
 					let isHtmlElement = figureElementChild instanceof HTMLElement;
 
 					if (isHtmlElement) {
-						if (figureElementChild.tagName === "P") {
+						if (figureElementChild.tagName === "DIV") {
 							teamName = figureElementChild.textContent;
 						}
 					}
@@ -226,7 +226,7 @@ var injectFlagByTeamNameAndPage = function() {
 		}, {
 			team : "England",
 			flagSrc : "England.jpg",
-			polishTeamName : "Wielka Brytania"
+			polishTeamName : "Anglia"
 		}, {
 			team : "Panama",
 			flagSrc : "Panama.jpg",

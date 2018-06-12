@@ -15,7 +15,7 @@
 	<div th:if="${regSuccess}">
 		<div id="successAlert"
 			class="alert alert-success alert-dismissible fade show" role="alert">
-			Pomyślnie zarejestrowano
+			Pomyślnie zarejestrowano. Teraz można się zalogować.
 			<button
 				onclick="document.getElementById('successAlert').hidden = true;"
 				type="button" class="close" aria-label="Close">
@@ -41,81 +41,35 @@
 					<div class="row text-center dateRow">
 						<div class="col-11 mt-3 mb-1">Dzisiejsze spotkania</div>
 					</div>
-                    <th:block th:each="match : ${todayMatches}">
-                        <tr>
-							<td th:text="${match.time}"/>
-                            <td th:text="${match.hometeamName}"/>
-                            <td th:text="${match.awayteamName}"/>
-                        </tr>
-                    </th:block>
-					<div class="row text-center pt-3">
-						<div class="col-2 matchTime">12:00</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid" />
-								<p class="font-weight-bold">England</p>
-							</figure>
+					<th:block th:each="match : ${todayMatches}">
+						<div class="row text-center pt-3">
+							<div class="col-2 matchTime">
+								<div th:text="${match.time}"></div>
+							</div>
+							<div class="col-3">
+								<figure>
+									<img class="img-fluid" />
+									<div class="font-weight-bold" th:text="${match.hometeamName}"></div>
+								</figure>
+							</div>
+							<div class="result col-1">
+								<div th:if="${match.hometeamScore != null}"
+									th:text="${match.hometeamScore}"></div>
+								<div th:unless="${match.hometeamScore}">-</div>
+								:
+								<div th:if="${match.awayteamScore != null}"
+									th:text="${match.awayteamScore}"></div>
+								<div th:unless="${match.awayteamScore}">-</div>
+							</div>
+							<div class="col-3">
+								<figure>
+									<img class="img-fluid">
+									<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
+								</figure>
+							</div>
+							<div class="col-3"></div>
 						</div>
-						<div class="result col-1">-:-</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid">
-								<p class="font-weight-bold">Saudi Arabia</p>
-							</figure>
-						</div>
-						<div class="col-3"></div>
-					</div>
-					<div class="row text-center pt-3">
-						<div class="col-2 matchTime">12:00</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid" />
-								<p class="font-weight-bold">Russia</p>
-							</figure>
-						</div>
-						<div class="result col-1">-:-</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid" />
-								<p class="font-weight-bold">Spain</p>
-							</figure>
-						</div>
-						<div class="col-3"></div>
-					</div>
-					<div class="row text-center pt-3">
-						<div class="col-2 matchTime">12:00</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid" />
-								<p class="font-weight-bold">Mexico</p>
-							</figure>
-						</div>
-						<div class="result col-1">-:-</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid" />
-								<p class="font-weight-bold">South Korea</p>
-							</figure>
-						</div>
-						<div class="col-3"></div>
-					</div>
-					<div class="row text-center pt-3">
-						<div class="col-2 matchTime">12:00</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid" />
-								<p class="font-weight-bold">Belgium</p>
-							</figure>
-						</div>
-						<div class="result col-1">-:-</div>
-						<div class="col-3">
-							<figure>
-								<img class="img-fluid" />
-								<p class="font-weight-bold">Poland</p>
-							</figure>
-						</div>
-						<div class="col-3"></div>
-					</div>
+					</th:block>
 				</div>
 			</div>
 			<div class="col-1"></div>
@@ -126,11 +80,11 @@
 						class="btn btn-success btn-lg btn-block">
 						Wyloguj <i class="fas fa-sign-out-alt"></i>
 					</button>
-					<button onclick="location.href+='world-cup-winner'" type="button"
+					<button disabled onclick="location.href+='world-cup-winner'" type="button"
 						class="btn btn-outline-success btn-lg btn-block">
 						Kto zwycięży <i class="fas fa-chess-king"></i>
 					</button>
-					<button onclick="location.href+='world-cup-winner'" type="button"
+					<button disabled onclick="location.href+='world-cup-winner'" type="button"
 						class="btn btn-outline-success btn-lg btn-block">
 						Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
 					</button>
@@ -153,11 +107,11 @@
 				</div>
 
 				<div sec:authorize="isAnonymous()">
-					<button onclick="location.href+='login'" type="button"
+					<button onclick="location.href=location.origin+'/login'" type="button"
 						class="btn btn-success btn-lg btn-block">
 						Logowanie <i class="fas fa-sign-in-alt"></i>
 					</button>
-					<button onclick="location.href+='register'" type="button"
+					<button onclick="location.href=location.origin+'/register'" type="button"
 						class="btn btn-success btn-lg btn-block">
 						Rejestracja <i class="fas fa-user-plus"></i>
 					</button>
