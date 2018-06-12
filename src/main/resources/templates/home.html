@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4"
-	  xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security4"
+	xmlns="http://www.w3.org/1999/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="../../img/favicon.ico" />
@@ -11,6 +12,28 @@
 <link rel="stylesheet" href="../../css/home.css" />
 </head>
 <body>
+	<div th:if="${regSuccess}">
+		<div id="successAlert"
+			class="alert alert-success alert-dismissible fade show" role="alert">
+			Pomyślnie zarejestrowano
+			<button
+				onclick="document.getElementById('successAlert').hidden = true;"
+				type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+	<div th:if="${errorMsg}">
+		<div id="errorAlert"
+			class="alert alert-danger alert-dismissible fade show" role="alert">
+			Wystąpił bład
+			<button
+				onclick="document.getElementById('errorAlert').hidden = true;"
+				type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
 	<div class="container fixed-center position-fixed">
 		<div class="row">
 			<div id="leftPanel" class="col-8 rounded p-3 pb-3">
@@ -29,17 +52,15 @@
 						<div class="col-2 matchTime">12:00</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-								<p class="font-weight-bold">Szwajcaria</p>
+								<img class="img-fluid" />
+								<p class="font-weight-bold">England</p>
 							</figure>
 						</div>
 						<div class="result col-1">-:-</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/240px-Flag_of_Germany.svg.png">
-								<p class="font-weight-bold">Korea Południowa</p>
+								<img class="img-fluid">
+								<p class="font-weight-bold">Saudi Arabia</p>
 							</figure>
 						</div>
 						<div class="col-3"></div>
@@ -48,17 +69,15 @@
 						<div class="col-2 matchTime">12:00</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-								<p class="font-weight-bold">Szwajcaria</p>
+								<img class="img-fluid" />
+								<p class="font-weight-bold">Russia</p>
 							</figure>
 						</div>
 						<div class="result col-1">-:-</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/240px-Flag_of_Germany.svg.png">
-								<p class="font-weight-bold">Korea Południowa</p>
+								<img class="img-fluid" />
+								<p class="font-weight-bold">Spain</p>
 							</figure>
 						</div>
 						<div class="col-3"></div>
@@ -67,17 +86,15 @@
 						<div class="col-2 matchTime">12:00</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-								<p class="font-weight-bold">Szwajcaria</p>
+								<img class="img-fluid" />
+								<p class="font-weight-bold">Mexico</p>
 							</figure>
 						</div>
 						<div class="result col-1">-:-</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/240px-Flag_of_Germany.svg.png">
-								<p class="font-weight-bold">Korea Południowa</p>
+								<img class="img-fluid" />
+								<p class="font-weight-bold">South Korea</p>
 							</figure>
 						</div>
 						<div class="col-3"></div>
@@ -86,17 +103,15 @@
 						<div class="col-2 matchTime">12:00</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-								<p class="font-weight-bold">Szwajcaria</p>
+								<img class="img-fluid" />
+								<p class="font-weight-bold">Belgium</p>
 							</figure>
 						</div>
 						<div class="result col-1">-:-</div>
 						<div class="col-3">
 							<figure>
-								<img class="img-fluid"
-									src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/240px-Flag_of_Germany.svg.png">
-								<p class="font-weight-bold">Korea Południowa</p>
+								<img class="img-fluid" />
+								<p class="font-weight-bold">Poland</p>
 							</figure>
 						</div>
 						<div class="col-3"></div>
@@ -105,32 +120,56 @@
 			</div>
 			<div class="col-1"></div>
 			<div id="rightPanel" class="col-3 rounded p-3 pb-3">
+
 				<div sec:authorize="isAuthenticated()">
-					<!--  https://stackoverflow.com/questions/22557741/logout-link-with-spring-and-thymeleaf -->
-					<button style="height: 15%;" type="button"
+					<button onclick="document.logoutForm.submit()" type="button"
 						class="btn btn-success btn-lg btn-block">
 						Wyloguj <i class="fas fa-sign-out-alt"></i>
 					</button>
-
-				<a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
-				<form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-					<input hidden type="submit" value="Sign Out"/>
-				</form>
+					<button onclick="location.href+='world-cup-winner'" type="button"
+						class="btn btn-outline-success btn-lg btn-block">
+						Kto zwycięży <i class="fas fa-chess-king"></i>
+					</button>
+					<button onclick="location.href+='world-cup-winner'" type="button"
+						class="btn btn-outline-success btn-lg btn-block">
+						Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
+					</button>
+					<button disabled type="button"
+						class="btn btn-outline-success btn-lg btn-block">
+						Wszystkie mecze <i class="far fa-list-alt"></i>
+					</button>
+					<button disabled type="button"
+						class="btn btn-outline-success btn-lg btn-block">
+						Puntkacja <i class="fas fa-signal"></i>
+					</button>
+					<button disabled type="button"
+						class="btn btn-outline-success btn-lg btn-block">
+						Ranking <i class="fas fa-trophy"></i>
+					</button>
+					<form name="logoutForm" th:action="@{/logout}" method="post"
+						th:hidden="true">
+						<input hidden=true type="submit" value="Sign Out" />
+					</form>
 				</div>
 
 				<div sec:authorize="isAnonymous()">
-					<a href="/login">Login</a> </br>
-					<a href="/register">Register</a>
+					<button onclick="location.href+='login'" type="button"
+						class="btn btn-success btn-lg btn-block">
+						Logowanie <i class="fas fa-sign-in-alt"></i>
+					</button>
+					<button onclick="location.href+='register'" type="button"
+						class="btn btn-success btn-lg btn-block">
+						Rejestracja <i class="fas fa-user-plus"></i>
+					</button>
 				</div>
-
-				<div th:text="${regSuccess}" />
-				<div th:text="${errorMsg}" />
 			</div>
 		</div>
 	</div>
 
 	<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
+	<script src="../../js/events/homeEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
 </body>
 </html>

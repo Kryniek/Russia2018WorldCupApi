@@ -60,11 +60,6 @@ public class MainController {
 		return mav;
 	}
 
-	@GetMapping("/home")
-	public ModelAndView home() {
-		return getHomeView();
-	}
-
 	private ModelAndView getHomeView() {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.HOME.getValue());
 		mav.addObject("todayMatches", matchService.selectMatchesByDate(now()));
