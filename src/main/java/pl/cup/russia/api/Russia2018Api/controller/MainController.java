@@ -5,15 +5,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
+import pl.cup.russia.api.Russia2018Api.enums.BetType;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
+import pl.cup.russia.api.Russia2018Api.util.BetValidator;
 
 import static java.time.LocalDate.now;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinner;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+    @Autowired
+    private BetService betService;
 
 	@Autowired
 	private LeagueService leagueService;
@@ -43,6 +51,8 @@ public class MainController {
 	public ModelAndView worldCupWinner() {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.WORLD_CUP_WINNER.getValue());
 		mav.addObject("teams", leagueService.selectAllTeams());
+		mav.addObject("userBet", betService.selectUserBetByType(WORLD_CUP_WINNER));
+		mav.addObject("canYouBet", canBetWorldCupWinner());
 
 		return mav;
 	}

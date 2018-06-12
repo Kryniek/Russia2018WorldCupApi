@@ -2,7 +2,9 @@ package pl.cup.russia.api.Russia2018Api.enums;
 
 public enum DBCollections {
 
-    LEAGUES("leagues");
+    LEAGUES("leagues"),
+    MATCHES("matches"),
+    BETS("bets");
 
     private String value;
 

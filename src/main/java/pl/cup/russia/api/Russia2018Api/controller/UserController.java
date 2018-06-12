@@ -3,6 +3,7 @@ package pl.cup.russia.api.Russia2018Api.controller;
 import static java.time.LocalDate.now;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,7 +13,7 @@ import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 import pl.cup.russia.api.Russia2018Api.model.security.User;
 import pl.cup.russia.api.Russia2018Api.util.exception.security.UserAlreadyExistAuthenticationException;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UserController {
 
