@@ -13,4 +13,6 @@ public interface LeagueService {
     List<String> selectAllTeams();
 
     List<String> selectTeamsByLeagueId(Integer leagueId);
+
+    List<League> saveAll(List<League> leagues);
 }
