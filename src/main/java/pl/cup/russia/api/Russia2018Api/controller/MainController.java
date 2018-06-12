@@ -4,16 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.servlet.ModelAndView;
+import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 
-import java.time.LocalDate;
+import static java.time.LocalDate.now;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+    @Autowired
+    private LeagueService leagueService;
 
 	@Autowired
 	private MatchService matchService;
@@ -34,13 +37,19 @@ public class MainController {
 	}
 
 	@GetMapping("/world-cup-winner")
-	public String worldCupWinner() {
-		return StaticHtmlResource.WORLD_CUP_WINNER.getValue();
+	public ModelAndView worldCupWinner() {
+		ModelAndView mav = new ModelAndView(StaticHtmlResource.WORLD_CUP_WINNER.getValue());
+		mav.addObject("teams", leagueService.selectAllTeams());
+
+	    return mav;
 	}
 
 	@GetMapping("/groups-winners")
-	public String groupsWinners() {
-		return StaticHtmlResource.GROUPS_WINNERS.getValue();
+	public ModelAndView groupsWinners() {
+        ModelAndView mav = new ModelAndView(StaticHtmlResource.GROUPS_WINNERS.getValue());
+        mav.addObject("teamsByGroupName", leagueService.selectTeamsGroupedByLeagueName());
+
+		return mav;
 	}
 
 	@GetMapping("/matches")
@@ -53,7 +62,7 @@ public class MainController {
 
 	private ModelAndView getHomeView() {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.HOME.getValue());
-		mav.addObject("todayMatches", matchService.selectMatchesByDate(LocalDate.now()));
+		mav.addObject("todayMatches", matchService.selectMatchesByDate(now()));
 
 		return mav;
 	}
