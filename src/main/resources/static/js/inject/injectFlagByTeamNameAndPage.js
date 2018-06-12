@@ -41,6 +41,31 @@ var injectFlagByTeamNameAndPage = function() {
 				}
 			}
 		} else if (htmlPageName === "world-cup-winner") {
+			let teamButtons = document.getElementsByClassName("teamButton");
+
+			for ( let teamButtonIndex in teamButtons) {
+				let teamButton = teamButtons[teamButtonIndex];
+				let isHtmlElement = teamButton instanceof HTMLElement;
+
+				if (isHtmlElement) {
+					let teamButtonChildren = teamButton.children;
+
+					for ( let teamButtonChildIndex in teamButtonChildren) {
+						let teamButtonElementChild = teamButtonChildren[teamButtonChildIndex];
+						let isHtmlElement = teamButtonElementChild instanceof HTMLElement;
+
+						if (isHtmlElement) {
+							if (teamButtonElementChild.tagName === "DIV") {
+								let polishTeamName = getPolishTeamNameFunc(teamButtonElementChild.textContent);
+
+								if (polishTeamName) {
+									teamButtonElementChild.textContent = polishTeamName;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -85,7 +110,43 @@ var injectFlagByTeamNameAndPage = function() {
 	}
 
 	function addFlagsSrcToWorldCupWinnerPage() {
+		let teamButtons = document.getElementsByClassName("teamButton");
 
+		for ( let teamButtonIndex in teamButtons) {
+			let teamButton = teamButtons[teamButtonIndex];
+			let isHtmlElement = teamButton instanceof HTMLElement;
+
+			if (isHtmlElement) {
+				let teamButtonChildren = teamButton.children;
+				let teamName = null;
+
+				for ( let teamButtonChildIndex in teamButtonChildren) {
+					let teamButtonElementChild = teamButtonChildren[teamButtonChildIndex];
+					let isHtmlElement = teamButtonElementChild instanceof HTMLElement;
+
+					if (isHtmlElement) {
+						if (teamButtonElementChild.tagName === "DIV") {
+							teamName = teamButtonElementChild.textContent;
+						}
+					}
+				}
+
+				for ( let teamButtonChildIndex in teamButtonChildren) {
+					let teamButtonElementChild = teamButtonChildren[teamButtonChildIndex];
+					let isHtmlElement = teamButtonElementChild instanceof HTMLElement;
+
+					if (isHtmlElement) {
+						if (teamButtonElementChild.tagName === "IMG") {
+							let flag = getFlagByTeamName(teamName);
+
+							if (flag) {
+								teamButtonElementChild.src = flag;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	function getFlagByTeamName(team) {

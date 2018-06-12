@@ -21,7 +21,7 @@ public class MainController {
 	@Autowired
 	private MatchService matchService;
 
-	@GetMapping()
+	@GetMapping
 	public ModelAndView base() {
 		return getHomeView();
 	}
