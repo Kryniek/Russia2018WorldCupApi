@@ -29,7 +29,7 @@ public class MainController {
 	@Autowired
 	private MatchService matchService;
 
-	@GetMapping()
+	@GetMapping
 	public ModelAndView base() {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.HOME.getValue());
 		mav.addObject("todayMatches", matchService.selectMatchesByDate(now()));

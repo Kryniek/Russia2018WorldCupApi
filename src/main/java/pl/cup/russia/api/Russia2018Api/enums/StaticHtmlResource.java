@@ -21,6 +21,24 @@ public enum StaticHtmlResource {
 		return value;
 	}
 
+	public String getKebabCasedRedirectValue() {
+		String redirect = "redirect:/";
+
+		if (HOME.equals(this)) {
+			return redirect;
+		}
+
+		if (WORLD_CUP_WINNER.equals(this)) {
+			return redirect.concat("world-cup-winner");
+		}
+
+		if (GROUPS_WINNERS.equals(this)) {
+			return redirect.concat("groups-winners");
+		}
+
+		return redirect.concat(this.value);
+	}
+
 	@Override
 	public String toString() {
 		return value;
