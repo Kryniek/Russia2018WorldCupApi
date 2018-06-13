@@ -61,6 +61,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.GROUPS_WINNERS.getValue());
 		mav.addObject("teamsByGroupName", leagueService.selectTeamsGroupedByLeagueName());
 		mav.addObject("userBets", betService.selectUserBetsByType(GROUP_STAGE_PROMOTION));
+		mav.addObject("canYouBet", canBetWorldCupWinnerAndGroupWinners());
 
 		return mav;
 	}
