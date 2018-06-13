@@ -1,6 +1,7 @@
 package pl.cup.russia.api.Russia2018Api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.cup.russia.api.Russia2018Api.dto.rest.Result;
 import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
+import pl.cup.russia.api.Russia2018Api.util.BetValidator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -89,6 +91,11 @@ public class Match {
         if (nonNull(this.hometeamPenaltyScore) && nonNull(this.awayteamPenaltyScore))
             return TRUE;
         return FALSE;
+    }
+
+    @JsonProperty(value = "canBetMatch")
+    public Boolean canBetMatch() {
+        return BetValidator.canBetMatch(this.date, this.time);
     }
 
     @JsonIgnore // TODO: ignore for now, jackson mapping to repair in this model
