@@ -96,14 +96,13 @@ public class BetServiceImpl implements BetService {
             for (BetValue value : betValues) {
                 Query query = new Query();
                 query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser())
-                        .and("value.groupName").is(value.getGroupName()));
+                        .and("value.groupName").regex(value.getGroupName()));
 
                 Update update = new Update();
                 update.set("value.firstPlace", value.getFirstPlace())
                         .set("value.secondPlace", value.getSecondPlace());
 
                 mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount();
-
             }
         }
 
