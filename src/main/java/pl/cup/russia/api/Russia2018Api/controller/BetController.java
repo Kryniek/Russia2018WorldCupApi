@@ -46,12 +46,12 @@ public class BetController {
 		return getWorldCupWinnerRedirectWithAttributes(redirectAttributes, DBOperation.UPDATED);
 	}
 
-	@PostMapping("/group")
+	@PostMapping("/groups")
 	public List<Bet> betGroupPromotion(@ModelAttribute("betValues") List<BetValue> betValues) {
 		return service.createGroupPromotionBets(betValues);
 	}
 
-	@PutMapping("/group")
+	@PutMapping("/groups")
 	public Integer updateBetGroupPromotion(@ModelAttribute("betValues") List<BetValue> betValues) {
 		return service.updateBetsByType(GROUP_STAGE_PROMOTION, betValues);
 	}
