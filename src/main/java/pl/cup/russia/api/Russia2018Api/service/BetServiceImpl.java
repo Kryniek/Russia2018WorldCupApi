@@ -77,6 +77,11 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
+    public List<Bet> selectUserBetsByType(BetType type) {
+        return repository.findBetsByTypeAndUsername(type.name(), getLoggedInUser());
+    }
+
+    @Override
     public Integer updateBetByType(BetType type, BetValue betValue) {
         if (WORLD_CUP_WINNER.equals(type)) {
             Query query = new Query();

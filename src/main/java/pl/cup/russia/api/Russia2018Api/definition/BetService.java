@@ -20,6 +20,8 @@ public interface BetService {
 
     Bet selectUserBetByType(BetType type);
 
+    List<Bet> selectUserBetsByType(BetType type);
+
     Integer updateBetByType(BetType type, BetValue betValue);
 
     Integer updateBetsByType(BetType type, List<BetValue> betValues);
