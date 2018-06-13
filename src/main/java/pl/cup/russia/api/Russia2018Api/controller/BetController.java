@@ -1,6 +1,7 @@
 package pl.cup.russia.api.Russia2018Api.controller;
 
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.MATCH_RESULT;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
 import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinnerAndGroupWinners;
 
@@ -60,6 +61,11 @@ public class BetController {
 	public Bet betMatchScore(@ModelAttribute("betValue") BetValue betValue) {
 		return service.createMatchScoreBet(betValue);
 	}
+
+	@PutMapping("/match")
+    public Integer updateBetMatchScore(@ModelAttribute("betValue") BetValue betValue) {
+        return service.updateBetByType(MATCH_RESULT, betValue);
+    }
 
 	private String getWorldCupWinnerRedirectWithAttributes(RedirectAttributes redirectAttributes,
 			DBOperation operation) {

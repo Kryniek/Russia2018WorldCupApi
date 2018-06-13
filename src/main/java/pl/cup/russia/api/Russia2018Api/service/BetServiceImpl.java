@@ -15,6 +15,7 @@ import pl.cup.russia.api.Russia2018Api.repository.BetRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Integer.valueOf;
 import static java.lang.Math.toIntExact;
 import static pl.cup.russia.api.Russia2018Api.enums.BetStatus.OPENED;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.*;
@@ -90,9 +91,17 @@ public class BetServiceImpl implements BetService {
             update.set("value.winner", betValue.getWinner());
 
             return toIntExact(mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount());
+        } else if (MATCH_RESULT.equals(type)) {
+            Query query = new Query();
+            query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser())
+                    .and("value.matchId").is(betValue.getMatchId()));
+            Update update = new Update();
+            update.set("value.hometeamScore", betValue.getHometeamScore()).set("value.awayteamScore", betValue.getAwayteamScore());
+
+            return toIntExact(mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount());
         }
 
-        return null;
+        return valueOf(0);
     }
 
     @Override
@@ -111,7 +120,7 @@ public class BetServiceImpl implements BetService {
             }
         }
 
-        return null;
+        return valueOf(0);
     }
 
 }
