@@ -14,6 +14,19 @@
 		type="button" class="btn btn-outline-success">
 		<i class="fas fa-arrow-left"></i>
 	</button>
+	<div th:if="${operation} != null">
+		<div id="successAlert"
+			class="alert alert-success alert-dismissible fade show float-right"
+			role="alert">
+			<p th:if="${operation} == INSERTED">Pomyślnie zapisano</p>
+			<p th:if="${operation} == UPDATED">Pomyślnie zaktualizowano</p>
+			<button
+				onclick="document.getElementById('successAlert').hidden = true;"
+				type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
 	<div
 		class="container fixed-center position-fixed shadow-lg p-3 mb-5 bg-white border border-success rounded">
 		<h2 class="text-center p-3">Kto podniesie puchar?</h2>
@@ -23,8 +36,9 @@
 			<img class="listGroupItemFlag float-left rounded" />
 			<div th:text="${userBet?.value?.winner}"></div>
 		</button>
-		<form th:if="${canYouBet} and ${userBet?.value?.winner} == null" id="worldCupWinnerForm"
-			name="worldCupWinnerForm" th:action="@{/bets/winner/}" th:method="post">
+		<form th:if="${canYouBet} and ${userBet?.value?.winner} == null"
+			id="worldCupWinnerForm" name="worldCupWinnerForm"
+			th:action="@{/bets/winner/}" th:method="post">
 			<fieldset>
 				<div id="notChosenTeamAlert" class="alert alert-danger text-center"
 					role="alert">Najpierw wybierz zwycięzce!</div>
@@ -38,12 +52,15 @@
 					</th:block>
 				</div>
 				<button th:if="${canYouBet}" id="forwardButton" type="button"
-					class="btn btn-success float-right mt-3">Dalej</button>
+					class="btn btn-success float-right mt-3">Wybierz</button>
+				<button onclick="location.href=location.origin" type="button"
+					class="btn btn-outline-success float-left mt-3">Wróć</button>
 				<input hidden=true type="submit" class="btn btn-success"></input>
 			</fieldset>
 		</form>
-		<form th:if="${canYouBet} and ${userBet?.value?.winner} != null" id="worldCupWinnerForm"
-			name="worldCupWinnerForm" th:action="@{/bets/winner/}" th:method="put">
+		<form th:if="${canYouBet} and ${userBet?.value?.winner} != null"
+			id="worldCupWinnerForm" name="worldCupWinnerForm"
+			th:action="@{/bets/winner/}" th:method="put">
 			<fieldset>
 				<div id="notChosenTeamAlert" class="alert alert-danger text-center"
 					role="alert">Najpierw wybierz zwycięzce!</div>
@@ -57,7 +74,9 @@
 					</th:block>
 				</div>
 				<button th:if="${canYouBet}" id="forwardButton" type="button"
-					class="btn btn-success float-right mt-3">Dalej</button>
+					class="btn btn-success float-right mt-3">Wybierz</button>
+				<button onclick="location.href=location.origin" type="button"
+					class="btn btn-outline-success float-left mt-3">Wróć</button>
 				<input hidden=true type="submit" class="btn btn-success"></input>
 			</fieldset>
 		</form>

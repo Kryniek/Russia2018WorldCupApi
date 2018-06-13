@@ -62,3 +62,16 @@
 	-moz-box-shadow: 0px 0px 5px white;
 	box-shadow: 0px 0px 5px white;
 }
+
+#successAlert{
+	z-index: 1;
+	
+	-webkit-box-shadow: 0px 0px 10px black;
+	-moz-box-shadow: 0px 0px 10px black;
+	box-shadow: 0px 0px 10px black;
+
+	width: 15%;
+	opacity: 0.95;
+	margin: 1%;
+	text-align: center;
+}
