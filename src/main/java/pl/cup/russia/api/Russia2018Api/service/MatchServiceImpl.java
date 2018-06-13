@@ -15,52 +15,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.translateMatchesCountryNamesToPolish;
 
 @Service
 public class MatchServiceImpl implements MatchService {
 
-    @Autowired
-    private FootballApiService apiService;
+	@Autowired
+	private FootballApiService apiService;
 
-    @Autowired
-    private LeagueService leagueService;
+	@Autowired
+	private LeagueService leagueService;
 
-    @Autowired
-    private MatchRepository repository;
+	@Autowired
+	private MatchRepository repository;
 
-    @Override
-    public void syncMatches() {
-        List<Match> matches = new ArrayList<>();
-        List<League> leagues = leagueService.selectLeagues();
+	@Override
+	public void syncMatches() {
+		List<Match> matches = new ArrayList<>();
+		List<League> leagues = leagueService.selectLeagues();
 
-        for (League league : leagues) {
-            List<Match> leagueMatches = convertApiEventsToMatches(apiService.getApiEventsByLeagueId(league.getLeagueApiId()));
-            List<Integer> leagueMatchesIds = leagueMatches.stream().map(match -> match.getMatchApiId()).collect(toList());
+		for (League league : leagues) {
+			List<Match> leagueMatches = convertApiEventsToMatches(
+					apiService.getApiEventsByLeagueId(league.getLeagueApiId()));
+			List<Integer> leagueMatchesIds = leagueMatches.stream().map(match -> match.getMatchApiId())
+					.collect(toList());
 
-            league.setMatchesId(leagueMatchesIds);
-            matches.addAll(leagueMatches);
-        }
+			league.setMatchesId(leagueMatchesIds);
+			matches.addAll(leagueMatches);
+		}
 
-        saveAll(matches);
-    }
+		saveAll(matches);
+	}
 
-    @Override
-    public List<Match> selectAll() {
-        return repository.findAll();
-    }
+	@Override
+	public List<Match> selectAll() {
+		return repository.findAll();
+	}
 
-    @Override
-    public List<Match> selectMatchesByDate(LocalDate date) {
-        return repository.findByDate(date);
-    }
+	@Override
+	public List<Match> selectMatchesByDate(LocalDate date) {
+		List<Match> matches = repository.findByDate(date);
 
-    @Override
-    public List<Match> saveAll(List<Match> matches) {
-        return repository.saveAll(matches);
-    }
+		translateMatchesCountryNamesToPolish(matches);
 
-    private List<Match> convertApiEventsToMatches(List<ApiEvent> apiEvents) {
-        return apiEvents.stream().map(evt -> new Match(evt)).collect(toList());
-    }
+		return matches;
+	}
+
+	@Override
+	public List<Match> saveAll(List<Match> matches) {
+		return repository.saveAll(matches);
+	}
+
+	private List<Match> convertApiEventsToMatches(List<ApiEvent> apiEvents) {
+		return apiEvents.stream().map(evt -> new Match(evt)).collect(toList());
+	}
 
 }
