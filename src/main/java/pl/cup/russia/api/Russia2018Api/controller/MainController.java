@@ -13,7 +13,7 @@ import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 import static java.time.LocalDate.now;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
-import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinner;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinnerAndGroupWinners;
 
 @Controller
 @RequestMapping("/")
@@ -51,7 +51,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.WORLD_CUP_WINNER.getValue());
 		mav.addObject("teams", leagueService.selectAllTeams());
 		mav.addObject("userBet", betService.selectUserBetByType(WORLD_CUP_WINNER));
-		mav.addObject("canYouBet", canBetWorldCupWinner());
+		mav.addObject("canYouBet", canBetWorldCupWinnerAndGroupWinners());
 
 		return mav;
 	}

@@ -2,7 +2,7 @@ package pl.cup.russia.api.Russia2018Api.controller;
 
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
-import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinner;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinnerAndGroupWinners;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class BetController {
 			DBOperation operation) {
 		redirectAttributes.addFlashAttribute("teams", leagueService.selectAllTeams());
 		redirectAttributes.addFlashAttribute("userBet", service.selectUserBetByType(WORLD_CUP_WINNER));
-		redirectAttributes.addFlashAttribute("canYouBet", canBetWorldCupWinner());
+		redirectAttributes.addFlashAttribute("canYouBet", canBetWorldCupWinnerAndGroupWinners());
 		redirectAttributes.addFlashAttribute("operation", operation.name());
 
 		return StaticHtmlResource.WORLD_CUP_WINNER.getKebabCasedRedirectValue();

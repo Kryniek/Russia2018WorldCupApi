@@ -9,10 +9,11 @@ import static java.time.LocalDateTime.of;
 
 public class BetValidator {
 
-    private static final LocalDateTime WORLD_CUP_START = of(2018, 06,14, 17, 0);
+    private static final LocalDateTime START_OF_SECOND_ROUND_OF_GROUP_STAGE =
+            of(2018, 06,19, 20, 0);
 
-    public static Boolean canBetWorldCupWinner() {
-        if (now().isBefore(WORLD_CUP_START))
+    public static Boolean canBetWorldCupWinnerAndGroupWinners() {
+        if (now().isBefore(START_OF_SECOND_ROUND_OF_GROUP_STAGE))
             return true;
 
         return false;
