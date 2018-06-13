@@ -28,8 +28,8 @@ var onRegisterFormSubmitButtonClick = function() {
 			return false;
 		}
 
-		if (loginInputText.length < 6) {
-			showErrorMessage("Login musi być dłuższy niż 5 znaków");
+		if (loginInputText.length < 5) {
+			showErrorMessage("Login musi być dłuższy niż 4 znaki");
 			return false;
 		}
 
