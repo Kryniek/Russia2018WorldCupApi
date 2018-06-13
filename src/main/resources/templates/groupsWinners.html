@@ -16,14 +16,20 @@
 		<i class="fas fa-arrow-left"></i>
 	</button>
 	<div class="container fixed-center position-fixed">
-		<form id="groupsWinnersForm"
+		<form id="groupsWinnersForm" name="groupsWinnersForm"
+			th:action="@{/bets/groups}" th:method="post"
 			class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
 			<fieldset>
 				<h2 class="text-center p-3">Które drużyny wyjdą z grup?</h2>
+				<div id="notAllTeamsSelectedAlert"
+					class="alert alert-danger text-center" role="alert">Nie
+					wszystkie miejsca zostaly wybrane!</div>
 				<div class="formRow form-row pb-1 mb-3">
 					<th:block th:each="teamsByGroupName : ${teamsByGroupName}">
 						<div class="form-row col-6">
 							<div class="col-6">
+								<p class="groupName" hidden=true
+									th:text="${teamsByGroupName.key}"></p>
 								<label class="float-right groupLabel">Grupa</label>
 								<div class="form-group">
 									<select class="form-control customSelect">
@@ -35,6 +41,8 @@
 								</div>
 							</div>
 							<div class="col-6">
+								<p class="groupName" hidden=true
+									th:text="${teamsByGroupName.key}"></p>
 								<label class="float-left groupLabel"
 									th:text="${#strings.replace(teamsByGroupName.key,'Group ','')}"></label>
 								<div class="form-group">
@@ -51,13 +59,17 @@
 				</div>
 				<button onclick="location.href=location.origin" type="button"
 					class="btn btn-outline-success float-left">Wróć</button>
-				<button type="submit" class="btn btn-success float-right">Wybierz</button>
+				<button id="forwardButton" type="button"
+					class="btn btn-success float-right">Wybierz</button>
 			</fieldset>
 		</form>
 	</div>
 
 	<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/groupsWinners/onForwardButtonClick.js"></script>
+	<script src="../../js/events/groupsWinnersEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
 </body>
 </html>

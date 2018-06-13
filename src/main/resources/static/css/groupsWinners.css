@@ -46,3 +46,7 @@ h2 {
 	border-bottom-width: 0.5px;
 	border-bottom-color: rgba(81, 81, 81, 0.5);
 }
+
+#notAllTeamsSelectedAlert{
+	display: none;
+}

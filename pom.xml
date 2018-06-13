@@ -30,6 +30,7 @@
 		<jackson-jsr310.version>2.9.5</jackson-jsr310.version>
 		<bootstrap.version>4.1.1</bootstrap.version>
 		<guava.version>25.1-jre</guava.version>
+		<jquery.version>3.3.1-1</jquery.version>
 	</properties>
 
 	<dependencies>
@@ -88,6 +89,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>${bootstrap.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>${jquery.version}</version>
 		</dependency>
 		<!-- THYMELEAF -->
 		<dependency>
