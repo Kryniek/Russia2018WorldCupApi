@@ -14,24 +14,49 @@
 		type="button" class="btn btn-outline-success">
 		<i class="fas fa-arrow-left"></i>
 	</button>
-	<div class="container fixed-center position-fixed">
-		<form id="worldCupWinnerForm" name="worldCupWinnerForm"
-			class="shadow-lg p-3 mb-5 bg-white border border-success rounded"
-			th:action="@{/bets/winner/}" method="post">
+	<div
+		class="container fixed-center position-fixed shadow-lg p-3 mb-5 bg-white border border-success rounded">
+		<h2 class="text-center p-3">Kto podniesie puchar?</h2>
+		<button th:if="${userBet?.value?.winner} != null" id="yourTeamButton"
+			type="button"
+			class="list-group-item list-group-item-action text-center mb-3 rounded">
+			<img class="listGroupItemFlag float-left rounded" />
+			<div th:text="${userBet?.value?.winner}"></div>
+		</button>
+		<form th:if="${canYouBet} and ${userBet?.value?.winner} == null" id="worldCupWinnerForm"
+			name="worldCupWinnerForm" th:action="@{/bets/winner/}" th:method="post">
 			<fieldset>
-				<h2 class="text-center p-3">Kto podniesie puchar?</h2>
 				<div id="notChosenTeamAlert" class="alert alert-danger text-center"
 					role="alert">Najpierw wybierz zwycięzce!</div>
 				<div class="list-group">
 					<th:block th:each="team : ${teams}">
 						<button type="button"
-							class="list-group-item list-group-item-action text-center teamButton">
+							class="list-group-item list-group-item-action text-center teamButton rounded">
 							<img class="listGroupItemFlag float-left rounded" />
 							<div th:text="${team}"></div>
 						</button>
 					</th:block>
 				</div>
-				<button id="forwardButton" type="button"
+				<button th:if="${canYouBet}" id="forwardButton" type="button"
+					class="btn btn-success float-right mt-3">Dalej</button>
+				<input hidden=true type="submit" class="btn btn-success"></input>
+			</fieldset>
+		</form>
+		<form th:if="${canYouBet} and ${userBet?.value?.winner} != null" id="worldCupWinnerForm"
+			name="worldCupWinnerForm" th:action="@{/bets/winner/}" th:method="put">
+			<fieldset>
+				<div id="notChosenTeamAlert" class="alert alert-danger text-center"
+					role="alert">Najpierw wybierz zwycięzce!</div>
+				<div class="list-group">
+					<th:block th:each="team : ${teams}">
+						<button type="button"
+							class="list-group-item list-group-item-action text-center teamButton rounded">
+							<img class="listGroupItemFlag float-left rounded" />
+							<div th:text="${team}"></div>
+						</button>
+					</th:block>
+				</div>
+				<button th:if="${canYouBet}" id="forwardButton" type="button"
 					class="btn btn-success float-right mt-3">Dalej</button>
 				<input hidden=true type="submit" class="btn btn-success"></input>
 			</fieldset>

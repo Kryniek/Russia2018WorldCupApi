@@ -8,9 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
-import pl.cup.russia.api.Russia2018Api.enums.BetType;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
-import pl.cup.russia.api.Russia2018Api.util.BetValidator;
 
 import static java.time.LocalDate.now;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;

@@ -62,7 +62,7 @@ public class LeagueServiceImpl implements LeagueService {
 		List<String> translatedTeams = getPolishCountryNames(allTeams);
 		translatedTeams.sort(Comparator.naturalOrder());
 
-		return translatedTeams;
+		return allTeams;
 	}
 
 	@Override
