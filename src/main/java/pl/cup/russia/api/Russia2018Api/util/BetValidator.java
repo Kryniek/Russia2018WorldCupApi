@@ -11,7 +11,7 @@ public class BetValidator {
 
     private static final LocalDateTime WORLD_CUP_START = of(2018, 06,14, 17, 0);
 
-    public static Boolean canBetWorldCupWinner() {
+    public static Boolean canBetWorldCupWinnerAndGroupsWinners() {
         if (now().isBefore(WORLD_CUP_START))
             return true;
 
