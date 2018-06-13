@@ -147,6 +147,39 @@ var injectFlagByTeamNameAndPage = function() {
 				}
 			}
 		}
+
+		let yourTeamButton = document.getElementById("yourTeamButton");
+
+		if (yourTeamButton) {
+			let yourTeamButtonChildren = yourTeamButton.children;
+			let teamName = null;
+
+			for ( let yourTeamButtonChildIndex in yourTeamButtonChildren) {
+				let yourTeamButtonChild = yourTeamButtonChildren[yourTeamButtonChildIndex];
+				let isHtmlElement = yourTeamButtonChild instanceof HTMLElement;
+
+				if (isHtmlElement) {
+					if (yourTeamButtonChild.tagName === "DIV") {
+						teamName = yourTeamButtonChild.textContent;
+					}
+				}
+			}
+
+			for ( let yourTeamButtonChildIndex in yourTeamButtonChildren) {
+				let yourTeamButtonChild = yourTeamButtonChildren[yourTeamButtonChildIndex];
+				let isHtmlElement = yourTeamButtonChild instanceof HTMLElement;
+
+				if (isHtmlElement) {
+					if (yourTeamButtonChild.tagName === "IMG") {
+						let flag = getFlagByTeamName(teamName);
+
+						if (flag) {
+							yourTeamButtonChild.src = flag;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	function getFlagByTeamName(team) {
@@ -246,7 +279,7 @@ var injectFlagByTeamNameAndPage = function() {
 		}, {
 			team : "Croatia",
 			flagSrc : "Croatia.jpg",
-			polishTeamName : "	Chorwacja"
+			polishTeamName : "Chorwacja"
 		}, {
 			team : "Iceland",
 			flagSrc : "Iceland.jpg",
