@@ -13,6 +13,7 @@ import pl.cup.russia.api.Russia2018Api.model.Bet;
 import java.util.List;
 
 import static java.time.LocalDate.now;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
 
 @Controller
@@ -40,9 +41,14 @@ public class BetController {
     }
 
     @PostMapping("/group")
-    public List<Bet> betGroupPromotion(@ModelAttribute("betValue") List<BetValue> betValues) {
+    public List<Bet> betGroupPromotion(@ModelAttribute("betValues") List<BetValue> betValues) {
         return service.createGroupPromotionBets(betValues);
     }
+
+    @PutMapping("/group")
+	public Integer updateBetGroupPromotion(@ModelAttribute("betValues") List<BetValue> betValues) {
+		return service.updateBetsByType(GROUP_STAGE_PROMOTION, betValues);
+	}
 
 	@PostMapping("/match")
 	public Bet betMatchScore(@ModelAttribute("betValue") BetValue betValue) {

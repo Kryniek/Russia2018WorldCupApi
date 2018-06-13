@@ -55,6 +55,7 @@ public class LeagueServiceImpl implements LeagueService {
 
 	@Override
 	public List<String> selectAllTeams() {
+		// TODO: narrow to groups
 		List<String> allTeams = mongoTemplate.getCollection(LEAGUES.getValue())
 				.distinct("standings.teamName", String.class).into(new ArrayList<>());
 
@@ -66,12 +67,14 @@ public class LeagueServiceImpl implements LeagueService {
 
 	@Override
 	public List<String> selectTeamsByLeagueId(Integer leagueId) {
+		// TODO: narrow to groups
 		return mongoTemplate.getCollection(LEAGUES.getValue())
 				.distinct("standings.teamName", eq("leagueApiId", leagueId), String.class).into(new ArrayList<>());
 	}
 
 	@Override
 	public Map<String, List<String>> selectTeamsGroupedByLeagueName() {
+		// TODO: narrow to groups
 		List<League> leagues = selectLeagues();
 		Map<String, List<String>> teamsByLeagueName = new LinkedHashMap<>();
 

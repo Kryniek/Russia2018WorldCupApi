@@ -90,4 +90,24 @@ public class BetServiceImpl implements BetService {
         return null;
     }
 
+    @Override
+    public Integer updateBetsByType(BetType type, List<BetValue> betValues) {
+        if (GROUP_STAGE_PROMOTION.equals(type)) {
+            for (BetValue value : betValues) {
+                Query query = new Query();
+                query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser())
+                        .and("value.groupName").is(value.getGroupName()));
+
+                Update update = new Update();
+                update.set("value.firstPlace", value.getFirstPlace())
+                        .set("value.secondPlace", value.getSecondPlace());
+
+                mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount();
+
+            }
+        }
+
+        return null;
+    }
+
 }
