@@ -10,15 +10,14 @@ import pl.cup.russia.api.Russia2018Api.external.api.model.ApiStanding;
 import pl.cup.russia.api.Russia2018Api.model.League;
 import pl.cup.russia.api.Russia2018Api.model.Standing;
 import pl.cup.russia.api.Russia2018Api.repository.LeagueRepository;
+import pl.cup.russia.api.Russia2018Api.util.TranslationUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 import static java.util.stream.Collectors.toList;
 import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.LEAGUES;
+import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.getPolishCountryNames;
 
 @Service
 public class LeagueServiceImpl implements LeagueService {
@@ -59,9 +58,11 @@ public class LeagueServiceImpl implements LeagueService {
 	public List<String> selectAllTeams() {
 		List<String> allTeams = mongoTemplate.getCollection(LEAGUES.getValue())
 				.distinct("standings.teamName", String.class).into(new ArrayList<>());
-		allTeams.sort((o1, o2) -> o1.compareTo(o2));
 
-		return allTeams;
+		List<String> translatedTeams = getPolishCountryNames(allTeams);
+		translatedTeams.sort(Comparator.naturalOrder());
+
+		return translatedTeams;
 	}
 
 	@Override
@@ -79,7 +80,10 @@ public class LeagueServiceImpl implements LeagueService {
 			String leagueName = league.getName();
 			List<String> teams = league.getStandings().stream().map(std -> std.getTeamName()).collect(toList());
 
-			teamsByLeagueName.put(leagueName, teams);
+			List<String> translatedTeams = getPolishCountryNames(teams);
+			translatedTeams.sort(Comparator.naturalOrder());
+
+			teamsByLeagueName.put(leagueName, translatedTeams);
 		}
 
 		return teamsByLeagueName;
