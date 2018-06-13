@@ -4,9 +4,9 @@
 
 @import url("util/centeredContainer.css");
 
-@import url("util/formDefaults.css");
-
 @import url("util/customSelect.css");
+
+@import url("util/backButton.css");
 
 #groupsWinnersForm {
 	background-color: rgba(255, 255, 255, 0.9) !important;
@@ -18,4 +18,31 @@
 
 label {
 	color: green;
+}
+
+.customSelect {
+	transition: box-shadow 0.3s linear;
+}
+
+.customSelect:hover {
+	-webkit-box-shadow: 0px 0px 20px green;
+	-moz-box-shadow: 0px 0px 20px green;
+	box-shadow: 0px 0px 20px green;
+}
+
+h2 {
+	color: green;
+	border-bottom-style: solid;
+	border-bottom-width: 0.5px;
+	border-bottom-color: rgba(81, 81, 81, 0.5);
+}
+
+.groupLabel {
+	font-size: 2vw;
+}
+
+.formRow{
+	border-bottom-style: solid;
+	border-bottom-width: 0.5px;
+	border-bottom-color: rgba(81, 81, 81, 0.5);
 }

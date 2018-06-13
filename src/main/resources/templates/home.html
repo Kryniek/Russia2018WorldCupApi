@@ -26,7 +26,7 @@
 	<div th:if="${errorMsg}">
 		<div id="errorAlert"
 			class="alert alert-danger alert-dismissible fade show" role="alert">
-			<div th:text="${errorMsg}"/>
+			<div th:text="${errorMsg}" />
 			<button
 				onclick="document.getElementById('errorAlert').hidden = true;"
 				type="button" class="close" aria-label="Close">
@@ -80,11 +80,11 @@
 						class="btn btn-success btn-lg btn-block">
 						Wyloguj <i class="fas fa-sign-out-alt"></i>
 					</button>
-					<button onclick="location.href+='world-cup-winner'" type="button"
-						class="btn btn-outline-success btn-lg btn-block">
+					<button onclick="location.href=location.origin+'/world-cup-winner'"
+						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Kto zwycięży <i class="fas fa-chess-king"></i>
 					</button>
-					<button disabled onclick="location.href+='world-cup-winner'"
+					<button onclick="location.href=location.origin+'/groups-winners'"
 						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
 					</button>
@@ -92,7 +92,8 @@
 						class="btn btn-outline-success btn-lg btn-block">
 						Wszystkie mecze <i class="far fa-list-alt"></i>
 					</button>
-					<button type="button" onclick="location.href+='points'"
+					<button type="button"
+						onclick="location.href=location.origin+'/points'"
 						class="btn btn-outline-success btn-lg btn-block">
 						Punktacja <i class="fas fa-signal"></i>
 					</button>

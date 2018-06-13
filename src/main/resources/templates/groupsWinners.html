@@ -1,43 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="../../img/favicon.ico" />
 <title>Kto wyjdzie z grupy?</title>
 <link rel="stylesheet"
 	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
 <link rel="stylesheet" href="../../css/groupsWinners.css" />
 </head>
 <body>
+	<button id="backButton" onclick="location.href=location.origin"
+		type="button" class="btn btn-outline-success">
+		<i class="fas fa-arrow-left"></i>
+	</button>
 	<div class="container fixed-center position-fixed">
 		<form id="groupsWinnersForm"
 			class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
 			<fieldset>
-				<h2 class="text-center p-3">Kto wyjdzie z grupy A?</h2>
-
-				<div class="form-row">
-					<div class="col">
-						<label for="firstPlaceSelect">Pierwsze miejsce</label>
-						<div class="form-group">
-							<select class="form-control customSelect" id="firstPlaceSelect">
-								<option>Polska</option>
-								<option>Niemcy</option>
-								<option>Anglia</option>
-								<option>Rosja</option>
-							</select>
+				<h2 class="text-center p-3">Które drużyny wyjdą z grup?</h2>
+				<div class="formRow form-row pb-1 mb-3">
+					<th:block th:each="teamsByGroupName : ${teamsByGroupName}">
+						<div class="form-row col-6">
+							<div class="col-6">
+								<label class="float-right groupLabel">Grupa</label>
+								<div class="form-group">
+									<select class="form-control customSelect">
+										<option hidden=true>Pierwsze miejsce</option>
+										<th:block th:each="team : ${teamsByGroupName.value}">
+											<option th:text="${team}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
+							<div class="col-6">
+								<label class="float-left groupLabel"
+									th:text="${#strings.replace(teamsByGroupName.key,'Group ','')}"></label>
+								<div class="form-group">
+									<select class="form-control customSelect">
+										<option hidden=true>Drugie miejsce</option>
+										<th:block th:each="team : ${teamsByGroupName.value}">
+											<option th:text="${team}"></option>
+										</th:block>
+									</select>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="col">
-						<label for="secondPlaceSelect">Drugie miejsce</label>
-						<div class="form-group">
-							<select class="form-control customSelect" id="secondPlaceSelect">
-								<option>Polska</option>
-								<option>Niemcy</option>
-								<option>Anglia</option>
-								<option>Rosja</option>
-							</select>
-						</div>
-					</div>
+					</th:block>
 				</div>
 				<button type="submit" class="btn btn-success float-right">Dalej</button>
 			</fieldset>

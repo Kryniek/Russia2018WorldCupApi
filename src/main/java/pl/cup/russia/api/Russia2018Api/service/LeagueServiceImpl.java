@@ -10,7 +10,6 @@ import pl.cup.russia.api.Russia2018Api.external.api.model.ApiStanding;
 import pl.cup.russia.api.Russia2018Api.model.League;
 import pl.cup.russia.api.Russia2018Api.model.Standing;
 import pl.cup.russia.api.Russia2018Api.repository.LeagueRepository;
-import pl.cup.russia.api.Russia2018Api.util.TranslationUtil;
 
 import java.util.*;
 
@@ -74,7 +73,7 @@ public class LeagueServiceImpl implements LeagueService {
 	@Override
 	public Map<String, List<String>> selectTeamsGroupedByLeagueName() {
 		List<League> leagues = selectLeagues();
-		Map<String, List<String>> teamsByLeagueName = new HashMap<>();
+		Map<String, List<String>> teamsByLeagueName = new LinkedHashMap<>();
 
 		for (League league : leagues) {
 			String leagueName = league.getName();
