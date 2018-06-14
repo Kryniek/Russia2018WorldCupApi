@@ -22,6 +22,8 @@ public interface BetService {
 
     List<Bet> selectUserBetsByType(BetType type);
 
+    Bet selectUserMatchBet(Integer matchId);
+
     Integer updateBetByType(BetType type, BetValue betValue);
 
     Integer updateBetsByType(BetType type, List<BetValue> betValues);

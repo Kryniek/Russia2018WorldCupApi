@@ -83,6 +83,15 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
+    public Bet selectUserMatchBet(Integer matchId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("username").is(getLoggedInUser())
+            .and("value.matchId").is(matchId));
+
+        return mongoTemplate.findOne(query, Bet.class);
+    }
+
+    @Override
     public Integer updateBetByType(BetType type, BetValue betValue) {
         if (WORLD_CUP_WINNER.equals(type)) {
             Query query = new Query();

@@ -82,9 +82,10 @@ public class MainController {
 	}
 
 	@GetMapping("/bet/{matchId}")
-	public ModelAndView bet(@PathVariable String matchId) {
+	public ModelAndView bet(@PathVariable Integer matchId) {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.BET.getValue());
-		mav.addObject("match", matchService.selectById(matchId));
+		mav.addObject("match", matchService.selectByMatchApiId(matchId));
+		mav.addObject("userBet", betService.selectUserMatchBet(matchId));
 
 		return mav;
 	}

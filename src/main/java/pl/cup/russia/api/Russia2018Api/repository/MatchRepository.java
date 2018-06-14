@@ -10,4 +10,6 @@ public interface MatchRepository extends MongoRepository<Match, String> {
 
     List<Match> findByDate(LocalDate date);
 
+    Match findByMatchApiId(Integer matchApiId);
+
 }

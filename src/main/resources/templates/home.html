@@ -68,7 +68,7 @@
 								</figure>
 							</div>
 							<div class="col-3">
-								<p hidden=true id="getMatchId" th:text="${match.id}"></p>
+								<p hidden=true id="getMatchId" th:text="${match.matchApiId}"></p>
 								<button
 									onclick="document.betMatchForm.action+=document.getElementById('getMatchId').textContent;document.betMatchForm.submit();"
 									type="button" class="btn btn-outline-success btn-lg btn-block">

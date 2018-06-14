@@ -10,7 +10,7 @@ public interface MatchService {
 
     List<Match> selectAll();
     
-    Match selectById(String id);
+    Match selectByMatchApiId(Integer id);
 
     List<Match> selectMatchesByDate(LocalDate date);
 

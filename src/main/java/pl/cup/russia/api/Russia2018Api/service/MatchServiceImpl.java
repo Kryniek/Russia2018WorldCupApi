@@ -54,8 +54,8 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public Match selectById(String id) {
-		Match match = repository.findById(id).orElse(null);
+	public Match selectByMatchApiId(Integer matchId) {
+		Match match = repository.findByMatchApiId(matchId);
 		
 		translateMatchCountryNameToPolish(match);
 		
