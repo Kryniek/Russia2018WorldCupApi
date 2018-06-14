@@ -33,7 +33,7 @@ var onForwardButtonClick = function() {
 	}
 
 	function sendRequestToServer() {
-		var betValues = getBetValues()[0];
+		var betValues = getBetValues();
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",

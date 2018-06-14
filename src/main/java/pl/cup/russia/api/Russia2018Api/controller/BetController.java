@@ -47,39 +47,35 @@ public class BetController {
 
 	@PostMapping("/groups")
 	@ResponseBody
-	public List<Bet> betGroupPromotion(@RequestBody BetValue betValue) {
-//		System.out.println(betValues.stream().map(BetValue::getGroupName).collect(Collectors.toList()));
-//		System.out.println(betValue.getGroupName());
-//		CustomJsonObjectMapper mapper = new CustomJsonObjectMapper();
-//		System.out.println((mapper.readValue(betValue, BetValue.class)));
-		System.out.println(betValue);
+	public List<Bet> betGroupPromotion(@RequestBody List<BetValue> betValues) {
 		List<Bet> testBets = new ArrayList<>();
-//		for (BetValue value : betValues) {
-//			Bet bet = new Bet();
-//			BetValue bv = new BetValue();
-//			bv.setGroupName(value.getGroupName());
-//			bv.setFirstPlace(value.getFirstPlace());
-//			bv.setSecondPlace(value.getSecondPlace());
-//			bet.setValue(bv);
-//
-//			testBets.add(bet);
-//		}
+		for (BetValue value : betValues) {
+			Bet bet = new Bet();
+			BetValue bv = new BetValue();
+			bv.setGroupName(value.getGroupName());
+			bv.setFirstPlace(value.getFirstPlace());
+			bv.setSecondPlace(value.getSecondPlace());
+			bet.setValue(bv);
+
+			testBets.add(bet);
+		}
 		return testBets;
+
 		//return service.createGroupPromotionBets(betValues);
 	}
 
 	@PutMapping("/groups")
-	public Integer updateBetGroupPromotion(@ModelAttribute("betValues") List<BetValue> betValues) {
+	public Integer updateBetGroupPromotion(@RequestBody List<BetValue> betValues) {
 		return service.updateBetsByType(GROUP_STAGE_PROMOTION, betValues);
 	}
 
 	@PostMapping("/match")
-	public Bet betMatchScore(@ModelAttribute("betValue") BetValue betValue) {
+	public Bet betMatchScore(@RequestBody BetValue betValue) {
 		return service.createMatchScoreBet(betValue);
 	}
 
 	@PutMapping("/match")
-    public Integer updateBetMatchScore(@ModelAttribute("betValue") BetValue betValue) {
+    public Integer updateBetMatchScore(@RequestBody BetValue betValue) {
         return service.updateBetByType(MATCH_RESULT, betValue);
     }
 
