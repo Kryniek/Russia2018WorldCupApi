@@ -7,7 +7,7 @@
 <link rel="shortcut icon" href="../../img/favicon.ico" />
 <title>Strona domowa</title>
 <link rel="stylesheet"
-	href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+	th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
 <link rel="stylesheet" href="../../css/home.css" />
 </head>
@@ -67,7 +67,18 @@
 									<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
 								</figure>
 							</div>
-							<div class="col-3"></div>
+							<div class="col-3">
+								<p hidden=true id="getMatchId" th:text="${match.id}"></p>
+								<button
+									onclick="document.betMatchForm.action+=document.getElementById('getMatchId').textContent;document.betMatchForm.submit();"
+									type="button" class="btn btn-outline-success btn-lg btn-block">
+									Typuj <i class="fas fa-child"></i>
+								</button>
+								<form name="betMatchForm" th:action="@{/bet/}" method="get"
+									th:hidden="true">
+									<input hidden=true type="submit" />
+								</form>
+							</div>
 						</div>
 					</th:block>
 				</div>
@@ -95,7 +106,7 @@
 					<button type="button"
 						onclick="location.href=location.origin+'/points'"
 						class="btn btn-outline-success btn-lg btn-block">
-						Punktacja <i class="fas fa-signal"></i>
+						Punktacja <i class="fas fa-star"></i>
 					</button>
 					<button disabled type="button"
 						class="btn btn-outline-success btn-lg btn-block">
@@ -121,7 +132,7 @@
 		</div>
 	</div>
 
-	<script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
 	<script src="../../js/events/homeEvents.js"></script>

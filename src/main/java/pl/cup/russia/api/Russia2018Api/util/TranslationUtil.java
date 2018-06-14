@@ -20,9 +20,13 @@ public class TranslationUtil {
 
 	public static void translateMatchesCountryNamesToPolish(List<Match> matches) {
 		matches.forEach(match -> {
-			match.setHometeamName(getPolishCountryName(match.getHometeamName()));
-			match.setAwayteamName(getPolishCountryName(match.getAwayteamName()));
+			TranslationUtil.translateMatchCountryNameToPolish(match);
 		});
+	}
+
+	public static void translateMatchCountryNameToPolish(Match match) {
+		match.setHometeamName(getPolishCountryName(match.getHometeamName()));
+		match.setAwayteamName(getPolishCountryName(match.getAwayteamName()));
 	}
 
 	public static String getPolishCountryName(String englishCountryName) {

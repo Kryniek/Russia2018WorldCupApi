@@ -1,26 +1,28 @@
 package pl.cup.russia.api.Russia2018Api.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import pl.cup.russia.api.Russia2018Api.definition.BetService;
-import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
-import pl.cup.russia.api.Russia2018Api.definition.MatchService;
-import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
-
 import static java.time.LocalDate.now;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
 import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinnerAndGroupWinners;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import pl.cup.russia.api.Russia2018Api.definition.BetService;
+import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
+import pl.cup.russia.api.Russia2018Api.definition.MatchService;
+import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
+
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-    @Autowired
-    private BetService betService;
+	@Autowired
+	private BetService betService;
 
 	@Autowired
 	private LeagueService leagueService;
@@ -79,4 +81,11 @@ public class MainController {
 		return StaticHtmlResource.POINTS.getValue();
 	}
 
+	@GetMapping("/bet/{matchId}")
+	public ModelAndView bet(@PathVariable String matchId) {
+		ModelAndView mav = new ModelAndView(StaticHtmlResource.BET.getValue());
+		mav.addObject("match", matchService.selectById(matchId));
+
+		return mav;
+	}
 }
