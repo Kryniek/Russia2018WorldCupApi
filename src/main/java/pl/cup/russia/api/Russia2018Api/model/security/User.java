@@ -28,6 +28,8 @@ public class User implements UserDetails {
 
     private String surname;
 
+    private Boolean paid;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
