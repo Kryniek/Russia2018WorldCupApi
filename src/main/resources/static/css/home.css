@@ -5,7 +5,6 @@
 .container {
 	width: 90%;
 	height: 90%;
-	
 	left: 50%;
 	top: 5%;
 	transform: translate(-50%, 0);
@@ -14,7 +13,6 @@
 .dateRow {
 	font-size: 25px;
 	color: green;
-	
 	border-bottom-style: solid;
 	border-bottom-width: 0.5px;
 	border-bottom-color: rgba(81, 81, 81, 0.5);
@@ -22,7 +20,6 @@
 
 #leftPanel, #rightPanel {
 	background-color: rgba(255, 255, 255, 0.9) !important;
-	
 	-webkit-box-shadow: 0px 0px 20px black;
 	-moz-box-shadow: 0px 0px 20px black;
 	box-shadow: 0px 0px 20px black;
@@ -32,51 +29,43 @@ figure>img {
 	-webkit-box-shadow: 0px 0px 10px black;
 	-moz-box-shadow: 0px 0px 10px black;
 	box-shadow: 0px 0px 10px black;
-	
 	border-radius: 20px;
 	border-style: solid;
 	border-color: rgba(0, 0, 0, 0.6);
-	
 	transition: opacity 0.3s linear;
-	
 	min-height: 100px;
 	max-height: 100px;
 }
 
-figure > p {
+figure>p {
 	font-size: 20px;
-	
 	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-    visibility: hidden;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	visibility: hidden;
 }
 
-figure:hover > img {
+figure:hover>img {
 	opacity: 0.5;
 }
 
-figure:hover > img + p {
+figure:hover>img+p {
 	visibility: visible;
 	cursor: default;
 }
 
-.result,.matchTime {
+.result,.matchTime  {
 	font-size: 25px;
-	
 	display: flex;
 	align-items: center;
 }
 
-.alert{
+.alert {
 	z-index: 1;
-	
 	-webkit-box-shadow: 0px 0px 10px black;
 	-moz-box-shadow: 0px 0px 10px black;
 	box-shadow: 0px 0px 10px black;
-
 	width: 35%;
 	opacity: 0.95;
 	margin: 1% auto auto;

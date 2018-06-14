@@ -16,6 +16,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.translateMatchesCountryNamesToPolish;
+import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.translateMatchCountryNameToPolish;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -53,6 +54,15 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
+	public Match selectById(String id) {
+		Match match = repository.findById(id).orElse(null);
+		
+		translateMatchCountryNameToPolish(match);
+		
+		return match;
+	}
+
+	@Override
 	public List<Match> selectMatchesByDate(LocalDate date) {
 		List<Match> matches = repository.findByDate(date);
 
@@ -69,5 +79,4 @@ public class MatchServiceImpl implements MatchService {
 	private List<Match> convertApiEventsToMatches(List<ApiEvent> apiEvents) {
 		return apiEvents.stream().map(evt -> new Match(evt)).collect(toList());
 	}
-
 }

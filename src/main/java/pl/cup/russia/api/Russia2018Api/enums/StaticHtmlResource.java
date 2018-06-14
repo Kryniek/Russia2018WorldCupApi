@@ -8,7 +8,8 @@ public enum StaticHtmlResource {
 	GROUPS_WINNERS("groupsWinners"),
 	MATCHES("matches"),
 	HOME("home"),
-	POINTS("points");
+	POINTS("points"),
+	BET("bet");
 	//@formatter:on
 
 	private String value;

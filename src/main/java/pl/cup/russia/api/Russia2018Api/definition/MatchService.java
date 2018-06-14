@@ -9,6 +9,8 @@ public interface MatchService {
     void syncMatches();
 
     List<Match> selectAll();
+    
+    Match selectById(String id);
 
     List<Match> selectMatchesByDate(LocalDate date);
 
