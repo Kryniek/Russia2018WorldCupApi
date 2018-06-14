@@ -69,16 +69,19 @@
 							</div>
 							<div class="col-3">
 								<div sec:authorize="isAuthenticated()">
-									<p hidden=true id="getMatchId" th:text="${match.matchApiId}"></p>
-									<button
-										onclick="document.betMatchForm.action+=document.getElementById('getMatchId').textContent;document.betMatchForm.submit();"
-										type="button" class="btn btn-outline-success btn-lg btn-block">
-										Typuj <i class="fas fa-child"></i>
-									</button>
-									<form name="betMatchForm" th:action="@{/bet/}" method="get"
-										th:hidden="true">
-										<input hidden=true type="submit" />
-									</form>
+									<div th:if="${match?.canBetMatch}">
+										<p hidden=true id="getMatchId" th:text="${match.matchApiId}"></p>
+										<button
+											onclick="document.betMatchForm.action+=document.getElementById('getMatchId').textContent;document.betMatchForm.submit();"
+											type="button"
+											class="btn btn-outline-success btn-lg btn-block">
+											Typuj <i class="fas fa-child"></i>
+										</button>
+										<form name="betMatchForm" th:action="@{/bet/}" method="get"
+											th:hidden="true">
+											<input hidden=true type="submit" />
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -97,12 +100,13 @@
 						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Kto zwycięży <i class="fas fa-chess-king"></i>
 					</button>
-					<button disabled onclick="location.href=location.origin+'/groups-winners'"
+					<button disabled
+						onclick="location.href=location.origin+'/groups-winners'"
 						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
 					</button>
-					<button disabled type="button"
-						class="btn btn-outline-success btn-lg btn-block">
+					<button disabled onclick="location.href=location.origin+'/matches'"
+						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Wszystkie mecze <i class="far fa-list-alt"></i>
 					</button>
 					<button type="button"
