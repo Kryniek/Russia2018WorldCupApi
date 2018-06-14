@@ -38,7 +38,7 @@ public class BetController {
 		return getWorldCupWinnerRedirectWithAttributes(redirectAttributes, DBOperation.INSERTED);
 	}
 
-	@PutMapping("/winner/{winnerTeamName}")
+	@PostMapping("/winner/update/{winnerTeamName}")
 	public String updateBetWorldCupWinner(@PathVariable String winnerTeamName, RedirectAttributes redirectAttributes) {
 		service.updateBetByType(WORLD_CUP_WINNER, new BetValue(winnerTeamName));
 

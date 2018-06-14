@@ -60,7 +60,7 @@
 		</form>
 		<form th:if="${canYouBet} and ${userBet?.value?.winner} != null"
 			id="worldCupWinnerForm" name="worldCupWinnerForm"
-			th:action="@{/bets/winner/}" th:method="put">
+			th:action="@{/bets/winner/update/}" th:method="post">
 			<fieldset>
 				<div id="notChosenTeamAlert" class="alert alert-danger text-center"
 					role="alert">Najpierw wybierz zwycięzce!</div>
