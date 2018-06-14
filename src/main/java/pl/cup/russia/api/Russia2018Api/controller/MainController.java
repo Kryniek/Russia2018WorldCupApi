@@ -3,7 +3,7 @@ package pl.cup.russia.api.Russia2018Api.controller;
 import static java.time.LocalDate.now;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
-import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinnerAndGroupWinners;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +53,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.WORLD_CUP_WINNER.getValue());
 		mav.addObject("teams", leagueService.selectAllTeams());
 		mav.addObject("userBet", betService.selectUserBetByType(WORLD_CUP_WINNER));
-		mav.addObject("canYouBet", canBetWorldCupWinnerAndGroupWinners());
+		mav.addObject("canYouBet", canBet());
 
 		return mav;
 	}
@@ -63,7 +63,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.GROUPS_WINNERS.getValue());
 		mav.addObject("teamsByGroupName", leagueService.selectTeamsGroupedByLeagueName());
 		mav.addObject("userBets", betService.selectUserBetsByType(GROUP_STAGE_PROMOTION));
-		mav.addObject("canYouBet", canBetWorldCupWinnerAndGroupWinners());
+		mav.addObject("canYouBet", canBet());
 
 		return mav;
 	}
@@ -86,6 +86,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.BET.getValue());
 		mav.addObject("match", matchService.selectByMatchApiId(matchId));
 		mav.addObject("userBet", betService.selectUserMatchBet(matchId));
+		mav.addObject("canYouBet", canBet());
 
 		return mav;
 	}

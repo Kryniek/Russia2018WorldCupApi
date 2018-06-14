@@ -1,25 +1,22 @@
 package pl.cup.russia.api.Russia2018Api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
+import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.dto.rest.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.DBOperation;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
-import pl.cup.russia.api.Russia2018Api.util.jackson.CustomJsonObjectMapper;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.*;
-import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetWorldCupWinnerAndGroupWinners;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
 
 @Controller
 @RequestMapping("/bets")
@@ -30,6 +27,9 @@ public class BetController {
 
 	@Autowired
 	private LeagueService leagueService;
+
+	@Autowired
+	private MatchService matchService;
 
 	@PostMapping("/winner/{winnerTeamName}")
 	public String betWorldCupWinner(@PathVariable String winnerTeamName, RedirectAttributes redirectAttributes) {
@@ -61,7 +61,7 @@ public class BetController {
 		}
 		return testBets;
 
-		//return service.createGroupPromotionBets(betValues);
+		// return service.createGroupPromotionBets(betValues);
 	}
 
 	@PutMapping("/groups")
@@ -69,23 +69,49 @@ public class BetController {
 		return service.updateBetsByType(GROUP_STAGE_PROMOTION, betValues);
 	}
 
-	@PostMapping("/match")
-	public Bet betMatchScore(@RequestBody BetValue betValue) {
-		return service.createMatchScoreBet(betValue);
+	@PostMapping("/match/{matchId}/{hometeamScore}/{awayteamScore}")
+	public String betMatchScore(@PathVariable Integer matchId, @PathVariable Integer hometeamScore,
+			@PathVariable Integer awayteamScore, RedirectAttributes redirectAttributes) {
+		BetValue betValue = new BetValue();
+		betValue.setMatchId(matchId);
+		betValue.setHometeamScore(hometeamScore);
+		betValue.setAwayteamScore(awayteamScore);
+
+		service.createMatchScoreBet(betValue);
+
+		return getGroupsWinnersRedirectWithAttributes(redirectAttributes, DBOperation.INSERTED, matchId);
 	}
 
-	@PutMapping("/match")
-    public Integer updateBetMatchScore(@RequestBody BetValue betValue) {
-        return service.updateBetByType(MATCH_RESULT, betValue);
-    }
+	@PostMapping("/match/update/{matchId}/{hometeamScore}/{awayteamScore}")
+	public String updateBetMatchScore(@PathVariable Integer matchId, @PathVariable Integer hometeamScore,
+			@PathVariable Integer awayteamScore, RedirectAttributes redirectAttributes) {
+		BetValue betValue = new BetValue();
+		betValue.setMatchId(matchId);
+		betValue.setHometeamScore(hometeamScore);
+		betValue.setAwayteamScore(awayteamScore);
+
+		service.updateBetByType(MATCH_RESULT, betValue);
+
+		return getGroupsWinnersRedirectWithAttributes(redirectAttributes, DBOperation.UPDATED, matchId);
+	}
 
 	private String getWorldCupWinnerRedirectWithAttributes(RedirectAttributes redirectAttributes,
 			DBOperation operation) {
 		redirectAttributes.addFlashAttribute("teams", leagueService.selectAllTeams());
 		redirectAttributes.addFlashAttribute("userBet", service.selectUserBetByType(WORLD_CUP_WINNER));
-		redirectAttributes.addFlashAttribute("canYouBet", canBetWorldCupWinnerAndGroupWinners());
+		redirectAttributes.addFlashAttribute("canYouBet", canBet());
 		redirectAttributes.addFlashAttribute("operation", operation.name());
 
 		return StaticHtmlResource.WORLD_CUP_WINNER.getKebabCasedRedirectValue();
+	}
+
+	private String getGroupsWinnersRedirectWithAttributes(RedirectAttributes redirectAttributes, DBOperation operation,
+			Integer matchId) {
+		redirectAttributes.addFlashAttribute("match", matchService.selectByMatchApiId(matchId));
+		redirectAttributes.addFlashAttribute("userBet", service.selectUserMatchBet(matchId));
+		redirectAttributes.addFlashAttribute("canYouBet", canBet());
+		redirectAttributes.addFlashAttribute("operation", operation.name());
+
+		return StaticHtmlResource.BET.getKebabCasedRedirectValue() + "/" + matchId.intValue();
 	}
 }

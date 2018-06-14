@@ -16,44 +16,142 @@
 		type="button" class="btn btn-outline-success">
 		<i class="fas fa-arrow-left"></i>
 	</button>
-	<div class="container fixed-center position-fixed rounded">
-		<form id="betMatchForm" name="betMatchForm"
-			class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
-			<div class="pr-3 pl-3">
+	<div th:if="${operation} != null">
+		<div id="successAlert"
+			class="alert alert-success alert-dismissible fade show float-right"
+			role="alert">
+			<p th:if="${operation} == INSERTED">Pomyślnie zapisano</p>
+			<p th:if="${operation} == UPDATED">Pomyślnie zaktualizowano</p>
+			<button
+				onclick="document.getElementById('successAlert').hidden = true;"
+				type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+	<div
+		class="container fixed-center position-fixed rounded shadow-lg p-3 mb-5 bg-white border border-success">
+		<form
+			th:if="${userBet?.value?.hometeamScore} == null and ${userBet?.value?.awayteamScore} == null"
+			id="betMatchForm" name="betMatchForm" th:action="@{/bets/match/}"
+			th:method="post">
+			<div id="panel" class="pr-3 pl-3">
 				<div class="row text-center typeResultText">
 					<div class="col-11 mt-3 mb-1">Typuj wynik meczu</div>
 				</div>
+				<div id="wrongDataInInputs" class="alert alert-danger text-center"
+					role="alert">Błędne dane w formularzu!</div>
 				<div class="row mt-3">
 					<div class="col-3">
-						<figure>
-							<img class="img-fluid" />
-							<div class="font-weight-bold" th:text="${match.hometeamName}"></div>
-						</figure>
+						<div class="form-group float-left">
+							<figure>
+								<img class="img-fluid" />
+								<div class="font-weight-bold" th:text="${match.hometeamName}"></div>
+							</figure>
+						</div>
 					</div>
 					<div class="col-2">
-						<input type="number" class="form-control customNumberInput text-center"
-							min="0" autofocus required value="0">
+						<div class="form-group">
+							<input id="hometeamScore" type="number"
+								class="form-control customNumberInput text-center" min="0"
+								autofocus required value="0">
+						</div>
 					</div>
-					<div class="result col-1">:</div>
 					<div class="col-2">
-						<input type="number" class="form-control customNumberInput text-center"
-							min="0" autofocus required value="0">
+						<div class="form-group">
+							<div class="result text-centered">:</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-group">
+							<input id="awayteamScore" type="number"
+								class="form-control customNumberInput text-center" min="0"
+								autofocus required value="0">
+						</div>
 					</div>
 					<div class="col-3">
-						<figure>
-							<img class="img-fluid">
-							<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
-						</figure>
+						<div class="form-group float-right">
+							<figure>
+								<img class="img-fluid">
+								<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
+							</figure>
+						</div>
 					</div>
 				</div>
 			</div>
+			<button onclick="location.href=location.origin" type="button"
+				class="btn btn-outline-success float-left mt-3">Wróć</button>
+			<button th:if="${canYouBet}" id="forwardButton" type="button"
+				class="btn btn-success float-right mt-3">Wybierz</button>
+			<input hidden=true type="submit" class="btn btn-success"></input>
 		</form>
-		<div th:text="${match}"></div>
+		<form
+			th:if="${userBet?.value?.hometeamScore} != null and ${userBet?.value?.awayteamScore} != null"
+			id="betMatchForm" name="betMatchForm" th:action="@{/bets/match/update/}"
+			th:method="post">
+			<div id="panel" class="pr-3 pl-3">
+				<div class="row text-center typeResultText">
+					<div class="col-11 mt-3 mb-1">Typuj wynik meczu</div>
+				</div>
+				<div id="wrongDataInInputs" class="alert alert-danger text-center"
+					role="alert">Błędne dane w formularzu!</div>
+				<div class="row mt-3">
+					<div class="col-3">
+						<div class="form-group float-left">
+							<figure>
+								<img class="img-fluid" />
+								<div class="font-weight-bold" th:text="${match.hometeamName}"></div>
+							</figure>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-group">
+							<input id="hometeamScore" type="number"
+								class="form-control customNumberInput text-center" min="0"
+								autofocus required value="0">
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-group">
+							<div class="result text-centered">:</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="form-group">
+							<input id="awayteamScore" type="number"
+								class="form-control customNumberInput text-center" min="0"
+								autofocus required value="0">
+						</div>
+					</div>
+					<div class="col-3">
+						<div class="form-group float-right">
+							<figure>
+								<img class="img-fluid">
+								<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
+							</figure>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button onclick="location.href=location.origin" type="button"
+				class="btn btn-outline-success float-left mt-3">Wróć</button>
+			<button th:if="${canYouBet}" id="forwardButton" type="button"
+				class="btn btn-success float-right mt-3">Wybierz</button>
+			<input hidden=true type="submit" class="btn btn-success"></input>
+		</form>
+		<p id="getMatchId" hidden=true th:text="${match.matchApiId}"></p>
+		<p id="hometeamScoreFromDB" hidden=true
+			th:text="${userBet?.value?.hometeamScore}"></p>
+		<p id="awayteamScoreFromDB" hidden=true
+			th:text="${userBet?.value?.awayteamScore}"></p>
 	</div>
 
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
+	<script src="../../js/bet/onForwardButtonClick.js"></script>
+	<script src="../../js/bet/onLoad.js"></script>
+	<script src="../../js/events/betEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
 </body>
 </html>

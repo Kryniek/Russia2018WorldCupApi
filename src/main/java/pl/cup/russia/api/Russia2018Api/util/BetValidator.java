@@ -12,7 +12,7 @@ public class BetValidator {
     private static final LocalDateTime START_OF_SECOND_ROUND_OF_GROUP_STAGE =
             of(2018, 06,19, 20, 0);
 
-    public static Boolean canBetWorldCupWinnerAndGroupWinners() {
+    public static Boolean canBet() {
         if (now().isBefore(START_OF_SECOND_ROUND_OF_GROUP_STAGE))
             return true;
 

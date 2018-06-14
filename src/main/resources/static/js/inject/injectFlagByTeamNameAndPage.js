@@ -1,16 +1,30 @@
 var injectFlagByTeamNameAndPage = function() {
 	(function init() {
-		var htmlPageName = window.location.pathname.split("/").pop();
+		var htmlPageName = getHtmlPageName();
 
-		// replaceUKTeamsNamesToPolishTeamsNames(htmlPageName,
-		// getPolishTeamName);
-
-		if (htmlPageName === "" || htmlPageName === "users") {
+		if (htmlPageName === null || htmlPageName === "users"
+				|| htmlPageName === "bet") {
 			addFlagsSrcToHomePage();
 		} else if (htmlPageName === "world-cup-winner") {
 			addFlagsSrcToWorldCupWinnerPage();
 		}
 	})();
+
+	function getHtmlPageName() {
+		var htmlPageName = null;
+		var htmlPathPageNames = window.location.pathname.split("/");
+
+		for ( let pageNameIndex in htmlPathPageNames) {
+			let pageName = htmlPathPageNames[pageNameIndex];
+
+			if (pageName) {
+				htmlPageName = pageName;
+				break;
+			}
+		}
+
+		return htmlPageName;
+	}
 
 	function addFlagsSrcToHomePage() {
 		let figureElements = document.getElementsByTagName("figure");

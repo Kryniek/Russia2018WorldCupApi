@@ -2,11 +2,17 @@
 
 @import url("main.css");
 
-@import url("util/centeredContainer.css");
-
 @import url("util/backButton.css");
 
-#betMatchForm {
+@import url("util/successAlert.css");
+
+.container{
+	max-width: 1000px;
+	
+	left: 50%;
+	top: 10%;
+	transform: translate(-50%, -10%);
+	
 	background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
@@ -56,10 +62,18 @@ h2 {
 	border-bottom-color: rgba(81, 81, 81, 0.5);
 }
 
+#panel{
+	border-bottom-style: solid;
+	border-bottom-width: 0.5px;
+	border-bottom-color: rgba(81, 81, 81, 0.5);
+}
+
 .result{
 	font-size: 25px;
 	display: flex;
 	align-items: center;
+	position: absolute;
+	left: 50%;
 }
 
 figure>img {
@@ -90,4 +104,8 @@ figure:hover>img {
 figure:hover>img+p {
 	visibility: visible;
 	cursor: default;
+}
+
+#wrongDataInInputs{
+	display: none;
 }
