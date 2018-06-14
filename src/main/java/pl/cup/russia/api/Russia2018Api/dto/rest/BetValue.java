@@ -27,4 +27,10 @@ public class BetValue {
         this.winner = winner;
     }
 
+    public BetValue(String firstPlace, String groupName, String secondPlace) {
+        this.firstPlace = firstPlace;
+        this.groupName = groupName;
+        this.secondPlace = secondPlace;
+    }
+
 }

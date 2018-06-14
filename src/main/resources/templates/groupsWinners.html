@@ -33,7 +33,6 @@
 								<label class="float-right groupLabel">Grupa</label>
 								<div class="form-group">
 									<select class="form-control customSelect">
-										<option hidden=true>Pierwsze miejsce</option>
 										<th:block th:each="team : ${teamsByGroupName.value}">
 											<option th:text="${team}"></option>
 										</th:block>
@@ -47,7 +46,6 @@
 									th:text="${#strings.replace(teamsByGroupName.key,'Group ','')}"></label>
 								<div class="form-group">
 									<select class="form-control customSelect">
-										<option hidden=true>Drugie miejsce</option>
 										<th:block th:each="team : ${teamsByGroupName.value}">
 											<option th:text="${team}"></option>
 										</th:block>

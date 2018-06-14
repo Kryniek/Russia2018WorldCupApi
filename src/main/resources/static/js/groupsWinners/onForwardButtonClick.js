@@ -33,7 +33,18 @@ var onForwardButtonClick = function() {
 	}
 
 	function sendRequestToServer() {
-		var betValues = getBetValues();
+		var betValues = getBetValues()[0];
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            url: "/bets/groups",
+            data: JSON.stringify(betValues),
+            success: function (result) {
+                console.log(result);
+                // do what ever you want with data
+            }
+        });
 		// document.groupsWinnersForm.submit();
 	}
 
