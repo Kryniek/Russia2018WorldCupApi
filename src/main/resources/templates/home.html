@@ -74,14 +74,15 @@
 									<div th:if="${match?.canBetMatch}">
 										<p hidden=true class="getMatchId"
 											th:text="${match.matchApiId}"></p>
-										<button type="button"
+										<button type="button" th:onclick="'gotoMatchBetForm(' + ${match.matchApiId} + ')'"
 											class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
 											Typuj <i class="fas fa-child"></i>
 										</button>
-										<form th:name="'betMatchForm-' + ${match.matchApiId}"
-											th:action="@{/bet/}" method="get" th:hidden="true">
-											<input hidden=true type="submit" />
-										</form>
+										<a th:id="'bet-' + ${match.matchApiId}" hidden=true th:href="@{/bet/} + ${match.matchApiId}">typ</a>
+										<!--<form th:name="'betMatchForm-' + ${match.matchApiId}"-->
+											<!--th:action="@{/bet/}" method="get" th:hidden="true">-->
+											<!--<input hidden=true type="submit" />-->
+										<!--</form>-->
 									</div>
 								</div>
 							</div>
@@ -140,10 +141,18 @@
 	</div>
 
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
 	<script src="../../js/home/onBetMatchFormClick.js"></script>
 	<script src="../../js/events/homeEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
+    <script>
+		function gotoMatchBetForm(matchId) {
+		    var betElClass = "#bet-" + matchId;
+            var href = $(betElClass).attr('href');
+            window.location.href = href;
+		}
+    </script>
 </body>
 </html>
