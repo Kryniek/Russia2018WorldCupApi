@@ -60,6 +60,8 @@
 								<div th:if="${match.awayteamScore != null}"
 									th:text="${match.awayteamScore}"></div>
 								<div th:unless="${match.awayteamScore}">-</div>
+                                <!-- TODO: wyświetlenie match.hometeam/awayteam-HalftimeScore -->
+                                <!-- TODO: zaznaczenie meczu live -->
 							</div>
 							<div class="col-3">
 								<figure>
@@ -77,7 +79,7 @@
 											class="btn btn-outline-success btn-lg btn-block">
 											Typuj <i class="fas fa-child"></i>
 										</button>
-										<form name="betMatchForm" th:action="@{/bet/}" method="get"
+										<form th:name="'betMatchForm-' + ${match.matchApiId}" th:action="@{/bet/}" method="get"
 											th:hidden="true">
 											<input hidden=true type="submit" />
 										</form>
