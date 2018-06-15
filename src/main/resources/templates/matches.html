@@ -6,10 +6,37 @@
 <title>Mecze</title>
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
 <link rel="stylesheet" href="../../css/matches.css" />
 </head>
 <body>
+	<button id="backButton" onclick="location.href=location.origin"
+		type="button" class="btn btn-outline-success">
+		<i class="fas fa-arrow-left"></i>
+	</button>
 	<div class="container fixed-center position-fixed rounded p-3 pb-3">
+		<th:block th:each="matchesByDate : ${matchesByDates}">
+			<div th:text=${matchesByDate}></div>
+			<div id="#accordionParent" role="tablist" aria-multiselectable="true">
+				<div class="card">
+					<!-- Dodaj id="data" do "card-header" -->
+					<p hidden=true class="cardHeaderId">add th:text</p>
+					<div class="card-header" role="tab">
+						<h5 class="mb-0">
+							<!-- Dodaj href="#data-body" do "collapse" -->
+							<!-- Dodaj aria-controls="data-body" do "collapse" -->
+							<a data-toggle="collapse" data-parent="#accordionParent"
+								aria-expanded="true"> Data </a>
+						</h5>
+					</div>
+					<!-- Dodaj id="data-body" do "collapse in" -->
+					<!-- Dodaj aria-labelledby="data" do "collapse in" -->
+					<div class="collapse in" role="tabpanel">
+						<div class="card-body">Mecze</div>
+					</div>
+				</div>
+			</div>
+		</th:block>
 		<div class="pr-3 pl-3">
 			<div class="row text-center dateRow">
 				<div class="col-11 mt-3 mb-1">2018-06-14</div>
@@ -455,6 +482,7 @@
 		</div>
 	</div>
 
+	<script th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/events/events.js"></script>

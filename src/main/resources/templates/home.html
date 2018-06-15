@@ -55,11 +55,11 @@
 							<div class="result col-1">
 								<div th:if="${match.hometeamScore != null}"
 									th:text="${match.hometeamScore}"></div>
-								<div th:unless="${match.hometeamScore}">-</div>
+								<div th:if="!${match.hometeamScore} and ${match.hometeamScore} != 0">-</div>
 								:
 								<div th:if="${match.awayteamScore != null}"
 									th:text="${match.awayteamScore}"></div>
-								<div th:unless="${match.awayteamScore}">-</div>
+								<div th:if="!${match.awayteamScore} and ${match.awayteamScore} != 0">-</div>
 							</div>
 							<div class="col-3">
 								<figure>
@@ -98,14 +98,14 @@
 					</button>
 					<button onclick="location.href=location.origin+'/world-cup-winner'"
 						type="button" class="btn btn-outline-success btn-lg btn-block">
-						Kto zwycięży <i class="fas fa-chess-king"></i>
+						Kto zwycięży <i class="fas fa-trophy"></i>
 					</button>
 					<button disabled
 						onclick="location.href=location.origin+'/groups-winners'"
 						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
 					</button>
-					<button disabled onclick="location.href=location.origin+'/matches'"
+					<button onclick="location.href=location.origin+'/matches'"
 						type="button" class="btn btn-outline-success btn-lg btn-block">
 						Wszystkie mecze <i class="far fa-list-alt"></i>
 					</button>
@@ -116,7 +116,7 @@
 					</button>
 					<button disabled type="button"
 						class="btn btn-outline-success btn-lg btn-block">
-						Ranking <i class="fas fa-trophy"></i>
+						Ranking <i class="fas fa-sort-numeric-down"></i>
 					</button>
 					<form name="logoutForm" th:action="@{/logout}" method="post"
 						th:hidden="true">

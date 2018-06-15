@@ -1,7 +1,21 @@
 package pl.cup.russia.api.Russia2018Api.service;
 
+import static java.util.stream.Collectors.toList;
+import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.translateMatchCountryNameToPolish;
+import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.translateMatchesCountryNamesToPolish;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.external.api.definition.FootballApiService;
@@ -9,14 +23,6 @@ import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
 import pl.cup.russia.api.Russia2018Api.model.League;
 import pl.cup.russia.api.Russia2018Api.model.Match;
 import pl.cup.russia.api.Russia2018Api.repository.MatchRepository;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
-import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.translateMatchesCountryNamesToPolish;
-import static pl.cup.russia.api.Russia2018Api.util.TranslationUtil.translateMatchCountryNameToPolish;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -54,11 +60,33 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
+	public Map<LocalDate, List<Match>> selectAllMatchesByDates() {
+		Map<LocalDate, List<Match>> matchesByDates = new HashMap<>();
+		List<Match> matches = selectAll();
+
+		matches.forEach(match -> {
+			LocalDate matchDate = match.getDate();
+
+			if (matchesByDates.containsKey(matchDate)) {
+				matchesByDates.get(matchDate).add(match);
+			} else {
+				matchesByDates.put(matchDate, new ArrayList<>(Arrays.asList(match)));
+			}
+		});
+		matchesByDates.values().forEach(v -> v.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime())));
+
+//		matchesByDates.entrySet().stream().sorted(Map.Entry.comparingByKey().reversed())
+//				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o1, o2) -> o1, HashMap::new));
+
+		return matchesByDates;
+	}
+
+	@Override
 	public Match selectByMatchApiId(Integer matchId) {
 		Match match = repository.findByMatchApiId(matchId);
-		
+
 		translateMatchCountryNameToPolish(match);
-		
+
 		return match;
 	}
 

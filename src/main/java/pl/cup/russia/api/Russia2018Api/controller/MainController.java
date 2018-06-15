@@ -71,7 +71,7 @@ public class MainController {
 	@GetMapping("/matches")
 	public ModelAndView matches() {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.MATCHES.getValue());
-		mav.addObject("matches", matchService.selectAll());
+		mav.addObject("matchesByDates", matchService.selectAllMatchesByDates());
 
 		return mav;
 	}
