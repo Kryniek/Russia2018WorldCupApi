@@ -60,6 +60,8 @@
 								<div th:if="${match.awayteamScore != null}"
 									th:text="${match.awayteamScore}"></div>
 								<div th:if="!${match.awayteamScore} and ${match.awayteamScore} != 0">-</div>
+								<!-- TODO: wyświetlenie match.hometeam/awayteam-HalftimeScore -->
+								<!-- TODO: zaznaczenie meczu live -->
 							</div>
 							<div class="col-3">
 								<figure>
@@ -70,15 +72,14 @@
 							<div class="col-3">
 								<div sec:authorize="isAuthenticated()">
 									<div th:if="${match?.canBetMatch}">
-										<p hidden=true id="getMatchId" th:text="${match.matchApiId}"></p>
-										<button
-											onclick="document.betMatchForm.action+=document.getElementById('getMatchId').textContent;document.betMatchForm.submit();"
-											type="button"
-											class="btn btn-outline-success btn-lg btn-block">
+										<p hidden=true class="getMatchId"
+											th:text="${match.matchApiId}"></p>
+										<button type="button"
+											class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
 											Typuj <i class="fas fa-child"></i>
 										</button>
-										<form name="betMatchForm" th:action="@{/bet/}" method="get"
-											th:hidden="true">
+										<form th:name="'betMatchForm-' + ${match.matchApiId}"
+											th:action="@{/bet/}" method="get" th:hidden="true">
 											<input hidden=true type="submit" />
 										</form>
 									</div>
@@ -141,6 +142,7 @@
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
+	<script src="../../js/home/onBetMatchFormClick.js"></script>
 	<script src="../../js/events/homeEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
 </body>

@@ -4,7 +4,8 @@ public enum DBCollections {
 
     LEAGUES("leagues"),
     MATCHES("matches"),
-    BETS("bets");
+    BETS("bets"),
+    USERS("users");
 
     private String value;
 

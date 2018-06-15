@@ -1,14 +1,21 @@
 package pl.cup.russia.api.Russia2018Api.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.cup.russia.api.Russia2018Api.definition.security.UserService;
+import pl.cup.russia.api.Russia2018Api.enums.DBCollections;
 import pl.cup.russia.api.Russia2018Api.model.security.User;
 import pl.cup.russia.api.Russia2018Api.repository.security.UserRepository;
 import pl.cup.russia.api.Russia2018Api.util.exception.security.UserAlreadyExistAuthenticationException;
 
+import static java.lang.Math.toIntExact;
 import static java.util.Objects.isNull;
+import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.USERS;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,6 +26,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
     @Override
     public User registerNewUserAccount(User user) throws UserAlreadyExistAuthenticationException {
         if (isUserExists(user))
@@ -26,6 +36,7 @@ public class UserServiceImpl implements UserService {
                     + ", już istnieje.");
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPaid(false);
 
         return repository.save(user);
     }
@@ -40,6 +51,16 @@ public class UserServiceImpl implements UserService {
             return true;
 
         return false;
+    }
+
+    @Override
+    public Integer setUserPaidStatusToTrue(String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.set("paid", true);
+
+        return toIntExact(mongoTemplate.updateFirst(query, update, User.class, USERS.getValue()).getModifiedCount());
     }
 
 }
