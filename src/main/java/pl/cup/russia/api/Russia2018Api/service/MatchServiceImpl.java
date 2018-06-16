@@ -6,9 +6,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Maps;
-
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.external.api.definition.FootballApiService;
@@ -16,14 +13,14 @@ import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
 import pl.cup.russia.api.Russia2018Api.model.League;
 import pl.cup.russia.api.Russia2018Api.model.Match;
 import pl.cup.russia.api.Russia2018Api.repository.MatchRepository;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.MATCHES;
 import static pl.cup.russia.api.Russia2018Api.enums.MatchStatus.FINAL_TIME;
@@ -80,7 +77,7 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public List<Match> selectMatchesByDate(LocalDate date) {
         List<Match> matches = repository.findByDate(date);
-        matches.sort(Comparator.comparing(Match::getTime));
+        matches.sort(comparing(Match::getTime));
 
         translateMatchesCountryNamesToPolish(matches);
 
@@ -99,28 +96,18 @@ public class MatchServiceImpl implements MatchService {
 
 	@Override
 	public Map<LocalDate, List<Match>> selectAllMatchesByDates() {
-		Map<LocalDate, List<Match>> matchesByDates = new HashMap<>();
+		Map<LocalDate, List<Match>> matchesByDates = new TreeMap<>();
 		List<Match> matches = selectAll();
 
 		translateMatchesCountryNamesToPolish(matches);
 
 		matches.forEach(match -> {
-			LocalDate matchDate = match.getDate();
-
-			if (matchesByDates.containsKey(matchDate)) {
-				matchesByDates.get(matchDate).add(match);
-			} else {
-				matchesByDates.put(matchDate, new ArrayList<>(Arrays.asList(match)));
-			}
+			matchesByDates.computeIfAbsent(match.getDate(), emptyList -> new ArrayList<>()).add(match);
 		});
 
-		matchesByDates.values().forEach(v -> v.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime())));
+        matchesByDates.values().forEach(m -> m.sort(comparing(Match::getTime)));
 
-		Map<LocalDate, List<Match>> reversedMatchesByDates = Maps.newTreeMap();
-		reversedMatchesByDates.putAll(matchesByDates);
-		
-
-		return reversedMatchesByDates;
+		return matchesByDates;
 	}
 
     private List<Match> convertApiEventsToMatches(List<ApiEvent> apiEvents) {
