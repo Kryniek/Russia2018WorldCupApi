@@ -8,13 +8,15 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.cup.russia.api.Russia2018Api.definition.security.UserService;
-import pl.cup.russia.api.Russia2018Api.enums.DBCollections;
 import pl.cup.russia.api.Russia2018Api.model.security.User;
 import pl.cup.russia.api.Russia2018Api.repository.security.UserRepository;
 import pl.cup.russia.api.Russia2018Api.util.exception.security.UserAlreadyExistAuthenticationException;
 
+import java.util.List;
+
 import static java.lang.Math.toIntExact;
 import static java.util.Objects.isNull;
+import static java.util.stream.Collectors.toList;
 import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.USERS;
 
 @Service
@@ -61,6 +63,24 @@ public class UserServiceImpl implements UserService {
         update.set("paid", true);
 
         return toIntExact(mongoTemplate.updateFirst(query, update, User.class, USERS.getValue()).getModifiedCount());
+    }
+
+    @Override
+    public List<String> getPaidUsersUsernames() {
+        return getUsersByPaidParam(true);
+    }
+
+    @Override
+    public List<String> getNonPaidUsersUsernames() {
+        return getUsersByPaidParam(false);
+    }
+
+    public List<String> getUsersByPaidParam(Boolean paid) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("paid").is(paid));
+
+        List<User> paidUsers = mongoTemplate.find(query, User.class, USERS.getValue());
+        return paidUsers.stream().map(User::getUsername).collect(toList());
     }
 
 }

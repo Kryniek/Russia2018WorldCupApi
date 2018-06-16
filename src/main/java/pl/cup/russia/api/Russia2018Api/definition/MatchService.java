@@ -14,5 +14,9 @@ public interface MatchService {
 
     List<Match> selectMatchesByDate(LocalDate date);
 
+    List<Match> selectMatchesByDateAndStatus(LocalDate date, String status);
+
     List<Match> saveAll(List<Match> matches);
+
+    void updateTodayMatchesResults();
 }

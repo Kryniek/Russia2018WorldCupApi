@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../../img/favicon.ico"/>
+    <title>Ranking</title>
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="../../css/register.css"/>
+</head>
+<body>
+<h2><b>Oficjalny ranking</b></h2>
+<th:block th:each="result : ${paidUserResults}">
+    <div th:text="'Login: ' + ${result._id} + ', punkty: ' + ${result.totalPoints}"/>
+</th:block>
+<br/><br/>
+<h3><b>Użytkownicy bez żetonów :)</b></h3>
+<th:block th:each="result : ${nonPaidUserResults}">
+    <div th:text="'Login: ' + ${result._id} + ', punkty: ' + ${result.totalPoints}"/>
+</th:block>
+</body>
+</html>

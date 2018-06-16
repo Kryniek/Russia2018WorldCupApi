@@ -1,6 +1,9 @@
 package pl.cup.russia.api.Russia2018Api.external.api.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
+import pl.cup.russia.api.Russia2018Api.util.jackson.StringHalfTimeIntegerDeserializer;
+import pl.cup.russia.api.Russia2018Api.util.jackson.StringQuestionMarkIntegerDeserializer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -28,14 +31,18 @@ public class ApiEvent {
 
     private String matchHometeamName;
 
+    @JsonDeserialize(using = StringQuestionMarkIntegerDeserializer.class)
     private Integer matchHometeamScore;
 
     private String matchAwayteamName;
 
+    @JsonDeserialize(using = StringQuestionMarkIntegerDeserializer.class)
     private Integer matchAwayteamScore;
 
+    @JsonDeserialize(using = StringHalfTimeIntegerDeserializer.class)
     private Integer matchHometeamHalftimeScore;
 
+    @JsonDeserialize(using = StringHalfTimeIntegerDeserializer.class)
     private Integer matchAwayteamHalftimeScore;
 
     private Integer matchHometeamExtraScore;

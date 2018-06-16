@@ -7,7 +7,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
-import pl.cup.russia.api.Russia2018Api.dto.rest.BetValue;
+import pl.cup.russia.api.Russia2018Api.dto.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.DBOperation;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
@@ -30,6 +30,12 @@ public class BetController {
 
 	@Autowired
 	private MatchService matchService;
+
+	@GetMapping("/sync")
+	@ResponseBody
+	public void syncBets() {
+		service.calculatePointsAndUpdateBetRecords();
+	}
 
 	@PostMapping("/winner/{winnerTeamName}")
 	public String betWorldCupWinner(@PathVariable String winnerTeamName, RedirectAttributes redirectAttributes) {

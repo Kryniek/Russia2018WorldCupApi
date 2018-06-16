@@ -6,21 +6,21 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.cup.russia.api.Russia2018Api.external.api.constants.ApiConstants;
 import pl.cup.russia.api.Russia2018Api.external.api.definition.FootballApiService;
-import pl.cup.russia.api.Russia2018Api.external.api.enums.FootballApiAction;
 import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
 import pl.cup.russia.api.Russia2018Api.external.api.model.ApiLeague;
 import pl.cup.russia.api.Russia2018Api.external.api.model.ApiStanding;
 import pl.cup.russia.api.Russia2018Api.external.api.util.builder.FootballApiUrlBuilder;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.time.LocalDate.now;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static pl.cup.russia.api.Russia2018Api.external.api.constants.ApiConstants.FINISH_OF_GROUP_STAGE;
+import static pl.cup.russia.api.Russia2018Api.external.api.enums.FootballApiAction.*;
 
 @Service
 public class FootballApiServiceImpl implements FootballApiService {
@@ -30,7 +30,7 @@ public class FootballApiServiceImpl implements FootballApiService {
 
     @Override
     public List<ApiLeague> getApiLeagues() {
-        String url = new FootballApiUrlBuilder(FootballApiAction.GET_LEAGUES).withCountryId().build();
+        String url = new FootballApiUrlBuilder(GET_LEAGUES).withCountryId().build();
 
         // move it to some util class with <T> type and parametrization
         ResponseEntity<List<ApiLeague>> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
@@ -43,7 +43,7 @@ public class FootballApiServiceImpl implements FootballApiService {
 
     @Override
     public List<ApiStanding> getApiStandingsByLeagueId(Integer leagueId) {
-        String url = new FootballApiUrlBuilder(FootballApiAction.GET_STANDINGS).withLeagueId(leagueId).build();
+        String url = new FootballApiUrlBuilder(GET_STANDINGS).withLeagueId(leagueId).build();
         ResponseEntity<List<ApiStanding>> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
                 null, new ParameterizedTypeReference<List<ApiStanding>>() {
                 });
@@ -59,7 +59,7 @@ public class FootballApiServiceImpl implements FootballApiService {
 
         List<String> urls = new ArrayList<>();
         for (Integer id : leagueIds)
-            urls.add(new FootballApiUrlBuilder(FootballApiAction.GET_STANDINGS).withLeagueId(id).build());
+            urls.add(new FootballApiUrlBuilder(GET_STANDINGS).withLeagueId(id).build());
 
         List<ApiStanding> standings = new ArrayList<>();
         for (String url : urls) {
@@ -76,8 +76,8 @@ public class FootballApiServiceImpl implements FootballApiService {
     public List<ApiEvent> getApiEventsByLeagueId(Integer leagueId) {
         // TODO: cause dates are mandatory it would be by league - if isGroup() return true will be from beginning of WC
         // TODO: to the end of group stage (consts), else it will be from beginning of playoff stage to final
-        String url = new FootballApiUrlBuilder(FootballApiAction.GET_EVENTS).withLeagueId(leagueId)
-                .fromDate(LocalDate.now()).toDate(ApiConstants.FINISH_OF_GROUP_STAGE).build();
+        String url = new FootballApiUrlBuilder(GET_EVENTS).withLeagueId(leagueId)
+                .fromDate(now()).toDate(FINISH_OF_GROUP_STAGE).build();
 
         ResponseEntity<List<ApiEvent>> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
                 null, new ParameterizedTypeReference<List<ApiEvent>>() {
@@ -93,8 +93,8 @@ public class FootballApiServiceImpl implements FootballApiService {
 
         List<String> urls = new ArrayList<>();
         for (Integer id : leagueIds) {
-            urls.add(new FootballApiUrlBuilder(FootballApiAction.GET_EVENTS).withLeagueId(id).fromDate(LocalDate.now())
-                    .toDate(ApiConstants.FINISH_OF_GROUP_STAGE).build());
+            urls.add(new FootballApiUrlBuilder(GET_EVENTS).withLeagueId(id).fromDate(now())
+                    .toDate(FINISH_OF_GROUP_STAGE).build());
         }
 
         List<ApiEvent> events = new ArrayList<>();
@@ -109,6 +109,16 @@ public class FootballApiServiceImpl implements FootballApiService {
         Map<Integer, List<ApiEvent>> eventsByLeagueId = events.stream().collect(groupingBy(ApiEvent::getLeagueId));
 
         return events;
+    }
+
+    @Override
+    public List<ApiEvent> getTodayApiEvents() {
+        String url = new FootballApiUrlBuilder(GET_EVENTS).withCountryId().fromDate(now()).toDate(now()).build();
+
+        ResponseEntity<List<ApiEvent>> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
+                null, new ParameterizedTypeReference<List<ApiEvent>>() {});
+
+        return responseEntity.getBody();
     }
 
 }

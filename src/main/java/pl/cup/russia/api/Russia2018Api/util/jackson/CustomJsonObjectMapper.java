@@ -26,6 +26,8 @@ public class CustomJsonObjectMapper extends ObjectMapper {
 
         customModule.addSerializer(Boolean.class, new StringZeroOneBooleanSerializer());
         customModule.addDeserializer(Boolean.class, new StringZeroOneBooleanDeserializer());
+        customModule.addDeserializer(Integer.class, new StringHalfTimeIntegerDeserializer());
+        customModule.addDeserializer(Integer.class, new StringQuestionMarkIntegerDeserializer());
 
         return customModule;
 

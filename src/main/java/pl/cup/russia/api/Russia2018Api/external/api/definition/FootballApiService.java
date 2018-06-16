@@ -18,4 +18,5 @@ public interface FootballApiService {
 
     List<ApiEvent> getApiEvents();
 
+    List<ApiEvent> getTodayApiEvents();
 }
