@@ -1,28 +1,24 @@
 package pl.cup.russia.api.Russia2018Api.model;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-import static java.util.Objects.nonNull;
-import static pl.cup.russia.api.Russia2018Api.enums.MatchResult.DRAW;
-import static pl.cup.russia.api.Russia2018Api.enums.MatchResult.WIN_EXTRA_TIME;
-import static pl.cup.russia.api.Russia2018Api.enums.MatchResult.WIN_PENALTIES;
-import static pl.cup.russia.api.Russia2018Api.enums.MatchResult.WIN_REGULAR_TIME;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+import pl.cup.russia.api.Russia2018Api.dto.Result;
+import pl.cup.russia.api.Russia2018Api.enums.WinnerSide;
+import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
+import pl.cup.russia.api.Russia2018Api.util.BetValidator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import pl.cup.russia.api.Russia2018Api.dto.rest.Result;
-import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
-import pl.cup.russia.api.Russia2018Api.util.BetValidator;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static java.util.Objects.nonNull;
+import static pl.cup.russia.api.Russia2018Api.enums.MatchResult.*;
 
 @Data
 @NoArgsConstructor
@@ -44,6 +40,8 @@ public class Match {
 	private LocalTime time;
 
 	private String status;
+
+	private Boolean live;
 
 	private String hometeamName;
 
@@ -110,16 +108,29 @@ public class Match {
 		if (hometeamScore.equals(awayteamScore))
 			return new Result(DRAW);
 
-		if (isPenalties())
-			return new Result(WIN_PENALTIES, getWinnerName(hometeamPenaltyScore, awayteamPenaltyScore));
-		else if (isExtraTime())
-			return new Result(WIN_EXTRA_TIME, getWinnerName(hometeamExtraScore, awayteamExtraScore));
-		else
-			return new Result(WIN_REGULAR_TIME, getWinnerName(hometeamScore, awayteamScore));
+		String winnerName;
+		if (isPenalties()) {
+			winnerName = getWinnerName(hometeamPenaltyScore, awayteamPenaltyScore);
+			return new Result(WIN_PENALTIES, winnerName, getWinnerSide(winnerName));
+		} else if (isExtraTime()) {
+			winnerName = getWinnerName(hometeamExtraScore, awayteamExtraScore);
+			return new Result(WIN_EXTRA_TIME, winnerName, getWinnerSide(winnerName));
+		} else {
+			winnerName = getWinnerName(hometeamScore, awayteamScore);
+			return new Result(WIN_REGULAR_TIME, winnerName, getWinnerSide(winnerName));
+		}
 
 	}
 
 	private String getWinnerName(Integer homeScore, Integer awayScore) {
 		return (homeScore > awayScore) ? hometeamName : awayteamName;
 	}
+
+	private WinnerSide getWinnerSide(String winnerName) {
+		if (this.getHometeamName().equals(winnerName))
+			return WinnerSide.HOME;
+
+		return WinnerSide.AWAY;
+	}
+
 }

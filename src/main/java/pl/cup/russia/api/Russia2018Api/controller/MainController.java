@@ -11,83 +11,96 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
+import pl.cup.russia.api.Russia2018Api.definition.ResultService;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-	@Autowired
-	private BetService betService;
+    @Autowired
+    private BetService betService;
 
-	@Autowired
-	private LeagueService leagueService;
+    @Autowired
+    private LeagueService leagueService;
 
-	@Autowired
-	private MatchService matchService;
+    @Autowired
+    private MatchService matchService;
 
-	@GetMapping
-	public ModelAndView base() {
-		ModelAndView mav = new ModelAndView(StaticHtmlResource.HOME.getValue());
-		mav.addObject("todayMatches", matchService.selectMatchesByDate(now()));
+    @Autowired
+    private ResultService resultService;
 
-		return mav;
-	}
+    @GetMapping
+    public ModelAndView base() {
+        ModelAndView mav = new ModelAndView(StaticHtmlResource.HOME.getValue());
+        mav.addObject("todayMatches", matchService.selectMatchesByDate(now()));
 
-	@GetMapping("/login")
-	public String login() {
-		return StaticHtmlResource.LOGIN.getValue();
-	}
+        return mav;
+    }
 
-	@GetMapping("/register")
-	public String register() {
-		return StaticHtmlResource.REGISTER.getValue();
-	}
+    @GetMapping("/login")
+    public String login() {
+        return StaticHtmlResource.LOGIN.getValue();
+    }
 
-	@GetMapping("/world-cup-winner")
-	public ModelAndView worldCupWinner() {
-		ModelAndView mav = new ModelAndView(StaticHtmlResource.WORLD_CUP_WINNER.getValue());
-		mav.addObject("teams", leagueService.selectAllTeams());
-		mav.addObject("userBet", betService.selectUserBetByType(WORLD_CUP_WINNER));
-		mav.addObject("canYouBet", canBet());
+    @GetMapping("/register")
+    public String register() {
+        return StaticHtmlResource.REGISTER.getValue();
+    }
 
-		return mav;
-	}
+    @GetMapping("/world-cup-winner")
+    public ModelAndView worldCupWinner() {
+        ModelAndView mav = new ModelAndView(StaticHtmlResource.WORLD_CUP_WINNER.getValue());
+        mav.addObject("teams", leagueService.selectAllTeams());
+        mav.addObject("userBet", betService.selectUserBetByType(WORLD_CUP_WINNER));
+        mav.addObject("canYouBet", canBet());
 
-	@GetMapping("/groups-winners")
-	public ModelAndView groupsWinners() {
-		ModelAndView mav = new ModelAndView(StaticHtmlResource.GROUPS_WINNERS.getValue());
-		mav.addObject("teamsByGroupName", leagueService.selectTeamsGroupedByLeagueName());
-		mav.addObject("userBets", betService.selectUserBetsByType(GROUP_STAGE_PROMOTION));
-		mav.addObject("canYouBet", canBet());
+        return mav;
+    }
 
-		return mav;
-	}
+    @GetMapping("/groups-winners")
+    public ModelAndView groupsWinners() {
+        ModelAndView mav = new ModelAndView(StaticHtmlResource.GROUPS_WINNERS.getValue());
+        mav.addObject("teamsByGroupName", leagueService.selectTeamsGroupedByLeagueName());
+        mav.addObject("userBets", betService.selectUserBetsByType(GROUP_STAGE_PROMOTION));
+        mav.addObject("canYouBet", canBet());
 
-	@GetMapping("/matches")
-	public ModelAndView matches() {
-		ModelAndView mav = new ModelAndView(StaticHtmlResource.MATCHES.getValue());
-		mav.addObject("matchesByDates", matchService.selectAllMatchesByDates());
+        return mav;
+    }
 
-		return mav;
-	}
+    @GetMapping("/matches")
+    public ModelAndView matches() {
+        ModelAndView mav = new ModelAndView(StaticHtmlResource.MATCHES.getValue());
+        mav.addObject("matchesByDates", matchService.selectAllMatchesByDates());
 
-	@GetMapping("/points")
-	public String points() {
-		return StaticHtmlResource.POINTS.getValue();
-	}
+        return mav;
+    }
 
-	@GetMapping("/bet/{matchId}")
-	public ModelAndView bet(@PathVariable Integer matchId) {
-		ModelAndView mav = new ModelAndView(StaticHtmlResource.BET.getValue());
-		mav.addObject("match", matchService.selectByMatchApiId(matchId));
-		mav.addObject("userBet", betService.selectUserMatchBet(matchId));
-		mav.addObject("canYouBet", canBet());
+    @GetMapping("/points")
+    public String points() {
+        return StaticHtmlResource.POINTS.getValue();
+    }
 
-		return mav;
-	}
+    @GetMapping("/bet/{matchId}")
+    public ModelAndView bet(@PathVariable Integer matchId) {
+        ModelAndView mav = new ModelAndView(StaticHtmlResource.BET.getValue());
+        mav.addObject("match", matchService.selectByMatchApiId(matchId));
+        mav.addObject("userBet", betService.selectUserMatchBet(matchId));
+        mav.addObject("canYouBet", canBet());
+
+        return mav;
+    }
+
+    @GetMapping("/results")
+    public ModelAndView results() {
+        ModelAndView mav = new ModelAndView(StaticHtmlResource.RESULTS.getValue());
+        mav.addObject("paidUserResults", resultService.getResultsForPaidUsers());
+        mav.addObject("nonPaidUserResults", resultService.getResultsForNonPaidUsers());
+
+        return mav;
+    }
+
 }

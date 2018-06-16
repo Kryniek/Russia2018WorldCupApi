@@ -1,6 +1,6 @@
 package pl.cup.russia.api.Russia2018Api.definition;
 
-import pl.cup.russia.api.Russia2018Api.dto.rest.BetValue;
+import pl.cup.russia.api.Russia2018Api.dto.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.BetType;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
 
@@ -24,7 +24,11 @@ public interface BetService {
 
     Bet selectUserMatchBet(Integer matchId);
 
+    List<Bet> selectMatchBets(Integer matchId);
+
     Integer updateBetByType(BetType type, BetValue betValue);
 
     Integer updateBetsByType(BetType type, List<BetValue> betValues);
+
+    void calculatePointsAndUpdateBetRecords();
 }

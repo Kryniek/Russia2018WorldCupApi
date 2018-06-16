@@ -4,7 +4,7 @@ public enum ApiStatisticType {
 
     SHOTS_ON_TARGET("shots on target"),
     SHOTS_OFF_TARGET("shots off target"),
-    POSSESSION("possession"),
+    POSSESSION("possession (%)"),
     CORNERS("corners"),
     OFFSIDES("offsides"),
     FOULS("fouls"),

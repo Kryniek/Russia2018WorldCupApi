@@ -1,4 +1,4 @@
-package pl.cup.russia.api.Russia2018Api.dto.rest;
+package pl.cup.russia.api.Russia2018Api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -21,4 +21,9 @@ public class MatchController {
         return service.selectAll();
     }
 
+    @GetMapping("/sync")
+    public void syncMatches() {
+        service.updateTodayMatchesResults();
+    }
+
 }

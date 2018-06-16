@@ -1,4 +1,4 @@
 (function() {
 	injectFlagByTeamNameAndPage();
-	onBetMatchFormClick();
+	// onBetMatchFormClick();
 })();
