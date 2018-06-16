@@ -1,462 +1,83 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="../../img/favicon.ico" />
 <title>Mecze</title>
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
 <link rel="stylesheet" href="../../css/matches.css" />
 </head>
 <body>
+	<button id="backButton" onclick="location.href=location.origin"
+		type="button" class="btn btn-outline-success">
+		<i class="fas fa-arrow-left"></i>
+	</button>
 	<div class="container fixed-center position-fixed rounded p-3 pb-3">
-		<div class="pr-3 pl-3">
-			<div class="row text-center dateRow">
-				<div class="col-11 mt-3 mb-1">2018-06-14</div>
+		<th:block th:each="matchesByDate : ${matchesByDates}">
+			<div id="#accordionParent" role="tablist" aria-multiselectable="true">
+				<div class="card">
+					<p th:text="${matchesByDate.key}" hidden=true class="cardHeaderId"></p>
+					<div class="card-header" role="tab">
+						<h5 class="mb-0 dateRow">
+							<a th:text="${matchesByDate.key}" data-toggle="collapse"
+								data-parent="#accordionParent" aria-expanded="true"
+								class="text-center"></a> <span
+								th:text="${#lists.size(matchesByDate.value)}"
+								class="badge badge-success float-right"></span>
+						</h5>
+					</div>
+					<div class="collapse in" role="tabpanel">
+						<th:block th:each="match : ${matchesByDate.value}">
+							<div class="card-body matchRow">
+								<div class="row ">
+									<div th:text="${match.status}" class="col-1"></div>
+									<div th:text="${match.time}" class="col-1"></div>
+									<div class="col-1 hometeamFlag">
+										<img class="teamFlag rounded">
+									</div>
+									<div th:text="${match.hometeamName}"
+										class="col-2 text-right hometeamName"></div>
+									<div class="col-1 text-center">:</div>
+									<div th:text="${match.awayteamName}"
+										class="col-2 text-left awayteamName"></div>
+									<div class="col-1 awayteamFlag">
+										<img class="teamFlag rounded">
+									</div>
+									<div class="col-3">
+										<div sec:authorize="isAuthenticated()">
+											<div th:if="${match?.canBetMatch}">
+												<p hidden=true class="getMatchId"
+													th:text="${match.matchApiId}"></p>
+												<button type="button"
+													class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
+													Typuj <i class="fas fa-child"></i>
+												</button>
+												<form th:name="'betMatchForm-' + ${match.matchApiId}"
+													th:action="@{/bet/}" method="get" th:hidden="true">
+													<input hidden=true type="submit" />
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</th:block>
+					</div>
+				</div>
 			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center dateRow">
-				<div class="col-11 mt-3 mb-1">2018-06-14</div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center dateRow">
-				<div class="col-11 mt-3 mb-1">2018-06-14</div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Polska</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Kolumbia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Niemcy</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Anglia</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-			<div class="row text-center matchRow pt-1 pb-1">
-				<div class="col-1">FT</div>
-				<div class="col-2">12:00</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-1 text-right">Rosja</div>
-				<div class="col-1">:</div>
-				<div class="col-1 text-left">Korea Południowa</div>
-				<div class="col-1">
-					<img class="teamFlag rounded"
-						src="https://www.worldatlas.com/webimage/flags/countrys/zzzflags/pllarge.gif">
-				</div>
-				<div class="col-4"></div>
-			</div>
-		</div>
+		</th:block>
 	</div>
 
+	<script th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
+	<script src="../../js/home/onBetMatchFormClick.js"></script>
+	<script src="../../js/matches/onLoad.js"></script>
 	<script src="../../js/events/events.js"></script>
+	<script src="../../js/events/matchesEvents.js"></script>
 </body>
 </html>

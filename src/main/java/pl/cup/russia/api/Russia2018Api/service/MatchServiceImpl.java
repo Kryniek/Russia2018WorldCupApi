@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Maps;
+
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.external.api.definition.FootballApiService;
@@ -13,11 +16,13 @@ import pl.cup.russia.api.Russia2018Api.external.api.model.ApiEvent;
 import pl.cup.russia.api.Russia2018Api.model.League;
 import pl.cup.russia.api.Russia2018Api.model.Match;
 import pl.cup.russia.api.Russia2018Api.repository.MatchRepository;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.MATCHES;
@@ -91,6 +96,32 @@ public class MatchServiceImpl implements MatchService {
     public List<Match> saveAll(List<Match> matches) {
         return repository.saveAll(matches);
     }
+
+	@Override
+	public Map<LocalDate, List<Match>> selectAllMatchesByDates() {
+		Map<LocalDate, List<Match>> matchesByDates = new HashMap<>();
+		List<Match> matches = selectAll();
+
+		translateMatchesCountryNamesToPolish(matches);
+
+		matches.forEach(match -> {
+			LocalDate matchDate = match.getDate();
+
+			if (matchesByDates.containsKey(matchDate)) {
+				matchesByDates.get(matchDate).add(match);
+			} else {
+				matchesByDates.put(matchDate, new ArrayList<>(Arrays.asList(match)));
+			}
+		});
+
+		matchesByDates.values().forEach(v -> v.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime())));
+
+		Map<LocalDate, List<Match>> reversedMatchesByDates = Maps.newTreeMap();
+		reversedMatchesByDates.putAll(matchesByDates);
+		
+
+		return reversedMatchesByDates;
+	}
 
     private List<Match> convertApiEventsToMatches(List<ApiEvent> apiEvents) {
         return apiEvents.stream().map(evt -> new Match(evt)).collect(toList());

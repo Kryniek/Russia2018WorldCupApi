@@ -12,69 +12,69 @@
     <link rel="stylesheet" href="../../css/home.css"/>
 </head>
 <body>
-<div th:if="${regSuccess}">
-    <div id="successAlert"
-         class="alert alert-success alert-dismissible fade show" role="alert">
-        Pomyślnie zarejestrowano. Teraz można się zalogować.
-        <button
-                onclick="document.getElementById('successAlert').hidden = true;"
-                type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-</div>
-<div th:if="${errorMsg}">
-    <div id="errorAlert"
-         class="alert alert-danger alert-dismissible fade show" role="alert">
-        <div th:text="${errorMsg}"></div>
-        <button
-                onclick="document.getElementById('errorAlert').hidden = true;"
-                type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-</div>
-<div class="container fixed-center position-fixed">
-    <div class="row">
-        <div id="leftPanel" class="col-8 rounded p-3 pb-3">
-            <div class="pr-3 pl-3">
-                <div class="row text-center dateRow">
-                    <div class="col-11 mt-3 mb-1">Dzisiejsze spotkania</div>
-                </div>
-                <th:block th:each="match : ${todayMatches}">
-                    <div class="row text-center pt-3">
-                        <div class="col-2 matchTime">
-                            <div th:text="${match.time}"></div>
-                        </div>
-                        <div class="col-3">
-                            <figure>
-                                <img class="img-fluid"/>
-                                <div class="font-weight-bold" th:text="${match.hometeamName}"></div>
-                            </figure>
-                        </div>
-                        <div class="result col-1">
-                            <div th:if="${match.hometeamScore != null}"
-                                 th:text="${match.hometeamScore}"></div>
-                            <div th:unless="${match.hometeamScore}">-</div>
-                            :
-                            <div th:if="${match.awayteamScore != null}"
-                                 th:text="${match.awayteamScore}"></div>
-                            <div th:unless="${match.awayteamScore}">-</div>
-                            <!-- TODO: wyświetlenie match.hometeam/awayteam-HalftimeScore -->
-                            <!-- TODO: zaznaczenie meczu live -->
-                        </div>
-                        <div class="col-3">
-                            <figure>
-                                <img class="img-fluid">
-                                <div class="font-weight-bold" th:text="${match.awayteamName}"></div>
-                            </figure>
-                        </div>
-                        <div class="col-3">
-                            <div sec:authorize="isAuthenticated()">
-                                <div th:if="${match?.canBetMatch}">
-                                    <p hidden=true class="getMatchId"
-                                       th:text="${match.matchApiId}"></p>
-                                    <button type="button" th:onclick="'gotoMatchBetForm(' + ${match.matchApiId} + ')'"
+	<div th:if="${regSuccess}">
+		<div id="successAlert"
+			class="alert alert-success alert-dismissible fade show" role="alert">
+			Pomyślnie zarejestrowano. Teraz można się zalogować.
+			<button
+				onclick="document.getElementById('successAlert').hidden = true;"
+				type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+	<div th:if="${errorMsg}">
+		<div id="errorAlert"
+			class="alert alert-danger alert-dismissible fade show" role="alert">
+			<div th:text="${errorMsg}"></div>
+			<button
+				onclick="document.getElementById('errorAlert').hidden = true;"
+				type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+	<div class="container fixed-center position-fixed">
+		<div class="row">
+			<div id="leftPanel" class="col-8 rounded p-3 pb-3">
+				<div class="pr-3 pl-3">
+					<div class="row text-center dateRow">
+						<div class="col-11 mt-3 mb-1">Dzisiejsze spotkania</div>
+					</div>
+					<th:block th:each="match : ${todayMatches}">
+						<div class="row text-center pt-3">
+							<div class="col-2 matchTime">
+								<div th:text="${match.time}"></div>
+							</div>
+							<div class="col-3">
+								<figure>
+									<img class="img-fluid" />
+									<div class="font-weight-bold" th:text="${match.hometeamName}"></div>
+								</figure>
+							</div>
+							<div class="result col-1">
+								<div th:if="${match.hometeamScore != null}"
+									th:text="${match.hometeamScore}"></div>
+								<div th:if="!${match.hometeamScore} and ${match.hometeamScore} != 0">-</div>
+								:
+								<div th:if="${match.awayteamScore != null}"
+									th:text="${match.awayteamScore}"></div>
+								<div th:if="!${match.awayteamScore} and ${match.awayteamScore} != 0">-</div>
+								<!-- TODO: wyświetlenie match.hometeam/awayteam-HalftimeScore -->
+								<!-- TODO: zaznaczenie meczu live -->
+							</div>
+							<div class="col-3">
+								<figure>
+									<img class="img-fluid">
+									<div class="font-weight-bold" th:text="${match.awayteamName}"></div>
+								</figure>
+							</div>
+							<div class="col-3">
+								<div sec:authorize="isAuthenticated()">
+									<div th:if="${match?.canBetMatch}">
+										<p hidden=true class="getMatchId"
+											th:text="${match.matchApiId}"></p>
+										<button type="button" th:onclick="'gotoMatchBetForm(' + ${match.matchApiId} + ')'"
                                             class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
                                         Typuj <i class="fas fa-child"></i>
                                     </button>
@@ -84,49 +84,49 @@
                                     <!--th:action="@{/bet/}" method="get" th:hidden="true">-->
                                     <!--<input hidden=true type="submit" />-->
                                     <!--</form>-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </th:block>
-            </div>
-        </div>
-        <div class="col-1"></div>
-        <div id="rightPanel" class="col-3 rounded p-3 pb-3">
-
-            <div sec:authorize="isAuthenticated()">
-                <button onclick="document.logoutForm.submit()" type="button"
-                        class="btn btn-success btn-lg btn-block">
-                    Wyloguj <i class="fas fa-sign-out-alt"></i>
-                </button>
-                <button onclick="location.href=location.origin+'/world-cup-winner'"
-                        type="button" class="btn btn-outline-success btn-lg btn-block">
-                    Kto zwycięży <i class="fas fa-chess-king"></i>
-                </button>
-                <button disabled
-                        onclick="location.href=location.origin+'/groups-winners'"
-                        type="button" class="btn btn-outline-success btn-lg btn-block">
-                    Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
-                </button>
-                <button disabled onclick="location.href=location.origin+'/matches'"
-                        type="button" class="btn btn-outline-success btn-lg btn-block">
-                    Wszystkie mecze <i class="far fa-list-alt"></i>
-                </button>
-                <button type="button"
-                        onclick="location.href=location.origin+'/points'"
-                        class="btn btn-outline-success btn-lg btn-block">
-                    Punktacja <i class="fas fa-star"></i>
-                </button>
-                <button type="button"
-                        onclick="location.href=location.origin+'/results'"
-                        class="btn btn-outline-success btn-lg btn-block">
-                    Ranking (RAW)<i class="fas fa-trophy"></i>
-                </button>
-                <form name="logoutForm" th:action="@{/logout}" method="post"
-                      th:hidden="true">
-                    <input hidden=true type="submit" value="Sign Out"/>
-                </form>
-            </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</th:block>
+				</div>
+			</div>
+			<div class="col-1"></div>
+			<div id="rightPanel" class="col-3 rounded p-3 pb-3">
+			
+				<div sec:authorize="isAuthenticated()">
+					<button onclick="document.logoutForm.submit()" type="button"
+						class="btn btn-success btn-lg btn-block">
+						Wyloguj <i class="fas fa-sign-out-alt"></i>
+					</button>
+					<button onclick="location.href=location.origin+'/world-cup-winner'"
+						type="button" class="btn btn-outline-success btn-lg btn-block">
+						Kto zwycięży <i class="fas fa-trophy"></i>
+					</button>
+					<button disabled
+						onclick="location.href=location.origin+'/groups-winners'"
+						type="button" class="btn btn-outline-success btn-lg btn-block">
+						Kto wyjdzie z grupy <i class="fas fa-door-open"></i>
+					</button>
+					<button onclick="location.href=location.origin+'/matches'"
+						type="button" class="btn btn-outline-success btn-lg btn-block">
+						Wszystkie mecze <i class="far fa-list-alt"></i>
+					</button>
+					<button type="button"
+						onclick="location.href=location.origin+'/points'"
+						class="btn btn-outline-success btn-lg btn-block">
+						Punktacja <i class="fas fa-star"></i>
+					</button>
+					<button type="button"
+					onclick="location.href=location.origin+'/results'"
+						class="btn btn-outline-success btn-lg btn-block">
+						Ranking (RAW)<i class="fas fa-sort-numeric-down"></i>
+					</button>
+					<form name="logoutForm" th:action="@{/logout}" method="post"
+						th:hidden="true">
+						<input hidden=true type="submit" value="Sign Out" />
+					</form>
+				</div>
 
             <div sec:authorize="isAnonymous()">
                 <button onclick="location.href=location.origin+'/login'"

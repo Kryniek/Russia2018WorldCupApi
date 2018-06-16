@@ -6,23 +6,40 @@
 
 @import url("util/customScrollbar.css");
 
+@import url("util/backButton.css");
+
 .container {
 	background-color: rgba(255, 255, 255, 0.9) !important;
 	-webkit-box-shadow: 0px 0px 20px black;
 	-moz-box-shadow: 0px 0px 20px black;
 	box-shadow: 0px 0px 20px black;
-	max-width: 90%;
+	max-width: 85%;
 	max-height: 90%;
-	overflow: scroll;
+	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 }
 
 .dateRow {
 	font-size: 25px;
+	text-align: center;
+}
+
+.dateRow>span{
+	width:5%;
+	min-width:30px;
+}
+
+.dateRow>a {
 	color: green;
-	border-bottom-style: solid;
-	border-bottom-width: 0.5px;
-	border-bottom-color: rgba(81, 81, 81, 0.5);
+}
+
+.dateRow>a:visited, .dateRow>a:link, dateRow>a:active {
+	text-decoration: none;
+}
+
+.dateRow>a:hover {
+	text-decoration: none;
+	color: rgba(0, 255, 0, 0.6);
 }
 
 .matchRow {
@@ -32,11 +49,7 @@
 }
 
 .matchRow:hover {
-	background-color: rgba(0, 170, 0, 0.8);
-	border-style: solid;
-	border-width: 0.5px;
-	border-color: rgba(0, 200, 0, 1);
-	color: white;
+	background-color: rgba(242, 239, 239, 0.8);
 }
 
 .teamFlag {

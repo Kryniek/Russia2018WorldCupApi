@@ -82,7 +82,7 @@
 			<button onclick="location.href=location.origin" type="button"
 				class="btn btn-outline-success float-left mt-3">Wróć</button>
 			<button th:if="${canYouBet}" id="forwardButton" type="button"
-				class="btn btn-success float-right mt-3">Wybierz</button>
+				class="btn btn-success float-right mt-3">Zapisz</button>
 			<input hidden=true type="submit" class="btn btn-success"></input>
 		</form>
 		<form
@@ -136,7 +136,7 @@
 			<button onclick="location.href=location.origin" type="button"
 				class="btn btn-outline-success float-left mt-3">Wróć</button>
 			<button th:if="${canYouBet} and ${match.canBetMatch}" id="forwardButton" type="button"
-				class="btn btn-success float-right mt-3">Wybierz</button>
+				class="btn btn-success float-right mt-3">Zapisz</button>
 			<input hidden=true type="submit" class="btn btn-success"></input>
 		</form>
 		<p id="getMatchId" hidden=true th:text="${match.matchApiId}"></p>

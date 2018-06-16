@@ -1,5 +1,10 @@
 package pl.cup.russia.api.Russia2018Api.controller;
 
+import static java.time.LocalDate.now;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +16,6 @@ import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.definition.ResultService;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
-
-import static java.time.LocalDate.now;
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
-import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
 
 @Controller
 @RequestMapping("/")
@@ -74,7 +74,7 @@ public class MainController {
     @GetMapping("/matches")
     public ModelAndView matches() {
         ModelAndView mav = new ModelAndView(StaticHtmlResource.MATCHES.getValue());
-        mav.addObject("matches", matchService.selectAll());
+        mav.addObject("matchesByDates", matchService.selectAllMatchesByDates());
 
         return mav;
     }
