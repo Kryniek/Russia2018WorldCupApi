@@ -8,13 +8,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Maps;
 
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
@@ -64,6 +64,8 @@ public class MatchServiceImpl implements MatchService {
 		Map<LocalDate, List<Match>> matchesByDates = new HashMap<>();
 		List<Match> matches = selectAll();
 
+		translateMatchesCountryNamesToPolish(matches);
+
 		matches.forEach(match -> {
 			LocalDate matchDate = match.getDate();
 
@@ -73,12 +75,14 @@ public class MatchServiceImpl implements MatchService {
 				matchesByDates.put(matchDate, new ArrayList<>(Arrays.asList(match)));
 			}
 		});
+
 		matchesByDates.values().forEach(v -> v.sort((o1, o2) -> o1.getTime().compareTo(o2.getTime())));
 
-//		matchesByDates.entrySet().stream().sorted(Map.Entry.comparingByKey().reversed())
-//				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (o1, o2) -> o1, HashMap::new));
+		Map<LocalDate, List<Match>> reversedMatchesByDates = Maps.newTreeMap();
+		reversedMatchesByDates.putAll(matchesByDates);
+		
 
-		return matchesByDates;
+		return reversedMatchesByDates;
 	}
 
 	@Override

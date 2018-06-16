@@ -1,0 +1,5 @@
+(function() {
+	onLoad();
+	injectFlagByTeamNameAndPage();
+	onBetMatchFormClick();
+})();

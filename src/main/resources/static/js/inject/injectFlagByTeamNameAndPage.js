@@ -7,6 +7,8 @@ var injectFlagByTeamNameAndPage = function() {
 			addFlagsSrcToHomePage();
 		} else if (htmlPageName === "world-cup-winner") {
 			addFlagsSrcToWorldCupWinnerPage();
+		} else if (htmlPageName === "matches") {
+			addFlagsSrcToMatchesPage();
 		}
 	})();
 
@@ -132,6 +134,96 @@ var injectFlagByTeamNameAndPage = function() {
 
 						if (flag) {
 							yourTeamButtonChild.src = flag;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	function addFlagsSrcToMatchesPage() {
+		var matchRowElements = document.getElementsByClassName("matchRow");
+
+		for ( let matchRowElementIndex in matchRowElements) {
+			let matchRowElement = matchRowElements[matchRowElementIndex];
+			let isHtmlElement = matchRowElement instanceof HTMLElement;
+
+			if (isHtmlElement) {
+				let matchRowElementChildren = matchRowElement.children;
+
+				for ( let matchRowElementChildIndex in matchRowElementChildren) {
+					let matchRowElementChild = matchRowElementChildren[matchRowElementChildIndex];
+					let isHtmlElement = matchRowElementChild instanceof HTMLElement;
+
+					if (isHtmlElement
+							&& matchRowElementChild.classList.contains("row")) {
+						let rowElementChildren = matchRowElementChild.children;
+						let hometeamName = null;
+						let awayteamName = null;
+
+						for ( let rowElementChildIndex in rowElementChildren) {
+							let rowElementChild = rowElementChildren[rowElementChildIndex];
+							let isHtmlElement = rowElementChild instanceof HTMLElement;
+
+							if (isHtmlElement) {
+								let isHometeamName = rowElementChild.classList
+										.contains("hometeamName");
+								let isAwayteamName = rowElementChild.classList
+										.contains("awayteamName");
+
+								if (isHometeamName) {
+									hometeamName = rowElementChild.textContent;
+								} else if (isAwayteamName) {
+									awayteamName = rowElementChild.textContent;
+								}
+							}
+						}
+
+						for ( let rowElementChildIndex in rowElementChildren) {
+							let rowElementChild = rowElementChildren[rowElementChildIndex];
+							let isHtmlElement = rowElementChild instanceof HTMLElement;
+
+							if (isHtmlElement) {
+								let isHometeamFlag = rowElementChild.classList
+										.contains("hometeamFlag");
+								let isAwayteamFlag = rowElementChild.classList
+										.contains("awayteamFlag");
+
+								if (isHometeamFlag) {
+									let rowElementChildChildren = rowElementChild.children;
+
+									for ( let secondDepthChildIndex in rowElementChildChildren) {
+										let secondDepthChild = rowElementChildChildren[secondDepthChildIndex];
+										let isHtmlElement = secondDepthChild instanceof HTMLElement;
+
+										if (isHtmlElement && secondDepthChild.classList.contains("teamFlag")) {
+											let flag = getFlagByTeamName(hometeamName);
+
+											if (flag) {
+												secondDepthChild.setAttribute("src",flag);
+												break;
+											}
+											break;
+										}
+									}
+								} else if (isAwayteamFlag) {
+									let rowElementChildChildren = rowElementChild.children;
+
+									for ( let secondDepthChildIndex in rowElementChildChildren) {
+										let secondDepthChild = rowElementChildChildren[secondDepthChildIndex];
+										let isHtmlElement = secondDepthChild instanceof HTMLElement;
+
+										if (isHtmlElement && secondDepthChild.classList.contains("teamFlag")) {
+											let flag = getFlagByTeamName(awayteamName);
+
+											if (flag) {
+												secondDepthChild.setAttribute("src",flag);
+												break;
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
