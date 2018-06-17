@@ -29,7 +29,7 @@
 								class="badge badge-success float-right"></span>
 						</h5>
 					</div>
-					<div class="collapse in" role="tabpanel">
+					<div class="collapse in show" role="tabpanel">
 						<th:block th:each="match : ${matchesByDate.value}">
 							<div class="card-body matchRow">
 								<div class="row ">
@@ -40,7 +40,13 @@
 									</div>
 									<div th:text="${match.hometeamName}"
 										class="col-2 text-right hometeamName"></div>
-									<div class="col-1 text-center">:</div>
+									<div
+										th:if="${match.hometeamScore} != null and ${match.awayteamScore} != null"
+										th:text="${match.hometeamScore + ' : ' + match.awayteamScore}"
+										class="col-1 text-center"></div>
+									<div
+										th:if="${match.hometeamScore} == null and ${match.awayteamScore} == null"
+										th:text="${' : '}" class="col-1 text-center"></div>
 									<div th:text="${match.awayteamName}"
 										class="col-2 text-left awayteamName"></div>
 									<div class="col-1 awayteamFlag">
