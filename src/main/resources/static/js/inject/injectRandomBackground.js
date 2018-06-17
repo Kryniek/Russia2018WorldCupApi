@@ -1,5 +1,5 @@
 var injectRandomBackground = function () {
-	var BACKGROUND_IMAGES_COUNT = 11;
+	var BACKGROUND_IMAGES_COUNT = 15;
 	
     (function init() {
         var headNode = document.head || document.getElementsByTagName('head')[0];

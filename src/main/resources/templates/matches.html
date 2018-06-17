@@ -48,18 +48,18 @@
 									</div>
 									<div class="col-3">
 										<div sec:authorize="isAuthenticated()">
-											<div th:if="${match?.canBetMatch}">
-												<p hidden=true class="getMatchId"
-													th:text="${match.matchApiId}"></p>
-												<button type="button"
-													class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
+											<p hidden=true class="getMatchId"
+												th:text="${match.matchApiId}"></p>
+											<button type="button"
+												th:onclick="'gotoMatchBetForm(' + ${match.matchApiId} + ')'"
+												class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
+												<div th:if="${match?.canBetMatch}">
 													Typuj <i class="fas fa-child"></i>
-												</button>
-												<form th:name="'betMatchForm-' + ${match.matchApiId}"
-													th:action="@{/bet/}" method="get" th:hidden="true">
-													<input hidden=true type="submit" />
-												</form>
-											</div>
+												</div>
+												<div th:if="!${match?.canBetMatch}">Sprawdź</div>
+											</button>
+											<a th:id="'bet-' + ${match.matchApiId}" hidden=true
+												th:href="@{/bet/} + ${match.matchApiId}">typ</a>
 										</div>
 									</div>
 								</div>
@@ -75,7 +75,7 @@
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
-	<script src="../../js/home/onBetMatchFormClick.js"></script>
+	<script src="../../js/gotoMatchBetForm.js"></script>
 	<script src="../../js/matches/onLoad.js"></script>
 	<script src="../../js/events/events.js"></script>
 	<script src="../../js/events/matchesEvents.js"></script>

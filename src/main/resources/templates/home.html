@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security4"
-      xmlns="http://www.w3.org/1999/html">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security4"
+	xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="shortcut icon" href="../../img/favicon.ico"/>
-    <title>Strona domowa</title>
-    <link rel="stylesheet"
-          th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css"/>
-    <link rel="stylesheet" href="../../css/home.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" href="../../img/favicon.ico" />
+<title>Strona domowa</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
+<link rel="stylesheet" href="../../css/home.css" />
 </head>
 <body>
 	<div th:if="${regSuccess}">
@@ -55,11 +55,13 @@
 							<div class="result col-1">
 								<div th:if="${match.hometeamScore != null}"
 									th:text="${match.hometeamScore}"></div>
-								<div th:if="!${match.hometeamScore} and ${match.hometeamScore} != 0">-</div>
+								<div
+									th:if="!${match.hometeamScore} and ${match.hometeamScore} != 0">-</div>
 								:
 								<div th:if="${match.awayteamScore != null}"
 									th:text="${match.awayteamScore}"></div>
-								<div th:if="!${match.awayteamScore} and ${match.awayteamScore} != 0">-</div>
+								<div
+									th:if="!${match.awayteamScore} and ${match.awayteamScore} != 0">-</div>
 								<!-- TODO: wyświetlenie match.hometeam/awayteam-HalftimeScore -->
 								<!-- TODO: zaznaczenie meczu live -->
 							</div>
@@ -71,20 +73,17 @@
 							</div>
 							<div class="col-3">
 								<div sec:authorize="isAuthenticated()">
-									<div th:if="${match?.canBetMatch}">
-										<p hidden=true class="getMatchId"
-											th:text="${match.matchApiId}"></p>
-										<button type="button" th:onclick="'gotoMatchBetForm(' + ${match.matchApiId} + ')'"
-                                            class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
-                                        Typuj <i class="fas fa-child"></i>
-                                    </button>
-                                    <a th:id="'bet-' + ${match.matchApiId}" hidden=true
-                                       th:href="@{/bet/} + ${match.matchApiId}">typ</a>
-                                    <!--<form th:name="'betMatchForm-' + ${match.matchApiId}"-->
-                                    <!--th:action="@{/bet/}" method="get" th:hidden="true">-->
-                                    <!--<input hidden=true type="submit" />-->
-                                    <!--</form>-->
-									</div>
+									<p hidden=true class="getMatchId" th:text="${match.matchApiId}"></p>
+									<button type="button"
+										th:onclick="'gotoMatchBetForm(' + ${match.matchApiId} + ')'"
+										class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
+										<div th:if="${match?.canBetMatch}">
+											Typuj <i class="fas fa-child"></i>
+										</div>
+										<div th:if="!${match?.canBetMatch}">Sprawdź</div>
+									</button>
+									<a th:id="'bet-' + ${match.matchApiId}" hidden=true
+										th:href="@{/bet/} + ${match.matchApiId}">typ</a>
 								</div>
 							</div>
 						</div>
@@ -93,7 +92,7 @@
 			</div>
 			<div class="col-1"></div>
 			<div id="rightPanel" class="col-3 rounded p-3 pb-3">
-			
+
 				<div sec:authorize="isAuthenticated()">
 					<button onclick="document.logoutForm.submit()" type="button"
 						class="btn btn-success btn-lg btn-block">
@@ -118,7 +117,7 @@
 						Punktacja <i class="fas fa-star"></i>
 					</button>
 					<button type="button"
-					onclick="location.href=location.origin+'/results'"
+						onclick="location.href=location.origin+'/results'"
 						class="btn btn-outline-success btn-lg btn-block">
 						Ranking (RAW)<i class="fas fa-sort-numeric-down"></i>
 					</button>
@@ -128,33 +127,26 @@
 					</form>
 				</div>
 
-            <div sec:authorize="isAnonymous()">
-                <button onclick="location.href=location.origin+'/login'"
-                        type="button" class="btn btn-success btn-lg btn-block">
-                    Logowanie <i class="fas fa-sign-in-alt"></i>
-                </button>
-                <button onclick="location.href=location.origin+'/register'"
-                        type="button" class="btn btn-success btn-lg btn-block">
-                    Rejestracja <i class="fas fa-user-plus"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+				<div sec:authorize="isAnonymous()">
+					<button onclick="location.href=location.origin+'/login'"
+						type="button" class="btn btn-success btn-lg btn-block">
+						Logowanie <i class="fas fa-sign-in-alt"></i>
+					</button>
+					<button onclick="location.href=location.origin+'/register'"
+						type="button" class="btn btn-success btn-lg btn-block">
+						Rejestracja <i class="fas fa-user-plus"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
-<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
-<script src="../../js/inject/injectRandomBackground.js"></script>
-<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
-<!--<script src="../../js/home/onBetMatchFormClick.js"></script>-->
-<script src="../../js/events/homeEvents.js"></script>
-<script src="../../js/events/events.js"></script>
-<script>
-    function gotoMatchBetForm(matchId) {
-        var betElClass = "#bet-" + matchId;
-        var href = $(betElClass).attr('href');
-        window.location.href = href;
-    }
-</script>
+	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
+	<script src="../../js/gotoMatchBetForm.js"></script>
+	<script src="../../js/events/homeEvents.js"></script>
+	<script src="../../js/events/events.js"></script>
 </body>
 </html>
