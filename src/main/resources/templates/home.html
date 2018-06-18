@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="../../css/home.css" />
 </head>
 <body>
+	<canvas id="canvasBubbles"></canvas>
 	<div th:if="${regSuccess}">
 		<div id="successAlert"
 			class="alert alert-success alert-dismissible fade show" role="alert">
@@ -143,7 +144,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
@@ -151,5 +151,7 @@
 	<script src="../../js/gotoMatchBetForm.js"></script>
 	<script src="../../js/events/homeEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
+	<script src="../../js/events/events.js"></script>
+	<script src="../../js/external/bubbles.js"></script>
 </body>
 </html>
