@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
 <link rel="stylesheet" href="../../css/home.css" />
 </head>
-
 <body>
+	<canvas id="canvasBubbles"></canvas>
 	<div th:if="${regSuccess}">
 		<div id="successAlert"
 			class="alert alert-success alert-dismissible fade show" role="alert">
@@ -169,5 +169,7 @@
             });
         });
     </script>
+	<script src="../../js/events/events.js"></script>
+	<script src="../../js/external/bubbles.js"></script>
 </body>
 </html>

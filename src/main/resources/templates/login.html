@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../css/login.css" />
 </head>
 <body>
+	<canvas id="canvasBubbles"></canvas>
 	<div class="container fixed-center position-fixed">
 		<form th:action="@{/login}" method="post" id="loginForm"
 			class="shadow-lg p-3 mb-5 bg-white border border-success rounded">
@@ -34,5 +35,6 @@
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/events/events.js"></script>
+	<script src="../../js/external/bubbles.js"></script>
 </body>
 </html>
