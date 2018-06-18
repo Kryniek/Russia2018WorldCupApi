@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.Integer.valueOf;
 
 public class StringHalfTimeIntegerDeserializer extends JsonDeserializer<Integer> {
@@ -15,8 +16,14 @@ public class StringHalfTimeIntegerDeserializer extends JsonDeserializer<Integer>
 
     @Override
     public Integer deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        return (jsonParser.getText().toLowerCase().equals(HALF) || jsonParser.getText().toLowerCase().equals(TIME))
-                ? valueOf(0) : valueOf(jsonParser.getText());
+        String textValue = jsonParser.getText();
+
+        if (isNullOrEmpty(textValue))
+            return null;
+        else if (textValue.toLowerCase().equals(HALF) || textValue.toLowerCase().equals(TIME))
+            return valueOf(0);
+        else
+            return valueOf(textValue);
     }
 
 }
