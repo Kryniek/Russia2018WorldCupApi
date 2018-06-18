@@ -15,6 +15,16 @@
 		type="button" class="btn btn-outline-success">
 		<i class="fas fa-arrow-left"></i>
 	</button>
+	<div id="successAlert"
+		class="alert alert-success alert-dismissible fade show float-right"
+		role="alert">
+		<p></p>
+		<button
+			onclick="document.getElementById('successAlert').style.setProperty('visibility', 'hidden')"
+			type="button" class="close" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
 	<div class="container fixed-center position-fixed">
 		<form id="groupsWinnersForm" name="groupsWinnersForm"
 			th:action="@{/bets/groups}" th:method="post"
@@ -25,9 +35,17 @@
 					class="alert alert-danger text-center" role="alert">Nie
 					wszystkie miejsca zostaly wybrane!</div>
 				<div class="formRow form-row pb-1 mb-3">
-					<th:block th:each="teamsByGroupName : ${teamsByGroupName}">
+					<th:block
+						th:each="teamsByGroupName, iterator : ${teamsByGroupName}">
 						<div class="form-row col-6">
-							<div class="col-6">
+							<div class="userBetsData" hidden=true
+								th:if="${not #lists.isEmpty(userBets)}">
+								<p hidden=true class="firstPlaceData"
+									th:text="${userBets[iterator.index].value.firstPlace}"></p>
+								<p hidden=true class="secondPlaceData"
+									th:text="${userBets[iterator.index].value.secondPlace}"></p>
+							</div>
+							<div class="firstPlace col-6">
 								<p class="groupName" hidden=true
 									th:text="${teamsByGroupName.key}"></p>
 								<label class="float-right groupLabel">Grupa</label>
@@ -40,7 +58,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-6">
+							<div class="secondPlace col-6">
 								<p class="groupName" hidden=true
 									th:text="${teamsByGroupName.key}"></p>
 								<label class="float-left groupLabel"
@@ -68,6 +86,7 @@
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/groupsWinners/onLoad.js"></script>
 	<script src="../../js/groupsWinners/onForwardButtonClick.js"></script>
 	<script src="../../js/events/groupsWinnersEvents.js"></script>
 	<script src="../../js/events/events.js"></script>

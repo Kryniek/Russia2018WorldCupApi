@@ -34,18 +34,28 @@ var onForwardButtonClick = function() {
 
 	function sendRequestToServer() {
 		var betValues = getBetValues();
-        $.ajax({
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            url: "/bets/groups",
-            data: JSON.stringify(betValues),
-            success: function (result) {
-                console.log(result);
-                // do what ever you want with data
-            }
-        });
-		// document.groupsWinnersForm.submit();
+		var hasUserBetsDataBeenSet = !!document
+				.getElementsByClassName("userBetsData").length;
+		var httpMethod = (hasUserBetsDataBeenSet) ? "PUT" : "POST";
+
+		$.ajax({
+			type : httpMethod,
+			contentType : "application/json; charset=utf-8",
+			dataType : 'json',
+			url : "/bets/groups",
+			data : JSON.stringify(betValues)
+		});
+
+		var successAlertElement = document.getElementById("successAlert");
+		var pElement = successAlertElement.getElementsByTagName("p")[0];
+
+		if (httpMethod === "PUT") {
+			pElement.textContent = "Pomyślnie zaktualizowano";
+		} else {
+			pElement.textContent = "Pomyślnie zapisano";
+		}
+
+		successAlertElement.style.setProperty('visibility', 'visible');
 	}
 
 	function getBetValues() {

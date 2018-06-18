@@ -10,9 +10,6 @@ import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.dto.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.DBOperation;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
-import pl.cup.russia.api.Russia2018Api.model.Bet;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static pl.cup.russia.api.Russia2018Api.enums.BetType.*;
@@ -53,24 +50,12 @@ public class BetController {
 
 	@PostMapping("/groups")
 	@ResponseBody
-	public List<Bet> betGroupPromotion(@RequestBody List<BetValue> betValues) {
-		List<Bet> testBets = new ArrayList<>();
-		for (BetValue value : betValues) {
-			Bet bet = new Bet();
-			BetValue bv = new BetValue();
-			bv.setGroupName(value.getGroupName());
-			bv.setFirstPlace(value.getFirstPlace());
-			bv.setSecondPlace(value.getSecondPlace());
-			bet.setValue(bv);
-
-			testBets.add(bet);
-		}
-		return testBets;
-
-		// return service.createGroupPromotionBets(betValues);
+	public void betGroupPromotion(@RequestBody List<BetValue> betValues) {
+		service.createGroupPromotionBets(betValues);
 	}
 
 	@PutMapping("/groups")
+	@ResponseBody
 	public Integer updateBetGroupPromotion(@RequestBody List<BetValue> betValues) {
 		return service.updateBetsByType(GROUP_STAGE_PROMOTION, betValues);
 	}
