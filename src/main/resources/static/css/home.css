@@ -71,3 +71,38 @@ figure:hover>img+p {
 	margin: 1% auto auto;
 	text-align: center;
 }
+
+.footerDrawer {
+	width: 250px;
+	position: fixed;
+	bottom: 0;
+	margin-left: 5%;
+}
+
+.footerDrawer .open {
+	background-color: green;
+	height: 40px;
+	font-size: x-large;
+	color: white;
+	margin: auto;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 45px;
+	border: 1px solid white;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.footerDrawer .content {
+	height: 200px;
+	background-color: white;
+	padding: 10px;
+	display: none;
+}
+
+.paypal {
+	height: 70px;
+	width: 70px;
+	display: block;
+	margin: 10px auto;
+}

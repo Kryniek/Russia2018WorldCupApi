@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
 <link rel="stylesheet" href="../../css/home.css" />
 </head>
+
 <body>
 	<div th:if="${regSuccess}">
 		<div id="successAlert"
@@ -144,6 +145,15 @@
 		</div>
 	</div>
 
+    <div class="footerDrawer">
+        <div class="open">ZESTAW KIBICA</div>
+        <div class="content">Jeśli podoba Ci się nasza praca to możesz dofinansować zestaw kibica dla twórców tutaj :) </br>
+            <a href="https://www.paypal.me/bskorka" target="_blank">
+                <img class="paypal" src="https://blufx.co.uk/wp-content/uploads/2018/03/paypal_PNG22.png" />
+            </a>
+        </div>
+    </div>
+
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
@@ -151,5 +161,13 @@
 	<script src="../../js/gotoMatchBetForm.js"></script>
 	<script src="../../js/events/homeEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
+    <script>
+        // TODO: script
+        $(document).ready(function() {
+            $('.footerDrawer .open').on('click', function() {
+                $('.footerDrawer .content').slideToggle();
+            });
+        });
+    </script>
 </body>
 </html>
