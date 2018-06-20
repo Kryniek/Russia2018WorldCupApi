@@ -2,6 +2,9 @@
 	injectFlagByTeamNameAndPage();
 	onLoad();
 
-	document.getElementById("forwardButton").addEventListener("click",
-			onForwardButtonClick);
+	var forwardButton = document.getElementById("forwardButton");
+
+	if (!!forwardButton) {
+		forwardButton.addEventListener("click", onForwardButtonClick);
+	}
 })();

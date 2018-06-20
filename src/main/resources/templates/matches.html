@@ -11,11 +11,13 @@
 <link rel="stylesheet" href="../../css/matches.css" />
 </head>
 <body>
-	<canvas id="canvasBubbles"></canvas>
 	<button id="backButton" onclick="location.href=location.origin"
 		type="button" class="btn btn-outline-success">
 		<i class="fas fa-arrow-left"></i>
 	</button>
+	<div class="fixed-center position-fixed">
+		<canvas id="canvasBubbles"></canvas>
+	</div>
 	<div class="container fixed-center position-fixed rounded p-3 pb-3">
 		<th:block th:each="matchesByDate : ${matchesByDates}">
 			<div id="#accordionParent" role="tablist" aria-multiselectable="true">
@@ -84,6 +86,7 @@
 	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
 	<script src="../../js/gotoMatchBetForm.js"></script>
 	<script src="../../js/matches/onLoad.js"></script>
+	<script src="../../js/constant.js"></script>
 	<script src="../../js/events/events.js"></script>
 	<script src="../../js/events/matchesEvents.js"></script>
 	<script src="../../js/external/bubbles.js"></script>

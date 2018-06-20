@@ -9,7 +9,9 @@
 <link rel="stylesheet" href="../../css/register.css" />
 </head>
 <body>
-	<canvas id="canvasBubbles"></canvas>
+	<div class="fixed-center position-fixed">
+		<canvas id="canvasBubbles"></canvas>
+	</div>
 	<div class="container fixed-center position-fixed">
 		<form th:action="@{/users}" method="post" th:object="${user}"
 			id="registerForm" name="registerForm"

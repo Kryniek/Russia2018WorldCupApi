@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="../../css/home.css" />
 </head>
 <body>
-	<canvas id="canvasBubbles"></canvas>
 	<div th:if="${regSuccess}">
 		<div id="successAlert"
 			class="alert alert-success alert-dismissible fade show" role="alert">
@@ -34,6 +33,9 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
+	</div>
+	<div class="fixed-center position-fixed">
+		<canvas id="canvasBubbles"></canvas>
 	</div>
 	<div class="container fixed-center position-fixed">
 		<div class="row">
@@ -145,30 +147,33 @@
 		</div>
 	</div>
 
-    <div class="footerDrawer">
-        <div class="open">ZESTAW KIBICA</div>
-        <div class="content">Jeśli podoba Ci się nasza praca to możesz dofinansować zestaw kibica dla twórców tutaj :) </br>
-            <a href="https://www.paypal.me/bskorka" target="_blank">
-                <img class="paypal" src="https://blufx.co.uk/wp-content/uploads/2018/03/paypal_PNG22.png" />
-            </a>
-        </div>
-    </div>
+	<div class="footerDrawer">
+		<div class="open">ZESTAW KIBICA</div>
+		<div class="content">
+			Jeśli podoba Ci się nasza praca to możesz dofinansować zestaw kibica
+			dla twórców tutaj :) </br> <a href="https://www.paypal.me/bskorka"
+				target="_blank"> <img class="paypal"
+				src="https://blufx.co.uk/wp-content/uploads/2018/03/paypal_PNG22.png" />
+			</a>
+		</div>
+	</div>
 
 	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 	<script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
 	<script src="../../js/inject/injectRandomBackground.js"></script>
 	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
 	<script src="../../js/gotoMatchBetForm.js"></script>
+	<script src="../../js/constant.js"></script>
 	<script src="../../js/events/homeEvents.js"></script>
 	<script src="../../js/events/events.js"></script>
-    <script>
-        // TODO: script
-        $(document).ready(function() {
-            $('.footerDrawer .open').on('click', function() {
-                $('.footerDrawer .content').slideToggle();
-            });
-        });
-    </script>
+	<script>
+		// TODO: script
+		$(document).ready(function() {
+			$('.footerDrawer .open').on('click', function() {
+				$('.footerDrawer .content').slideToggle();
+			});
+		});
+	</script>
 	<script src="../../js/events/events.js"></script>
 	<script src="../../js/external/bubbles.js"></script>
 </body>

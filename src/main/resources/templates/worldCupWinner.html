@@ -10,11 +10,13 @@
 <link rel="stylesheet" href="../../css/worldCupWinner.css" />
 </head>
 <body>
-	<canvas id="canvasBubbles"></canvas>
 	<button id="backButton" onclick="location.href=location.origin"
 		type="button" class="btn btn-outline-success">
 		<i class="fas fa-arrow-left"></i>
 	</button>
+	<div class="fixed-center position-fixed">
+		<canvas id="canvasBubbles"></canvas>
+	</div>
 	<div th:if="${operation} != null">
 		<div id="successAlert"
 			class="alert alert-success alert-dismissible fade show float-right"
