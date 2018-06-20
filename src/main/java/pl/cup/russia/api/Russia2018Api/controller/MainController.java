@@ -1,10 +1,5 @@
 package pl.cup.russia.api.Russia2018Api.controller;
 
-import static java.time.LocalDate.now;
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
-import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +11,13 @@ import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.definition.ResultService;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
+import pl.cup.russia.api.Russia2018Api.model.Match;
+
+import static java.time.LocalDate.now;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBetMatch;
 
 @Controller
 @RequestMapping("/")
@@ -87,9 +89,10 @@ public class MainController {
     @GetMapping("/bet/{matchId}")
     public ModelAndView bet(@PathVariable Integer matchId) {
         ModelAndView mav = new ModelAndView(StaticHtmlResource.BET.getValue());
-        mav.addObject("match", matchService.selectByMatchApiId(matchId));
+        Match match = matchService.selectByMatchApiId(matchId);
+        mav.addObject("match", match);
         mav.addObject("userBet", betService.selectUserMatchBet(matchId));
-        mav.addObject("canYouBet", canBet());
+        mav.addObject("canYouBet", canBetMatch(match.getDate(), match.getTime()));
 
         return mav;
     }

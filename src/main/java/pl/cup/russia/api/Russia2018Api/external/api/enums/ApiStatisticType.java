@@ -9,6 +9,7 @@ public enum ApiStatisticType {
     OFFSIDES("offsides"),
     FOULS("fouls"),
     YELLOW_CARDS("yellow cards"),
+    RED_CARDS("red cards"),
     GOAL_KICKS("goal kicks"),
     TREATMENTS("treatments");
 
