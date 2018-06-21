@@ -12,7 +12,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 
 public class FootballApiUrlBuilder {
 	private static final String BASIC_URL = "https://apifootball.com/api/";
-	private static final String API_KEY = "d49fc0bf81b31ef39c4573562e19475e4dfefaaed63100efd1fe7c972588059a";
+	private static final String API_KEY = "0807ad28e5ef4f3baf481006542eac37cf92f06ad0a90f8d1701880872faa8ef";
 
 	private FootballApiAction action;
 	private List<String> urlParameters = new ArrayList<>();
