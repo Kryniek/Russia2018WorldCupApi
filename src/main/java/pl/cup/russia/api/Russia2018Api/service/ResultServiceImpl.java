@@ -9,39 +9,47 @@ import org.springframework.stereotype.Service;
 import pl.cup.russia.api.Russia2018Api.definition.ResultService;
 import pl.cup.russia.api.Russia2018Api.definition.security.UserService;
 import pl.cup.russia.api.Russia2018Api.dto.BetResult;
+import pl.cup.russia.api.Russia2018Api.model.security.User;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.BETS;
 
 @Service
 public class ResultServiceImpl implements ResultService {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
-    @Override
-    public List<BetResult> getResultsForPaidUsers() {
-        return getResultsForUsers(userService.getPaidUsersUsernames());
-    }
+	@Override
+	public List<BetResult> getResultsForPaidUsers() {
+		return getResultsForUsers(userService.getPaidUsers());
+	}
 
-    @Override
-    public List<BetResult> getResultsForNonPaidUsers() {
-        return getResultsForUsers(userService.getNonPaidUsersUsernames());
-    }
+	@Override
+	public List<BetResult> getResultsForNonPaidUsers() {
+		return getResultsForUsers(userService.getNonPaidUsers());
+	}
 
-    public List<BetResult> getResultsForUsers(List<String> usernames) {
-        MatchOperation matchOperation = Aggregation.match(Criteria.where("username").in(usernames));
-        GroupOperation groupOperation = Aggregation.group("username").sum("points").as("totalPoints");
-        SortOperation sortOperation = Aggregation.sort(new Sort(Sort.Direction.DESC, "totalPoints"));
+	private List<BetResult> getResultsForUsers(List<User> users) {
+		List<String> usernames = users.stream().map(User::getUsername).collect(Collectors.toList());
 
-        Aggregation aggr = Aggregation.newAggregation(matchOperation, groupOperation, sortOperation);
-        AggregationResults<BetResult> betResults = mongoTemplate.aggregate(aggr, BETS.getValue(), BetResult.class);
+		MatchOperation matchOperation = Aggregation.match(Criteria.where("username").in(usernames));
+		GroupOperation groupOperation = Aggregation.group("username").sum("points").as("totalPoints");
+		SortOperation sortOperation = Aggregation.sort(new Sort(Sort.Direction.DESC, "totalPoints"));
 
-        return betResults.getMappedResults();
-    }
+		Aggregation aggr = Aggregation.newAggregation(matchOperation, groupOperation, sortOperation);
+		AggregationResults<BetResult> aggregationBetResults = mongoTemplate.aggregate(aggr, BETS.getValue(),
+				BetResult.class);
 
+		List<BetResult> betResults = aggregationBetResults.getMappedResults();
+
+		betResults.forEach(betResult -> betResult.addUserNameAndSurnameFromUser(users));
+
+		return betResults;
+	}
 }

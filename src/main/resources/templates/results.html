@@ -1,22 +1,87 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="shortcut icon" href="../../img/favicon.ico"/>
-    <title>Ranking</title>
-    <link rel="stylesheet"
-          th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" href="../../css/register.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" href="../../img/favicon.ico" />
+<title>Ranking</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
+<link rel="stylesheet" href="../../css/results.css" />
 </head>
 <body>
-<h2><b>Oficjalny ranking</b></h2>
-<th:block th:each="result : ${paidUserResults}">
-    <div th:text="'Login: ' + ${result._id} + ', punkty: ' + ${result.totalPoints}"/>
-</th:block>
-<br/><br/>
-<h3><b>Użytkownicy bez żetonów :)</b></h3>
-<th:block th:each="result : ${nonPaidUserResults}">
-    <div th:text="'Login: ' + ${result._id} + ', punkty: ' + ${result.totalPoints}"/>
-</th:block>
+	<button id="backButton" onclick="location.href=location.origin"
+		type="button" class="btn btn-outline-success">
+		<i class="fas fa-arrow-left"></i>
+	</button>
+	<div class="fixed-center position-fixed">
+		<canvas id="canvasBubbles"></canvas>
+	</div>
+	<div class="container fixed-center position-fixed rounded p-3 pb-3">
+		<h2 class="text-center">
+			<b>Oficjalny ranking</b>
+		</h2>
+		<button id="nonOfficialRankingButton" type="button"
+			class="btn btn-outline-success" data-toggle="modal"
+			data-target="#nonOfficialRankingModal">Bez żetonów</button>
+		<ul id="officialRanking" class="list-group p-3">
+			<th:block th:each="result, index : ${paidUserResults}">
+				<li
+					class="list-group-item d-flex justify-content-between align-items-center row mb-2">
+					<div th:text="${index.index + 1}" class="col-1 index"></div>
+					<div class="col-10"
+						th:text="${result.name} + ' ' + ${result.surname} + ' (' + ${result._id} + ')'">
+					</div>
+					<div th:text="${result.totalPoints}"
+						class="col-1 badge badge-success"></div>
+				</li>
+			</th:block>
+		</ul>
+	</div>
+
+	<!-- MODAL -->
+	<div class="modal fade" id="nonOfficialRankingModal" tabindex="-1"
+		role="dialog" aria-labelledby="nonOfficialRankingModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="nonOfficialRankingModalLabel">Ranking
+						bez żetonów</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="list-group p-3">
+						<th:block th:each="result, index : ${nonPaidUserResults}">
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center row mb-2">
+								<div th:text="${index.index + 1}" class="col-1 index"></div>
+								<div class="col-10"
+									th:text="${result.name} + ' ' + ${result.surname} + ' (' + ${result._id} + ')'">
+								</div>
+								<div th:text="${result.totalPoints}"
+									class="col-1 badge badge-success"></div>
+							</li>
+						</th:block>
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-success"
+						data-dismiss="modal">Zamknij</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/results/onLoad.js"></script>
+	<script src="../../js/events/resultsEvents.js"></script>
+	<script src="../../js/events/events.js"></script>
+	<script src="../../js/external/bubbles.js"></script>
 </body>
 </html>

@@ -1,0 +1,213 @@
+@charset "UTF-8";
+
+@-moz-keyframes listGroupItemSuccessBorderAnimation{
+    0%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 0, 73, 0.8);
+    }
+    5%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 20, 73, 0.8);
+    }
+    10%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 40, 73, 0.8);
+    }
+    15%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 60, 73, 0.8);
+    }
+    20%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 80, 73, 0.8);
+    }
+    25%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 100, 73, 0.8);
+    }
+    30%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 120, 73, 0.8);
+    }
+    35%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 140, 73, 0.8);
+    }
+    40%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 160, 73, 0.8);
+    }
+    45%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 180, 73, 0.8);
+    }
+    50%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 200, 73, 0.8);
+    }
+    55%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 180, 73, 0.8);
+    }
+    60%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 160, 73, 0.8);
+    }
+    65%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 140, 73, 0.8);
+    }
+    70%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 120, 73, 0.8);
+    }
+    75%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 100, 73, 0.8);
+    }
+    80%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 80, 73, 0.8);
+    }
+    85%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 60, 73, 0.8);
+    }
+    90%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 40, 73, 0.8);
+    }
+    95%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 20, 73, 0.8);
+    }
+    100%{
+        -moz-box-shadow: 0px 0px 5px rgba(40, 0, 73, 0.8);
+    }
+}
+
+@-webkit-keyframes listGroupItemSuccessBorderAnimation{
+    0%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 0, 73, 0.8);
+    }
+    5%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 20, 73, 0.8);
+    }
+    10%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 40, 73, 0.8);
+    }
+    15%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 60, 73, 0.8);
+    }
+    20%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 80, 73, 0.8);
+    }
+    25%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 100, 73, 0.8);
+    }
+    30%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 120, 73, 0.8);
+    }
+    35%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 140, 73, 0.8);
+    }
+    40%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 160, 73, 0.8);
+    }
+    45%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 180, 73, 0.8);
+    }
+    50%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 200, 73, 0.8);
+    }
+    55%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 180, 73, 0.8);
+    }
+    60%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 160, 73, 0.8);
+    }
+    65%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 140, 73, 0.8);
+    }
+    70%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 120, 73, 0.8);
+    }
+    75%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 100, 73, 0.8);
+    }
+    80%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 80, 73, 0.8);
+    }
+    85%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 60, 73, 0.8);
+    }
+    90%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 40, 73, 0.8);
+    }
+    95%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 20, 73, 0.8);
+    }
+    100%{
+        -webkit-box-shadow: 0px 0px 5px rgba(40, 0, 73, 0.8);
+    }
+}
+
+@keyframes listGroupItemSuccessBorderAnimation{
+    0%{
+        box-shadow: 0px 0px 5px rgba(40, 0, 73, 0.8);
+    }
+    5%{
+        box-shadow: 0px 0px 5px rgba(40, 20, 73, 0.8);
+    }
+    10%{
+        box-shadow: 0px 0px 5px rgba(40, 40, 73, 0.8);
+    }
+    15%{
+        box-shadow: 0px 0px 5px rgba(40, 60, 73, 0.8);
+    }
+    20%{
+        box-shadow: 0px 0px 5px rgba(40, 80, 73, 0.8);
+    }
+    25%{
+        box-shadow: 0px 0px 5px rgba(40, 100, 73, 0.8);
+    }
+    30%{
+        box-shadow: 0px 0px 5px rgba(40, 120, 73, 0.8);
+    }
+    35%{
+        box-shadow: 0px 0px 5px rgba(40, 140, 73, 0.8);
+    }
+    40%{
+        box-shadow: 0px 0px 5px rgba(40, 160, 73, 0.8);
+    }
+    45%{
+        box-shadow: 0px 0px 5px rgba(40, 180, 73, 0.8);
+    }
+    50%{
+        box-shadow: 0px 0px 5px rgba(40, 200, 73, 0.8);
+    }
+    55%{
+        box-shadow: 0px 0px 5px rgba(40, 180, 73, 0.8);
+    }
+    60%{
+        box-shadow: 0px 0px 5px rgba(40, 160, 73, 0.8);
+    }
+    65%{
+        box-shadow: 0px 0px 5px rgba(40, 140, 73, 0.8);
+    }
+    70%{
+        box-shadow: 0px 0px 5px rgba(40, 120, 73, 0.8);
+    }
+    75%{
+        box-shadow: 0px 0px 5px rgba(40, 100, 73, 0.8);
+    }
+    80%{
+        box-shadow: 0px 0px 5px rgba(40, 80, 73, 0.8);
+    }
+    85%{
+        box-shadow: 0px 0px 5px rgba(40, 60, 73, 0.8);
+    }
+    90%{
+        box-shadow: 0px 0px 5px rgba(40, 40, 73, 0.8);
+    }
+    95%{
+        box-shadow: 0px 0px 5px rgba(40, 20, 73, 0.8);
+    }
+    100%{
+        box-shadow: 0px 0px 5px rgba(40, 0, 73, 0.8);
+    }
+}
+
+.list-group-item-success{
+    -webkit-animation-name: listGroupItemSuccessBorderAnimation;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: listGroupItemSuccessBorderAnimation;
+    -moz-animation-duration: 2s;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: listGroupItemSuccessBorderAnimation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}

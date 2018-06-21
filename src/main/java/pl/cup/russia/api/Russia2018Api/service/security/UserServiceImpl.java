@@ -16,71 +16,69 @@ import java.util.List;
 
 import static java.lang.Math.toIntExact;
 import static java.util.Objects.isNull;
-import static java.util.stream.Collectors.toList;
 import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.USERS;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository repository;
+	@Autowired
+	private UserRepository repository;
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
-    @Override
-    public User registerNewUserAccount(User user) throws UserAlreadyExistAuthenticationException {
-        if (isUserExists(user))
-            throw new UserAlreadyExistAuthenticationException("Użytkownik o loginie: " + user.getUsername()
-                    + ", już istnieje.");
+	@Override
+	public User registerNewUserAccount(User user) throws UserAlreadyExistAuthenticationException {
+		if (isUserExists(user))
+			throw new UserAlreadyExistAuthenticationException(
+					"Użytkownik o loginie: " + user.getUsername() + ", już istnieje.");
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPaid(false);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPaid(false);
 
-        return repository.save(user);
-    }
+		return repository.save(user);
+	}
 
-    @Override
-    public User selectUserByUsername(String username) {
-        return repository.findUserByUsername(username);
-    }
+	@Override
+	public User selectUserByUsername(String username) {
+		return repository.findUserByUsername(username);
+	}
 
-    private Boolean isUserExists(User user) {
-        if (!isNull(selectUserByUsername(user.getUsername())))
-            return true;
+	private Boolean isUserExists(User user) {
+		if (!isNull(selectUserByUsername(user.getUsername())))
+			return true;
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public Integer setUserPaidStatusToTrue(String username) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username));
-        Update update = new Update();
-        update.set("paid", true);
+	@Override
+	public Integer setUserPaidStatusToTrue(String username) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("username").is(username));
+		Update update = new Update();
+		update.set("paid", true);
 
-        return toIntExact(mongoTemplate.updateFirst(query, update, User.class, USERS.getValue()).getModifiedCount());
-    }
+		return toIntExact(mongoTemplate.updateFirst(query, update, User.class, USERS.getValue()).getModifiedCount());
+	}
 
-    @Override
-    public List<String> getPaidUsersUsernames() {
-        return getUsersByPaidParam(true);
-    }
+	@Override
+	public List<User> getPaidUsers() {
+		return getUsersByPaidParam(true);
+	}
 
-    @Override
-    public List<String> getNonPaidUsersUsernames() {
-        return getUsersByPaidParam(false);
-    }
+	@Override
+	public List<User> getNonPaidUsers() {
+		return getUsersByPaidParam(false);
+	}
 
-    public List<String> getUsersByPaidParam(Boolean paid) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("paid").is(paid));
+	public List<User> getUsersByPaidParam(Boolean paid) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("paid").is(paid));
 
-        List<User> paidUsers = mongoTemplate.find(query, User.class, USERS.getValue());
-        return paidUsers.stream().map(User::getUsername).collect(toList());
-    }
+		return mongoTemplate.find(query, User.class, USERS.getValue());
+	}
 
 }

@@ -12,7 +12,7 @@ public interface UserService {
 
     Integer setUserPaidStatusToTrue(String username);
 
-    List<String> getPaidUsersUsernames();
+    List<User> getPaidUsers();
 
-    List<String> getNonPaidUsersUsernames();
+    List<User> getNonPaidUsers();
 }
