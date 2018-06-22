@@ -22,4 +22,6 @@ public interface MatchService {
     List<Match> saveAll(List<Match> matches);
 
     void updateTodayMatchesResults();
+
+	List<Match> selectByMatchesApiIds(List<Integer> matchesIds);
 }

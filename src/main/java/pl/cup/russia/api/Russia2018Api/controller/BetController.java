@@ -1,19 +1,29 @@
 package pl.cup.russia.api.Russia2018Api.controller;
 
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.MATCH_RESULT;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.WORLD_CUP_WINNER;
+import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.LeagueService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.dto.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.DBOperation;
 import pl.cup.russia.api.Russia2018Api.enums.StaticHtmlResource;
-import java.util.List;
-
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.*;
-import static pl.cup.russia.api.Russia2018Api.util.BetValidator.canBet;
 
 @Controller
 @RequestMapping("/bets")
@@ -85,7 +95,7 @@ public class BetController {
 
 		return getGroupsWinnersRedirectWithAttributes(redirectAttributes, DBOperation.UPDATED, matchId);
 	}
-
+	
 	private String getWorldCupWinnerRedirectWithAttributes(RedirectAttributes redirectAttributes,
 			DBOperation operation) {
 		redirectAttributes.addFlashAttribute("teams", leagueService.selectAllTeams());

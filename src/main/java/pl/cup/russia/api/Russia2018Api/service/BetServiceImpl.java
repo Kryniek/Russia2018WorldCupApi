@@ -169,7 +169,7 @@ public class BetServiceImpl implements BetService {
         }
 
     }
-
+    
     private void updateMatchBetsAfterSettlement(List<Bet> matchBets, Integer matchId) {
         for (Bet matchBet : matchBets) {
             Query query = new Query();
