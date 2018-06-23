@@ -9,6 +9,8 @@ var injectFlagByTeamNameAndPage = function() {
 			addFlagsSrcToWorldCupWinnerPage();
 		} else if (htmlPageName === "matches") {
 			addFlagsSrcToMatchesPage();
+		} else if (htmlPageName === "user-bets") {
+			addFlagSrcToUserBetsPage();
 		}
 	})();
 
@@ -196,11 +198,14 @@ var injectFlagByTeamNameAndPage = function() {
 										let secondDepthChild = rowElementChildChildren[secondDepthChildIndex];
 										let isHtmlElement = secondDepthChild instanceof HTMLElement;
 
-										if (isHtmlElement && secondDepthChild.classList.contains("teamFlag")) {
+										if (isHtmlElement
+												&& secondDepthChild.classList
+														.contains("teamFlag")) {
 											let flag = getFlagByTeamName(hometeamName);
 
 											if (flag) {
-												secondDepthChild.setAttribute("src",flag);
+												secondDepthChild.setAttribute(
+														"src", flag);
 												break;
 											}
 											break;
@@ -213,11 +218,14 @@ var injectFlagByTeamNameAndPage = function() {
 										let secondDepthChild = rowElementChildChildren[secondDepthChildIndex];
 										let isHtmlElement = secondDepthChild instanceof HTMLElement;
 
-										if (isHtmlElement && secondDepthChild.classList.contains("teamFlag")) {
+										if (isHtmlElement
+												&& secondDepthChild.classList
+														.contains("teamFlag")) {
 											let flag = getFlagByTeamName(awayteamName);
 
 											if (flag) {
-												secondDepthChild.setAttribute("src",flag);
+												secondDepthChild.setAttribute(
+														"src", flag);
 												break;
 											}
 										}
@@ -226,6 +234,40 @@ var injectFlagByTeamNameAndPage = function() {
 							}
 						}
 					}
+				}
+			}
+		}
+	}
+
+	function addFlagSrcToUserBetsPage() {
+		var matchRowElements = document.getElementsByClassName("matchRow");
+
+		for ( let matchRowElementIndex in matchRowElements) {
+			let matchRowElement = matchRowElements[matchRowElementIndex];
+			let isHtmlElement = matchRowElement instanceof HTMLElement;
+
+			if (isHtmlElement) {
+				let hometeamName = matchRowElement
+						.getElementsByClassName("hometeamName")[0].textContent;
+				let awayteamName = matchRowElement
+						.getElementsByClassName("awayteamName")[0].textContent;
+
+				let hometeamFlagElement = matchRowElement
+						.getElementsByClassName("hometeamFlag")[0];
+				let awayteamFlagElement = matchRowElement
+						.getElementsByClassName("awayteamFlag")[0];
+
+				let hometeamFlagSrc = getFlagByTeamName(hometeamName);
+				let awayteamFlagSrc = getFlagByTeamName(awayteamName);
+
+				if (hometeamFlagSrc) {
+					hometeamFlagElement.getElementsByClassName("teamFlag")[0]
+							.setAttribute("src", hometeamFlagSrc);
+				}
+
+				if (awayteamFlagSrc) {
+					awayteamFlagElement.getElementsByClassName("teamFlag")[0]
+							.setAttribute("src", awayteamFlagSrc);
 				}
 			}
 		}

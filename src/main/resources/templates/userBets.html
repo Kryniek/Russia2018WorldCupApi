@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" href="../../img/favicon.ico" />
+<title>Moje typy</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
+<link rel="stylesheet" href="../../css/userBets.css" />
+</head>
+<body>
+	<button id="backButton" onclick="location.href=location.origin"
+		type="button" class="btn btn-outline-success">
+		<i class="fas fa-arrow-left"></i>
+	</button>
+	<div class="fixed-center position-fixed">
+		<canvas id="canvasBubbles"></canvas>
+	</div>
+	<div class="container fixed-center position-fixed rounded p-3 pb-3">
+		<th:block th:each="userBet : ${userBets}">
+			<div class="betResult p-3 rounded">
+				<div class="row pb-2 matchRow">
+					<div th:text="${userBet.date} + ' ' + ${userBet.time}"
+						class="col-3"></div>
+					<div class="col-1 hometeamFlag">
+						<img class="teamFlag rounded"></img>
+					</div>
+					<div th:text="${userBet.match.hometeamName}"
+						class="col-2 text-right hometeamName"></div>
+					<div th:text="${userBet.match.awayteamName}"
+						class="col-2 text-left awayteamName"></div>
+					<div class="col-1 awayteamFlag">
+						<img class="teamFlag rounded"></img>
+					</div>
+					<div class="col-2"></div>
+					<div class="col-1">
+						<h4>
+							<span th:text="${userBet.bet.points}" class="badge badge-success"></span>
+						</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col-2 text-right">Mój typ:</div>
+					<div
+						th:text="${userBet.bet.value.hometeamScore} + ' : ' + ${userBet.bet.value.awayteamScore}"
+						class="col-1"></div>
+					<div class="col-2"></div>
+					<div class="col-2 text-right">Wynik meczu:</div>
+					<div
+						th:if="${userBet.match.hometeamScore} != null and ${userBet.match.awayteamScore} != null"
+						th:text="${userBet.match.hometeamScore} + ' : ' + ${userBet.match.awayteamScore}"
+						class="col-1"></div>
+				</div>
+			</div>
+		</th:block>
+	</div>
+
+	<script th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
+	<script src="../../js/events/userBetsEvents.js"></script>
+	<script src="../../js/events/events.js"></script>
+	<script src="../../js/external/bubbles.js"></script>
+</body>
+</html>

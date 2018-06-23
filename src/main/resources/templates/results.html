@@ -32,8 +32,12 @@
 					<div class="col-10"
 						th:text="${result.user.name} + ' ' + ${result.user.username} + ' (' + ${result._id} + ')'">
 					</div>
-					<div th:text="${result.totalPoints}"
-						class="col-1 badge badge-success"></div>
+					<div class="col-1">
+						<h4>
+							<span th:text="${result.totalPoints}"
+								class="badge badge-success totalPoints"></span>
+						</h4>
+					</div>
 				</li>
 			</th:block>
 		</ul>
