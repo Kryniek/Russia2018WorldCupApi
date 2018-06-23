@@ -78,8 +78,6 @@ public class MatchServiceImpl implements MatchService {
 		List<Match> matches = matchesIds.stream().map(matchId -> selectByMatchApiId(matchId))
 				.collect(Collectors.toList());
 
-		translateMatchesCountryNamesToPolish(matches);
-
 		return matches;
 	}
 

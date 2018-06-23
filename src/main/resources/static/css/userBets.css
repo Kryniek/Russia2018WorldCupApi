@@ -18,3 +18,25 @@
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 }
+
+.betResult{
+	border-bottom-style: solid;
+	border-bottom-width: 0.5px;
+	border-bottom-color: rgba(81, 81, 81, 0.5);
+}
+
+.betResult:hover {
+	background-color: rgba(212, 219, 219, 0.8);
+}
+
+.teamFlag {
+	height: 25px;
+	width: 35px;
+	-webkit-box-shadow: 0px 0px 5px black;
+	-moz-box-shadow: 0px 0px 5px black;
+	box-shadow: 0px 0px 5px black;
+}
+
+.badge{
+	min-width:50px;
+}
