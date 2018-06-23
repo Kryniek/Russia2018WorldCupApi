@@ -3,6 +3,7 @@ package pl.cup.russia.api.Russia2018Api.definition;
 import pl.cup.russia.api.Russia2018Api.dto.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.BetType;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
+import pl.cup.russia.api.Russia2018Api.model.Match;
 
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface BetService {
     Integer updateBetsByType(BetType type, List<BetValue> betValues);
 
     void calculatePointsAndUpdateBetRecords();
+
+    Bet settleBet(Match match, Bet bet);
 }

@@ -182,7 +182,8 @@ public class BetServiceImpl implements BetService {
         }
     }
 
-    private Bet settleBet(Match match, Bet bet) {
+    @Override
+    public Bet settleBet(Match match, Bet bet) {
         Result result = match.getResult();
         WinnerSide betWinnerSide = bet.getWinnerSideBasedOnBetValue();
         BetValue betValue = bet.getValue();

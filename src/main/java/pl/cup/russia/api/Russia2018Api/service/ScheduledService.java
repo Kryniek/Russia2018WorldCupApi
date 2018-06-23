@@ -20,10 +20,9 @@ public class ScheduledService {
         matchService.updateTodayMatchesResults();
     }
 
-    @Scheduled(cron = "0 25 15,16,18,19,22 * * *")
+    @Scheduled(cron = "30 0/1 14-22 * * *")
     public void scheduleBetSettlement() {
-        System.out.println("Odpalam się 3 razy dziennie po meczach");
-//        betService.calculatePointsAndUpdateBetRecords();
+        betService.calculatePointsAndUpdateBetRecords();
     }
 
 }
