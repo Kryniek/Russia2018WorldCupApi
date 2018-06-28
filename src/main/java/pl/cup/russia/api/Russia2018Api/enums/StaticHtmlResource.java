@@ -11,7 +11,8 @@ public enum StaticHtmlResource {
     POINTS("points"),
     BET("bet"),
     RESULTS("results"),
-    USER_BETS("userBets");
+    USER_BETS("userBets"),
+    PLAY_OFFS("playOffs");
     //@formatter:on
 
     private String value;
@@ -41,6 +42,10 @@ public enum StaticHtmlResource {
 
         if (USER_BETS.equals(this)) {
         	return redirect.concat("user-bets");
+        }
+
+        if (PLAY_OFFS.equals(this)) {
+        	return redirect.concat("play-offs");
         }
 
         return redirect.concat(this.value);

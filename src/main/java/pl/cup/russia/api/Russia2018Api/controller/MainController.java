@@ -117,4 +117,11 @@ public class MainController {
 
 		return mav;
 	}
+
+	@GetMapping("/play-offs")
+	public ModelAndView playOffs() {
+		ModelAndView mav = new ModelAndView(StaticHtmlResource.PLAY_OFFS.getValue());
+		
+		return mav;
+	}
 }
