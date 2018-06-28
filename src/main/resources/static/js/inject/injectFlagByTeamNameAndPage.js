@@ -11,6 +11,8 @@ var injectFlagByTeamNameAndPage = function() {
 			addFlagsSrcToMatchesPage();
 		} else if (htmlPageName === "user-bets") {
 			addFlagSrcToUserBetsPage();
+		} else if (htmlPageName === "play-offs") {
+			addFlagSrcToPlayOffsPage();
 		}
 	})();
 
@@ -268,6 +270,26 @@ var injectFlagByTeamNameAndPage = function() {
 				if (awayteamFlagSrc) {
 					awayteamFlagElement.getElementsByClassName("teamFlag")[0]
 							.setAttribute("src", awayteamFlagSrc);
+				}
+			}
+		}
+	}
+
+	function addFlagSrcToPlayOffsPage() {
+		var labelElements = document.getElementsByClassName("label");
+
+		for ( let labelElementIndex in labelElements) {
+			let labelElement = labelElements[labelElementIndex];
+			let isHtmlElement = labelElement instanceof HTMLElement;
+
+			if (isHtmlElement) {
+				let teamName = labelElement.textContent.trim();
+
+				if (!!teamName) {
+					let teamFlagSrc = getFlagByTeamName(teamName);
+
+					labelElement.getElementsByClassName("teamFlag")[0]
+							.setAttribute("src", teamFlagSrc);
 				}
 			}
 		}

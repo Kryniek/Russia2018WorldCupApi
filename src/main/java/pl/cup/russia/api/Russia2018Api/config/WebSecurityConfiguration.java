@@ -26,7 +26,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/register", "webjars/**").permitAll()
                 // have to do it a lil better
-                .antMatchers("/world-cup-winner", "/groups-winners", "/matches", "/bet/**", "/results", "/user-bets").authenticated()
+                .antMatchers("/world-cup-winner", "/groups-winners", "/matches", "/bet/**", "/results", "/user-bets", "/play-offs").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

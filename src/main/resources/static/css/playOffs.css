@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+@import url("main.css");
+
+@import url("util/centeredContainer.css");
+
+@import url("util/customScrollbar.css");
+
+@import url("util/backButton.css");
+
+.container {
+	background-color: rgba(255, 255, 255, 0.9) !important;
+	-webkit-box-shadow: 0px 0px 20px black;
+	-moz-box-shadow: 0px 0px 20px black;
+	box-shadow: 0px 0px 20px black;
+	max-width: 85%;
+	max-height: 90%;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+.teamFlag {
+	height: 20px;
+	width: 25px;
+	-webkit-box-shadow: 0px 0px 5px black;
+	-moz-box-shadow: 0px 0px 5px black;
+	box-shadow: 0px 0px 5px black;
+}
+
+.teamContainer {
+	-webkit-box-shadow: 0px 0px 5px black;
+	-moz-box-shadow: 0px 0px 5px black;
+	box-shadow: 0px 0px 5px black;
+}
+
+.team.highlight {
+	background-color: rgba(255, 255, 255, 0.9) !important;
+	color: black !important;
+}
+
+.team.highlight:hover {
+	background-color: rgba(255, 255, 255, 0.9) !important;
+	color: black !important;
+}
+
+.team.highlightWinner {
+	background-color: rgb(62, 211, 48) !important;
+	color: white !important;
+}
+
+.connector.highlightWinner {
+	border-color: rgb(62, 211, 48) !important;
+}
+
+.team.highlightWinner:hover {
+	background-color: rgb(62, 211, 48) !important;
+	color: white !important;
+}
+
+.connector.highlightWinner:hover {
+	border-color: rgb(62, 211, 48) !important;
+}

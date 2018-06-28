@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" href="../../img/favicon.ico" />
+<title>Drabinka</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="../../css/lib/css/fontawesome-all.css" />
+<link rel="stylesheet"
+	href="../../css/lib/brackets/jquery.bracket.min.css" />
+<link rel="stylesheet" href="../../css/playOffs.css" />
+</head>
+<body>
+	<button id="backButton" onclick="location.href=location.origin"
+		type="button" class="btn btn-outline-success">
+		<i class="fas fa-arrow-left"></i>
+	</button>
+	<div class="fixed-center position-fixed">
+		<canvas id="canvasBubbles"></canvas>
+	</div>
+	<div class="container fixed-center position-fixed rounded p-3 pb-3">
+
+	</div>
+
+	<script th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+	<script src="../../css/lib/brackets/jquery.bracket.min.js"></script>
+	<script src="../../js/inject/injectRandomBackground.js"></script>
+	<script src="../../js/inject/injectFlagByTeamNameAndPage.js"></script>
+	<script src="../../js/playOffs/initBracket.js"></script>
+	<script src="../../js/playOffs/onLoad.js"></script>
+	<script src="../../js/constant.js"></script>
+	<script src="../../js/events/playOffsEvents.js"></script>
+	<script src="../../js/events/events.js"></script>
+	<script src="../../js/external/bubbles.js"></script>
+</body>
+</html>
