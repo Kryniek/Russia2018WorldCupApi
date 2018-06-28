@@ -25,6 +25,7 @@ public class BetMatchSettlementTest {
         Bet bet = getBet(1, 0);
 
         Bet settledBet = betService.settleBet(match, bet);
+
         Assert.assertEquals(CORRECT_EXACT_RESULT_PREDICTION, settledBet.getPoints());
     }
 
@@ -34,24 +35,40 @@ public class BetMatchSettlementTest {
         Bet bet = getBet(2, 1);
 
         Bet settledBet = betService.settleBet(match, bet);
-        Integer expectedPoints = CORRECT_RESULT_PREDICTION + CORRECT_GOAL_DIFFERENCE;
+        Integer expectedPoints = CORRECT_WINNER_PREDICTION + CORRECT_GOAL_DIFFERENCE;
 
         Assert.assertEquals(expectedPoints, settledBet.getPoints());
     }
 
     @Test
-    public void betting_exact_winner_should_return_two_points() {
+    public void betting_winner_should_return_two_points() {
+        Match match = getMatch(1, 0);
+        Bet bet = getBet(2, 0);
 
+        Bet settledBet = betService.settleBet(match, bet);
+
+        Assert.assertEquals(CORRECT_WINNER_PREDICTION, settledBet.getPoints());
     }
 
     @Test
     public void betting_draw_should_return_three_points() {
+        Match match = getMatch(0, 0 );
+        Bet bet = getBet(1, 1);
 
+        Bet settledBet = betService.settleBet(match, bet);
+        Integer expectedPoints = CORRECT_WINNER_PREDICTION + CORRECT_GOAL_DIFFERENCE;
+
+        Assert.assertEquals(expectedPoints, settledBet.getPoints());
     }
 
     @Test
     public void betting_bad_winner_and_good_goal_difference_should_return_zero_points() {
+        Match match = getMatch(1, 0);
+        Bet bet = getBet(0, 1);
 
+        Bet settledBet = betService.settleBet(match, bet);
+
+        Assert.assertEquals(BAD_BET_PREDICTION, settledBet.getPoints());
     }
 
     private Match getMatch(Integer hometeamScore, Integer awayteamScore) {

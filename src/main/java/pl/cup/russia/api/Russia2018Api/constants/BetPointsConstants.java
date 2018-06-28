@@ -2,7 +2,9 @@ package pl.cup.russia.api.Russia2018Api.constants;
 
 public class BetPointsConstants {
 
-    public static final Integer CORRECT_RESULT_PREDICTION = 2;
+    public static final Integer BAD_BET_PREDICTION = 0;
+
+    public static final Integer CORRECT_WINNER_PREDICTION = 2;
 
     public static final Integer CORRECT_GOAL_DIFFERENCE = 1;
 
