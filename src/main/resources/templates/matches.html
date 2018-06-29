@@ -39,7 +39,9 @@
 									<div th:text="${match.status}" class="col-1"></div>
 									<div th:text="${match.time}" class="col-1"></div>
 									<div class="col-1 hometeamFlag">
-										<img class="teamFlag rounded">
+										<img
+											th:if="!${#strings.isEmpty(match?.hometeamName)} and !${#strings.isEmpty(match?.awayteamName)}"
+											class="teamFlag rounded">
 									</div>
 									<div th:text="${match.hometeamName}"
 										class="col-2 text-right hometeamName"></div>
@@ -53,13 +55,17 @@
 									<div th:text="${match.awayteamName}"
 										class="col-2 text-left awayteamName"></div>
 									<div class="col-1 awayteamFlag">
-										<img class="teamFlag rounded">
+										<img
+											th:if="!${#strings.isEmpty(match?.hometeamName)} and !${#strings.isEmpty(match?.awayteamName)}"
+											class="teamFlag rounded">
 									</div>
 									<div class="col-3">
 										<div sec:authorize="isAuthenticated()">
 											<p hidden=true class="getMatchId"
 												th:text="${match.matchApiId}"></p>
-											<button type="button"
+											<button
+												th:if="!${#strings.isEmpty(match?.hometeamName)} and !${#strings.isEmpty(match?.awayteamName)}"
+												type="button"
 												th:onclick="'gotoMatchBetForm(' + ${match.matchApiId} + ')'"
 												class="betMatchFormButton btn btn-outline-success btn-lg btn-block">
 												<div th:if="${match?.canBetMatch}">
