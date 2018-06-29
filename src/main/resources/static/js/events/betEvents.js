@@ -7,4 +7,10 @@
 	if (!!forwardButton) {
 		forwardButton.addEventListener("click", onForwardButtonClick);
 	}
+
+	var statisticsButton = document.getElementById("statisticsButton");
+
+	if (!!statisticsButton) {
+		statisticsButton.addEventListener("click", onStatisticsButtonClick);
+	}
 })();

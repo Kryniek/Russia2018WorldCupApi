@@ -35,7 +35,7 @@ public class MainController {
 
 	@Autowired
 	private ResultService resultService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -94,9 +94,15 @@ public class MainController {
 	public ModelAndView bet(@PathVariable Integer matchId) {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.BET.getValue());
 		Match match = matchService.selectByMatchApiId(matchId);
+		Boolean canBetMatch = canBetMatch(match.getDate(), match.getTime());
+
 		mav.addObject("match", match);
 		mav.addObject("userBet", betService.selectUserMatchBet(matchId));
-		mav.addObject("canYouBet", canBetMatch(match.getDate(), match.getTime()));
+		mav.addObject("canYouBet", canBetMatch);
+
+		if (!canBetMatch) {
+			mav.addObject("matchScoresByBetCount", betService.selectMatchScoresByBetCount(matchId));
+		}
 
 		return mav;
 	}
@@ -121,7 +127,7 @@ public class MainController {
 	@GetMapping("/play-offs")
 	public ModelAndView playOffs() {
 		ModelAndView mav = new ModelAndView(StaticHtmlResource.PLAY_OFFS.getValue());
-		
+
 		return mav;
 	}
 }

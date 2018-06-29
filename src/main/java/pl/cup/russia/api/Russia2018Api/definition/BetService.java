@@ -1,11 +1,12 @@
 package pl.cup.russia.api.Russia2018Api.definition;
 
+import java.util.List;
+import java.util.Map;
+
 import pl.cup.russia.api.Russia2018Api.dto.BetValue;
 import pl.cup.russia.api.Russia2018Api.enums.BetType;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
 import pl.cup.russia.api.Russia2018Api.model.Match;
-
-import java.util.List;
 
 public interface BetService {
 
@@ -25,7 +26,9 @@ public interface BetService {
 
     Bet selectUserMatchBet(Integer matchId);
 
-    List<Bet> selectMatchBets(Integer matchId);
+    List<Bet> selectOpenedMatchBets(Integer matchId);
+    
+	Map<String, Integer> selectMatchScoresByBetCount(Integer matchId);
 
     Integer updateBetByType(BetType type, BetValue betValue);
 

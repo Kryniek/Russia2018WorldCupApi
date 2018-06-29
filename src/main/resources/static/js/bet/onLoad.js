@@ -1,5 +1,9 @@
 var onLoad = function() {
 	(function init() {
+		addScores();
+	})();
+
+	function addScores() {
 		var hometeamScoreFromDB = document
 				.getElementById("hometeamScoreFromDB").textContent;
 		var awayteamScoreFromDB = document
@@ -12,5 +16,5 @@ var onLoad = function() {
 			hometeamScoreElement.value = hometeamScoreFromDB;
 			awayteamScoreElement.value = awayteamScoreFromDB;
 		}
-	})();
+	}
 };

@@ -1,11 +1,32 @@
 package pl.cup.russia.api.Russia2018Api.service;
 
+import static java.lang.Integer.valueOf;
+import static java.lang.Math.toIntExact;
+import static pl.cup.russia.api.Russia2018Api.constants.BetPointsConstants.CORRECT_DRAW_RESULT_PREDICTION;
+import static pl.cup.russia.api.Russia2018Api.constants.BetPointsConstants.CORRECT_EXACT_RESULT_PREDICTION;
+import static pl.cup.russia.api.Russia2018Api.constants.BetPointsConstants.CORRECT_GOAL_DIFFERENCE;
+import static pl.cup.russia.api.Russia2018Api.constants.BetPointsConstants.CORRECT_WINNER_PREDICTION;
+import static pl.cup.russia.api.Russia2018Api.enums.BetStatus.CLOSED;
+import static pl.cup.russia.api.Russia2018Api.enums.BetStatus.OPENED;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
+import static pl.cup.russia.api.Russia2018Api.enums.BetType.MATCH_RESULT;
+import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.BETS;
+import static pl.cup.russia.api.Russia2018Api.enums.MatchStatus.FINAL_TIME;
+import static pl.cup.russia.api.Russia2018Api.util.SecurityUtil.getLoggedInUser;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
 import pl.cup.russia.api.Russia2018Api.definition.BetService;
 import pl.cup.russia.api.Russia2018Api.definition.MatchService;
 import pl.cup.russia.api.Russia2018Api.dto.BetValue;
@@ -16,21 +37,6 @@ import pl.cup.russia.api.Russia2018Api.enums.WinnerSide;
 import pl.cup.russia.api.Russia2018Api.model.Bet;
 import pl.cup.russia.api.Russia2018Api.model.Match;
 import pl.cup.russia.api.Russia2018Api.repository.BetRepository;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Integer.valueOf;
-import static java.lang.Math.toIntExact;
-import static pl.cup.russia.api.Russia2018Api.constants.BetPointsConstants.*;
-import static pl.cup.russia.api.Russia2018Api.enums.BetStatus.CLOSED;
-import static pl.cup.russia.api.Russia2018Api.enums.BetStatus.OPENED;
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.GROUP_STAGE_PROMOTION;
-import static pl.cup.russia.api.Russia2018Api.enums.BetType.MATCH_RESULT;
-import static pl.cup.russia.api.Russia2018Api.enums.DBCollections.BETS;
-import static pl.cup.russia.api.Russia2018Api.enums.MatchStatus.FINAL_TIME;
-import static pl.cup.russia.api.Russia2018Api.util.SecurityUtil.getLoggedInUser;
 
 @Service
 public class BetServiceImpl implements BetService {
@@ -105,13 +111,33 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
-    public List<Bet> selectMatchBets(Integer matchId) {
+    public List<Bet> selectOpenedMatchBets(Integer matchId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("value.matchId").is(matchId)
                 .and("status").is(OPENED.name()));
 
         return mongoTemplate.find(query, Bet.class, BETS.getValue());
     }
+    
+    @Override
+	public Map<String, Integer> selectMatchScoresByBetCount(Integer matchId) {
+		Map<String, Integer> matchScoresByBetCount = new HashMap<String, Integer>();
+		List<Bet> matchBets = selectMatchBets(matchId);
+
+		matchBets.forEach(matchBet -> {
+			BetValue betValue = matchBet.getValue();
+			String matchScore = new StringBuilder().append(betValue.getHometeamScore()).append(":")
+					.append(betValue.getAwayteamScore()).toString();
+
+			Integer betCount = (matchScoresByBetCount.containsKey(matchScore))
+					? matchScoresByBetCount.get(matchScore) + 1
+					: 1;
+
+			matchScoresByBetCount.put(matchScore, betCount);
+		});
+
+		return matchScoresByBetCount;
+	}
 
     @Override
     public Integer updateBetByType(BetType type, BetValue betValue) {
@@ -159,7 +185,7 @@ public class BetServiceImpl implements BetService {
         List<Match> todayMatches = matchService.selectMatchesByDateAndStatus(LocalDate.now(), FINAL_TIME.getValue());
 
         for (Match match : todayMatches) {
-            List<Bet> matchBets = selectMatchBets(match.getMatchApiId());
+            List<Bet> matchBets = selectOpenedMatchBets(match.getMatchApiId());
 
             for (Bet bet : matchBets) {
                 settleBet(match, bet);
@@ -212,5 +238,11 @@ public class BetServiceImpl implements BetService {
         bet.setPoints(points);
         return bet;
     }
+    
+    private List<Bet> selectMatchBets(Integer matchId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("value.matchId").is(matchId));
 
+		return mongoTemplate.find(query, Bet.class, BETS.getValue());
+	}
 }
