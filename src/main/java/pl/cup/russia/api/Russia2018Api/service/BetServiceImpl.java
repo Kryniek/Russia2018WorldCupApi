@@ -202,7 +202,7 @@ public class BetServiceImpl implements BetService {
                     points = CORRECT_DRAW_RESULT_PREDICTION;
             } else {
                 if (resultWinnerSide.equals(betWinnerSide))
-                    points = CORRECT_RESULT_PREDICTION;
+                    points = CORRECT_WINNER_PREDICTION;
 
                 if (matchGoalDifference.equals(bet.getBetGoalDifference()))
                     points += CORRECT_GOAL_DIFFERENCE;
