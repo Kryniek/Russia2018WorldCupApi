@@ -102,6 +102,7 @@ public class MainController {
 
 		if (!canBetMatch) {
 			mav.addObject("matchScoresByBetCount", betService.selectMatchScoresByBetCount(matchId));
+			mav.addObject("matchResultsByBetCount", betService.selectMatchResultsByBetCount(matchId));
 		}
 
 		return mav;

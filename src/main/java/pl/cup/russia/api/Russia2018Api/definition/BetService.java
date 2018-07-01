@@ -29,6 +29,8 @@ public interface BetService {
     List<Bet> selectOpenedMatchBets(Integer matchId);
     
 	Map<String, Integer> selectMatchScoresByBetCount(Integer matchId);
+	
+	Map<String, Integer> selectMatchResultsByBetCount(Integer matchId);
 
     Integer updateBetByType(BetType type, BetValue betValue);
 

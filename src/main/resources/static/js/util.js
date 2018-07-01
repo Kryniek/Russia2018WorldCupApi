@@ -17,3 +17,24 @@ function getRandomColors(length) {
 
 	return randomColors;
 }
+
+function mapElementsToJson(mapElements) {
+	var jsonMap = [];
+
+	for ( let elementIndex in mapElements) {
+		let element = mapElements[elementIndex];
+		let isHtmlElement = element instanceof HTMLElement;
+
+		if (isHtmlElement) {
+			let elementText = element.textContent;
+			let indexOfEqualSign = elementText.indexOf('=');
+
+			jsonMap.push({
+				key : elementText.substr(0, indexOfEqualSign),
+				value : elementText.substr(indexOfEqualSign + 1)
+			});
+		}
+	}
+
+	return jsonMap;
+}

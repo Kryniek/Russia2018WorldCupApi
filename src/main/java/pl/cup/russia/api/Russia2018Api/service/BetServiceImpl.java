@@ -41,85 +41,85 @@ import pl.cup.russia.api.Russia2018Api.repository.BetRepository;
 @Service
 public class BetServiceImpl implements BetService {
 
-    @Autowired
-    private MatchService matchService;
+	@Autowired
+	private MatchService matchService;
 
-    @Autowired
-    private BetRepository repository;
+	@Autowired
+	private BetRepository repository;
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
-    @Override
-    public Bet createWorldCupWinnerBet(String worldCupWinner) {
-        return save(getBet(new BetValue(worldCupWinner), BetType.WORLD_CUP_WINNER));
-    }
+	@Override
+	public Bet createWorldCupWinnerBet(String worldCupWinner) {
+		return save(getBet(new BetValue(worldCupWinner), BetType.WORLD_CUP_WINNER));
+	}
 
-    @Override
-    public List<Bet> createGroupPromotionBets(List<BetValue> betValues) {
-        List<Bet> bets = new ArrayList<>();
+	@Override
+	public List<Bet> createGroupPromotionBets(List<BetValue> betValues) {
+		List<Bet> bets = new ArrayList<>();
 
-        for (BetValue value : betValues) {
-            bets.add(getBet(value, GROUP_STAGE_PROMOTION));
-        }
+		for (BetValue value : betValues) {
+			bets.add(getBet(value, GROUP_STAGE_PROMOTION));
+		}
 
-        return saveAll(bets);
-    }
+		return saveAll(bets);
+	}
 
-    @Override
-    public Bet createMatchScoreBet(BetValue betValue) {
-        return save(getBet(betValue, MATCH_RESULT));
-    }
+	@Override
+	public Bet createMatchScoreBet(BetValue betValue) {
+		return save(getBet(betValue, MATCH_RESULT));
+	}
 
-    private Bet getBet(BetValue betValue, BetType groupStagePromotion) {
-        Bet bet = new Bet();
-        bet.setValue(betValue);
-        bet.setStatus(OPENED);
-        bet.setType(groupStagePromotion);
-        bet.setUsername(getLoggedInUser());
+	private Bet getBet(BetValue betValue, BetType groupStagePromotion) {
+		Bet bet = new Bet();
+		bet.setValue(betValue);
+		bet.setStatus(OPENED);
+		bet.setType(groupStagePromotion);
+		bet.setUsername(getLoggedInUser());
 
-        return bet;
-    }
+		return bet;
+	}
 
-    @Override
-    public Bet save(Bet bet) {
-        return repository.save(bet);
-    }
+	@Override
+	public Bet save(Bet bet) {
+		return repository.save(bet);
+	}
 
-    @Override
-    public List<Bet> saveAll(List<Bet> bets) {
-        return repository.saveAll(bets);
-    }
+	@Override
+	public List<Bet> saveAll(List<Bet> bets) {
+		return repository.saveAll(bets);
+	}
 
-    @Override
-    public Bet selectUserBetByType(BetType type) {
-        return repository.findBetByTypeAndUsername(type.name(), getLoggedInUser());
-    }
+	@Override
+	public Bet selectUserBetByType(BetType type) {
+		return repository.findBetByTypeAndUsername(type.name(), getLoggedInUser());
+	}
 
-    @Override
-    public List<Bet> selectUserBetsByType(BetType type) {
-        return repository.findBetsByTypeAndUsername(type.name(), getLoggedInUser());
-    }
+	@Override
+	public List<Bet> selectUserBetsByType(BetType type) {
+		return repository.findBetsByTypeAndUsername(type.name(), getLoggedInUser());
+	}
 
-    @Override
-    public Bet selectUserMatchBet(Integer matchId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("username").is(getLoggedInUser())
-                .and("value.matchId").is(matchId));
+	@Override
+	public Bet selectUserMatchBet(Integer matchId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("username").is(getLoggedInUser())
+				.and("value.matchId").is(matchId));
 
-        return mongoTemplate.findOne(query, Bet.class);
-    }
+		return mongoTemplate.findOne(query, Bet.class);
+	}
 
-    @Override
-    public List<Bet> selectOpenedMatchBets(Integer matchId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("value.matchId").is(matchId)
-                .and("status").is(OPENED.name()));
+	@Override
+	public List<Bet> selectOpenedMatchBets(Integer matchId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("value.matchId").is(matchId).and("status")
+				.is(OPENED.name()));
 
-        return mongoTemplate.find(query, Bet.class, BETS.getValue());
-    }
-    
-    @Override
+		return mongoTemplate.find(query, Bet.class, BETS.getValue());
+	}
+
+	@Override
 	public Map<String, Integer> selectMatchScoresByBetCount(Integer matchId) {
 		Map<String, Integer> matchScoresByBetCount = new HashMap<String, Integer>();
 		List<Bet> matchBets = selectMatchBets(matchId);
@@ -139,107 +139,135 @@ public class BetServiceImpl implements BetService {
 		return matchScoresByBetCount;
 	}
 
-    @Override
-    public Integer updateBetByType(BetType type, BetValue betValue) {
-        if (BetType.WORLD_CUP_WINNER.equals(type)) {
-            Query query = new Query();
-            query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser()));
-            Update update = new Update();
-            update.set("value.winner", betValue.getWinner());
+	@Override
+	public Map<String, Integer> selectMatchResultsByBetCount(Integer matchId) {
+		Map<String, Integer> matchResultsByBetCount = new HashMap<String, Integer>();
+		final Match match = matchService.selectByMatchApiId(matchId);
+		final List<Bet> matchBets = selectMatchBets(matchId);
 
-            return toIntExact(mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount());
-        } else if (MATCH_RESULT.equals(type)) {
-            Query query = new Query();
-            query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser())
-                    .and("value.matchId").is(betValue.getMatchId()));
-            Update update = new Update();
-            update.set("value.hometeamScore", betValue.getHometeamScore()).set("value.awayteamScore", betValue.getAwayteamScore());
+		matchBets.forEach(matchBet -> {
+			final BetValue betValue = matchBet.getValue();
+			final Integer hometeamScore = betValue.getHometeamScore();
+			final Integer awayteamScore = betValue.getAwayteamScore();
 
-            return toIntExact(mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount());
-        }
+			final Integer compareResult = hometeamScore.compareTo(awayteamScore);
+			final Boolean isHometeamScoreGreaterThanAwayteamScore = compareResult > 0;
+			final Boolean isHometeamScoreLessThanAwayteamScore = compareResult < 0;
 
-        return valueOf(0);
-    }
+			final String matchResult = (isHometeamScoreGreaterThanAwayteamScore) ? match.getHometeamName()
+					: (isHometeamScoreLessThanAwayteamScore) ? match.getAwayteamName() : "Remis";
 
-    @Override
-    public Integer updateBetsByType(BetType type, List<BetValue> betValues) {
-        if (GROUP_STAGE_PROMOTION.equals(type)) {
-            for (BetValue value : betValues) {
-                Query query = new Query();
-                query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser())
-                        .and("value.groupName").regex(value.getGroupName()));
+			Integer betCount = (matchResultsByBetCount.containsKey(matchResult))
+					? matchResultsByBetCount.get(matchResult) + 1
+					: 1;
 
-                Update update = new Update();
-                update.set("value.firstPlace", value.getFirstPlace())
-                        .set("value.secondPlace", value.getSecondPlace());
+			matchResultsByBetCount.put(matchResult, betCount);
+		});
 
-                mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount();
-            }
-        }
+		return matchResultsByBetCount;
+	}
 
-        return valueOf(0);
-    }
+	@Override
+	public Integer updateBetByType(BetType type, BetValue betValue) {
+		if (BetType.WORLD_CUP_WINNER.equals(type)) {
+			Query query = new Query();
+			query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser()));
+			Update update = new Update();
+			update.set("value.winner", betValue.getWinner());
 
-    @Override
-    public void calculatePointsAndUpdateBetRecords() {
-        List<Match> todayMatches = matchService.selectMatchesByDateAndStatus(LocalDate.now(), FINAL_TIME.getValue());
+			return toIntExact(mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount());
+		} else if (MATCH_RESULT.equals(type)) {
+			Query query = new Query();
+			query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser())
+					.and("value.matchId").is(betValue.getMatchId()));
+			Update update = new Update();
+			update.set("value.hometeamScore", betValue.getHometeamScore()).set("value.awayteamScore",
+					betValue.getAwayteamScore());
 
-        for (Match match : todayMatches) {
-            List<Bet> matchBets = selectOpenedMatchBets(match.getMatchApiId());
+			return toIntExact(mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount());
+		}
 
-            for (Bet bet : matchBets) {
-                settleBet(match, bet);
-            }
+		return valueOf(0);
+	}
 
-            updateMatchBetsAfterSettlement(matchBets, match.getMatchApiId());
-        }
+	@Override
+	public Integer updateBetsByType(BetType type, List<BetValue> betValues) {
+		if (GROUP_STAGE_PROMOTION.equals(type)) {
+			for (BetValue value : betValues) {
+				Query query = new Query();
+				query.addCriteria(Criteria.where("type").is(type.name()).and("username").is(getLoggedInUser())
+						.and("value.groupName").regex(value.getGroupName()));
 
-    }
-    
-    private void updateMatchBetsAfterSettlement(List<Bet> matchBets, Integer matchId) {
-        for (Bet matchBet : matchBets) {
-            Query query = new Query();
-            query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("username").is(matchBet.getUsername())
-                    .and("value.matchId").is(matchId));
-            Update update = new Update();
-            update.set("status", CLOSED).set("points", matchBet.getPoints());
+				Update update = new Update();
+				update.set("value.firstPlace", value.getFirstPlace()).set("value.secondPlace", value.getSecondPlace());
 
-            mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue());
-        }
-    }
+				mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue()).getModifiedCount();
+			}
+		}
 
-    @Override
-    public Bet settleBet(Match match, Bet bet) {
-        Result result = match.getResult();
-        WinnerSide betWinnerSide = bet.getWinnerSideBasedOnBetValue();
-        BetValue betValue = bet.getValue();
-        Integer matchGoalDifference = (match.getHometeamScore() - match.getAwayteamScore());
+		return valueOf(0);
+	}
 
-        Integer points = 0;
+	@Override
+	public void calculatePointsAndUpdateBetRecords() {
+		List<Match> todayMatches = matchService.selectMatchesByDateAndStatus(LocalDate.now(), FINAL_TIME.getValue());
 
-        if (match.getHometeamScore().equals(betValue.getHometeamScore())
-                && match.getAwayteamScore().equals(betValue.getAwayteamScore())) {
-            points = CORRECT_EXACT_RESULT_PREDICTION;
-        } else {
-            WinnerSide resultWinnerSide = result.getSide();
+		for (Match match : todayMatches) {
+			List<Bet> matchBets = selectOpenedMatchBets(match.getMatchApiId());
 
-            if (MatchResult.DRAW.equals(result.getResult())) {
-                if (WinnerSide.DRAW.equals(betWinnerSide))
-                    points = CORRECT_DRAW_RESULT_PREDICTION;
-            } else {
-                if (resultWinnerSide.equals(betWinnerSide))
-                    points = CORRECT_WINNER_PREDICTION;
+			for (Bet bet : matchBets) {
+				settleBet(match, bet);
+			}
 
-                if (matchGoalDifference.equals(bet.getBetGoalDifference()))
-                    points += CORRECT_GOAL_DIFFERENCE;
-            }
-        }
+			updateMatchBetsAfterSettlement(matchBets, match.getMatchApiId());
+		}
 
-        bet.setPoints(points);
-        return bet;
-    }
-    
-    private List<Bet> selectMatchBets(Integer matchId) {
+	}
+
+	private void updateMatchBetsAfterSettlement(List<Bet> matchBets, Integer matchId) {
+		for (Bet matchBet : matchBets) {
+			Query query = new Query();
+			query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("username").is(matchBet.getUsername())
+					.and("value.matchId").is(matchId));
+			Update update = new Update();
+			update.set("status", CLOSED).set("points", matchBet.getPoints());
+
+			mongoTemplate.updateFirst(query, update, Bet.class, BETS.getValue());
+		}
+	}
+
+	@Override
+	public Bet settleBet(Match match, Bet bet) {
+		Result result = match.getResult();
+		WinnerSide betWinnerSide = bet.getWinnerSideBasedOnBetValue();
+		BetValue betValue = bet.getValue();
+		Integer matchGoalDifference = (match.getHometeamScore() - match.getAwayteamScore());
+
+		Integer points = 0;
+
+		if (match.getHometeamScore().equals(betValue.getHometeamScore())
+				&& match.getAwayteamScore().equals(betValue.getAwayteamScore())) {
+			points = CORRECT_EXACT_RESULT_PREDICTION;
+		} else {
+			WinnerSide resultWinnerSide = result.getSide();
+
+			if (MatchResult.DRAW.equals(result.getResult())) {
+				if (WinnerSide.DRAW.equals(betWinnerSide))
+					points = CORRECT_DRAW_RESULT_PREDICTION;
+			} else {
+				if (resultWinnerSide.equals(betWinnerSide))
+					points = CORRECT_WINNER_PREDICTION;
+
+				if (matchGoalDifference.equals(bet.getBetGoalDifference()))
+					points += CORRECT_GOAL_DIFFERENCE;
+			}
+		}
+
+		bet.setPoints(points);
+		return bet;
+	}
+
+	private List<Bet> selectMatchBets(Integer matchId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("type").is(MATCH_RESULT.name()).and("value.matchId").is(matchId));
 

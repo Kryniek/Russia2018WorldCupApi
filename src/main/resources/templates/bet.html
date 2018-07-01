@@ -170,8 +170,14 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<h4 class="text-center">Dokładny wynik</h4>
-					<canvas id="usersBetsChart"></canvas>
+					<div class="mb-2">
+						<h4 class="text-center">Dokładny wynik</h4>
+						<canvas id="usersBetsChart"></canvas>
+					</div>
+					<div class="mb-2">
+						<h4 class="text-center">Wygrana/Remis</h4>
+						<canvas id="usersBetsWinDrawChart"></canvas>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-success"
@@ -182,6 +188,10 @@
 		<th:block th:each="matchScoreByBetCount : ${matchScoresByBetCount}">
 			<p class="matchScoreByBetCount" hidden=true
 				th:text="${matchScoreByBetCount}"></p>
+		</th:block>
+		<th:block th:each="matchResultByBetCount : ${matchResultsByBetCount}">
+			<p class="matchResultByBetCount" hidden=true
+				th:text="${matchResultByBetCount}"></p>
 		</th:block>
 	</div>
 

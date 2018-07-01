@@ -1,6 +1,8 @@
 var onStatisticsButtonClick = function() {
 	(function init() {
 		addExactResultChart();
+
+		addWinDrawChart();
 	})();
 
 	function addExactResultChart() {
@@ -9,14 +11,17 @@ var onStatisticsButtonClick = function() {
 		if (!!usersBetsChartElement) {
 			let context = usersBetsChartElement.getContext('2d');
 
-			let chartDataAndLabels = getExactResultChartDataAndLabels();
+			let matchScoreByBetCountElements = document
+					.getElementsByClassName("matchScoreByBetCount");
+
+			let chartDataAndLabels = mapElementsToJson(matchScoreByBetCountElements);
 
 			let backgroundColors = getRandomColors(chartDataAndLabels.length);
 			let data = chartDataAndLabels.map(function(element) {
-				return element.data;
+				return element.value;
 			});
 			let labels = chartDataAndLabels.map(function(element) {
-				return element.label;
+				return element.key;
 			});
 			let hoverBorderWidths = chartDataAndLabels.map(function(element) {
 				return 5;
@@ -36,27 +41,40 @@ var onStatisticsButtonClick = function() {
 		}
 	}
 
-	function getExactResultChartDataAndLabels() {
-		var dataAndLabels = [];
+	function addWinDrawChart() {
+		var usersBetsWinDrawChartElement = document
+				.getElementById("usersBetsWinDrawChart");
 
-		var matchScoreByBetCountElements = document
-				.getElementsByClassName("matchScoreByBetCount");
+		if (!!usersBetsWinDrawChartElement) {
+			let context = usersBetsWinDrawChartElement.getContext('2d');
 
-		for ( let elementIndex in matchScoreByBetCountElements) {
-			let element = matchScoreByBetCountElements[elementIndex];
-			let isHtmlElement = element instanceof HTMLElement;
+			let matchResultByBetCountElements = document
+					.getElementsByClassName("matchResultByBetCount");
 
-			if (isHtmlElement) {
-				let elementText = element.textContent;
-				let indexOfEqualSign = elementText.indexOf('=');
+			let chartDataAndLabels = mapElementsToJson(matchResultByBetCountElements);
 
-				dataAndLabels.push({
-					label : elementText.substr(0, indexOfEqualSign),
-					data : elementText.substr(indexOfEqualSign + 1)
-				});
-			}
+			let backgroundColors = getRandomColors(chartDataAndLabels.length);
+			let data = chartDataAndLabels.map(function(element) {
+				return element.value;
+			});
+			let labels = chartDataAndLabels.map(function(element) {
+				return element.key;
+			});
+			let hoverBorderWidths = chartDataAndLabels.map(function(element) {
+				return 5;
+			});
+
+			new Chart(context, {
+				type : 'doughnut',
+				data : {
+					datasets : [ {
+						data : data,
+						backgroundColor : backgroundColors,
+						hoverBorderWidth : hoverBorderWidths
+					} ],
+					labels : labels
+				}
+			});
 		}
-
-		return dataAndLabels;
 	}
 };
