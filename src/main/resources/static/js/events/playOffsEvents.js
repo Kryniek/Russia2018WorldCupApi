@@ -1,5 +1,0 @@
-(function() {
-	initBracket();
-	onLoad();
-	injectFlagByTeamNameAndPage();
-})();

@@ -1,7 +1,7 @@
 package pl.cup.russia.api.Russia2018Api.enums;
 
 public enum StaticHtmlResource {
-    // @formatter:off
+	// @formatter:off
     LOGIN("login"),
     REGISTER("register"),
     WORLD_CUP_WINNER("worldCupWinner"),
@@ -11,48 +11,43 @@ public enum StaticHtmlResource {
     POINTS("points"),
     BET("bet"),
     RESULTS("results"),
-    USER_BETS("userBets"),
-    PLAY_OFFS("playOffs");
+    USER_BETS("userBets");
     //@formatter:on
 
-    private String value;
+	private String value;
 
-    private StaticHtmlResource(String value) {
-        this.value = value;
-    }
+	private StaticHtmlResource(String value) {
+		this.value = value;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public String getKebabCasedRedirectValue() {
-        String redirect = "redirect:/";
+	public String getKebabCasedRedirectValue() {
+		String redirect = "redirect:/";
 
-        if (HOME.equals(this)) {
-            return redirect;
-        }
+		if (HOME.equals(this)) {
+			return redirect;
+		}
 
-        if (WORLD_CUP_WINNER.equals(this)) {
-            return redirect.concat("world-cup-winner");
-        }
+		if (WORLD_CUP_WINNER.equals(this)) {
+			return redirect.concat("world-cup-winner");
+		}
 
-        if (GROUPS_WINNERS.equals(this)) {
-            return redirect.concat("groups-winners");
-        }
+		if (GROUPS_WINNERS.equals(this)) {
+			return redirect.concat("groups-winners");
+		}
 
-        if (USER_BETS.equals(this)) {
-        	return redirect.concat("user-bets");
-        }
+		if (USER_BETS.equals(this)) {
+			return redirect.concat("user-bets");
+		}
 
-        if (PLAY_OFFS.equals(this)) {
-        	return redirect.concat("play-offs");
-        }
+		return redirect.concat(this.value);
+	}
 
-        return redirect.concat(this.value);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
+	@Override
+	public String toString() {
+		return value;
+	}
 }
